@@ -104,5 +104,31 @@ public class CommentResource {
         
         return commentPage;
     }
+
+    @POST
+    @UnitOfWork
+    @Path("/delete/{commentId}")
+    public Comment delete(@Auth Admin admin, @PathParam("commentId")Long commentId){
+        Comment comment = commentDao.findById(commentId);
+        if(comment != null){
+            comment.setLive(Boolean.FALSE);
+            commentDao.update(comment);
+        }
+
+        return comment;
+    }
+
+    @POST
+    @UnitOfWork
+    @Path("/reinstate/{commentId}")
+    public Comment reinstate(@Auth Admin admin, @PathParam("commentId")Long commentId){
+        Comment comment = commentDao.findById(commentId);
+        if(comment != null){
+            comment.setLive(Boolean.TRUE);
+            commentDao.update(comment);
+        }
+
+        return comment;
+    }
     
 }

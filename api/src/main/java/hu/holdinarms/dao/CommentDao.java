@@ -29,9 +29,17 @@ public class CommentDao extends AbstractDAO<Comment> {
         super(sessionFactory);
     }
 
+    public Comment findById(Long id){
+        return uniqueResult(namedQuery("Comment.findById").setParameter("id", id));
+    }
+
     public Comment save(Comment comment) {
         comment.setLive(Boolean.TRUE);
         comment.setCreateDate(new Date());
+        return persist(comment);
+    }
+
+    public Comment update(Comment comment){
         return persist(comment);
     }
 
