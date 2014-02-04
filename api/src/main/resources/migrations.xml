@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    
+    <changeSet id="2014.01.29.11.00" author="Dgzt">
+        <createTable tableName="RBL_restaurants">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="nvarchar(32)">
+                <constraints nullable="false" />
+            </column>
+            <column name="live" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="createdate" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        
+        <createTable tableName="RBL_comments">
+            <column name="id" type="bigint" autoIncrement="true" >
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="restaurant_id" type="bigint">
+                <constraints foreignKeyName="fk_comments_restaurants" references="RBL_restaurants" nullable="false" />
+            </column>
+            <column name="comment" type="nvarchar(256)">
+                <constraints nullable="false" />
+            </column>
+            <column name="vote" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="live" type="boolean" >
+                <constraints nullable="false" />
+            </column>
+            <column name="ordertime" type="time">
+                <constraints nullable="true" />
+            </column>
+            <column name="arrivetime" type="time">
+                <constraints nullable="true" />
+            </column>
+            <column name="deliverytime" type="time">
+                <constraints nullable="true" />
+            </column>
+            <column name="foodname" type="nvarchar(32)">
+                <constraints nullable="true" />
+            </column>
+            <column name="foodprice" type="float">
+                <constraints nullable="true" />
+            </column>
+            <column name="worthmoney" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="dispatch_behaviour" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="createdate" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        
+        <createTable tableName="RBL_admins">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="username" type="nvarchar(32)">
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="nvarchar(64)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2014.01.30.13.20" author="Dgzt">
+        <renameTable oldTableName="RBL_comments" newTableName="RR_comments" />
+        <renameTable oldTableName="RBL_restaurants" newTableName="RR_restaurants" />
+        <renameTable oldTableName="RBL_admins" newTableName="RR_admins" />
+    </changeSet>
+    
+</databaseChangeLog>

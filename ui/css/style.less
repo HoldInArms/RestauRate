@@ -1,0 +1,342 @@
+/* ******************** Variables ******************** */
+
+@margin-xs: 5px;
+@margin-sm: 10px;
+@margin-md: 20px;
+@margin-lg: 50px;
+
+@button-border-color: #000000;
+@button-bg-color: #BEDFE9;
+@button-bg-color-hover: #5fa1b5;
+
+@btn-color-red: #752222;
+@btn-color-red-selected: #c13838;
+@btn-color-green: #31752e;
+@btn-color-green-selected: #61e95b;
+
+@color-table-header: #cce7ff;
+
+@common-border-radius: 30px;
+
+@color-rating-1: #be3333;
+@color-rating-2: #be8a37;
+@color-rating-3: #bead28;
+@color-rating-4: #90be20;
+@color-rating-5: #3dbe1b;
+
+@font-default: 'Hammersmith One', cursive;
+
+/* ******************** Background Related ******************** */
+.bg-main {
+    background-image: url('../pics/background.png');
+}
+
+.bg-inner {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: @common-border-radius;
+}
+
+/* ******************** Table Related ******************** */
+.table-hover > tbody > tr:hover > td{
+    background-color: rgba(187, 227, 255, 1);
+    cursor: pointer;
+}
+
+.table > thead > tr > th {
+    background-color: rgba(100, 100, 100, 1);
+}
+
+.table > tbody > tr > td {
+    background-color: rgba(200, 200, 200, 1);
+}
+
+.table-header-sorting {
+    cursor: pointer;
+    .color-light-blue;
+}
+
+.table-footer-design {
+    background-color: rgba(100, 100, 100, 1);
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: -20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.table-footer-design > ul {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+/* ******************** Comment Box Design ******************* */
+
+.comment-box-design {
+    border-style: solid;
+    border-color: #000000;
+    border-radius: @common-border-radius;
+}
+
+.comment-box-header {
+    border-bottom-style: solid;
+    border-color: #000000;
+    .margin-side-sm;
+}
+
+.comment-box-accordion-margin {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.comment-box-accordion > div > div {
+    border-color: #000000;
+    border-width: 2px;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    border-radius: 0px !important;
+    background-color: transparent; 
+    .margin-side-sm;
+}
+
+.comment-box-accordion > div > div > div {
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+}
+
+
+/* ******************** Input Field Related ******************* */
+
+.custom-input-field {
+    border-radius: @common-border-radius;
+}
+
+.custom-input-field-label {
+    line-height: 30px;
+}
+
+.custom-textarea-boundaries {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 125px;
+    max-height: 450px;
+
+}
+
+.custom-rater-size {
+    width: 20px;
+    height: 20px;
+}
+
+.custom-accordion-margin {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.custom-accordion-rounding  > div > div {
+    border-radius: @common-border-radius !important;
+}
+
+.custom-modal-style {
+    min-width: 80%;
+    max-width: 80%;
+}
+
+/* ******************** Custom Progressbar ******************* */
+.custom-progressbar {
+    margin-bottom: 0;
+    border-radius: @common-border-radius;
+}
+
+.custom-progressbar > div > span {
+    color: #000000; 
+    position: absolute;
+}
+
+/* ******************** Buttons ******************* */
+.btn-restaurant {
+    border-width: 2px;
+    border-radius: @common-border-radius;
+    border-color: @button-border-color;
+    border-style: solid;
+    background-color: @button-bg-color;
+    font-weight: bold;
+}
+
+.btn-restaurant:hover {
+    font-weight: bolder;
+    background-color: @button-bg-color-hover;
+}
+
+.btn-restaurant > span {
+    margin: 0;
+    padding: 0;
+}
+
+.btn-restaurant-color-red {
+    .btn-restaurant;
+    background-color: @btn-color-red;
+}
+
+.btn-restaurant-color-red:hover,
+.btn-restaurant-color-red:active,
+.btn-restaurant-color-red:focus,
+.btn-restaurant-color-red:checked {
+    background-color: @btn-color-red-selected;
+}
+
+.btn-restaurant-color-green {
+    .btn-restaurant;
+    background-color: @btn-color-green;
+}
+
+.btn-restaurant-color-green:hover,
+.btn-restaurant-color-green:active,
+.btn-restaurant-color-green:focus,
+.btn-restaurant-color-green:checked {
+    background-color: @btn-color-green-selected;
+}
+
+.btn-restaurant-nonclickable,
+.btn-restaurant-nonclickable:hover, 
+.btn-restaurant-nonclickable:active,
+.btn-restaurant-nonclickable:focus {
+    .btn-restaurant;
+    cursor: default;
+    min-width: 150px;
+}
+
+.btn-restaurant-nonclickable.disabled,
+.btn-restaurant-nonclickable[disabled] {
+    opacity: 1.0;
+    color: #000000;
+    cursor: default;
+    text-align: center;
+}
+
+
+/* ******************** Custom Fonts ******************* */
+.font-default {
+    font-family: @font-default;
+}
+
+/* ******************** Colors ******************** */
+.color-rating-1 {
+    color: @color-rating-1;
+}
+
+.color-rating-2 {
+    color: @color-rating-2;
+}
+
+.color-rating-3 {
+    color: @color-rating-3;
+}
+
+.color-rating-4 {
+    color: @color-rating-4;
+}
+
+.color-rating-5 {
+    color: @color-rating-5;
+}
+
+.color-light-blue{
+    color: @color-table-header;
+}
+
+/* ******************** Margins ******************** */
+.margin-top-xs {
+    margin-top: @margin-xs;
+}
+
+.margin-top-sm {
+    margin-top: @margin-sm;
+}
+
+.margin-top-md {
+    margin-top: @margin-md;
+}
+
+.margin-top-lg {
+    margin-top: @margin-lg;
+}
+
+.margin-bot-xs {
+    margin-bottom: @margin-xs;
+}
+
+.margin-bot-sm {
+    margin-bottom: @margin-sm;
+}
+
+.margin-bot-md {
+    margin-bottom: @margin-md;
+}
+
+.margin-bot-lg {
+    margin-bottom: @margin-lg;
+}
+
+.margin-left-xs {
+    margin-left: @margin-xs;
+}
+
+.margin-left-sm {
+    margin-left: @margin-sm;
+}
+
+.margin-left-md {
+    margin-left: @margin-md;
+}
+
+.margin-left-lg {
+    margin-left: @margin-lg;
+}
+
+.margin-right-xs {
+    margin-right: @margin-xs;
+}
+
+.margin-right-sm {
+    margin-right: @margin-sm;
+}
+
+.margin-right-md {
+    margin-right: @margin-md;
+}
+
+.margin-right-lg {
+    margin-right: @margin-lg;
+}
+
+.margin-side-xs {
+    .margin-left-xs;
+    .margin-right-xs;
+}
+
+.margin-side-sm {
+    .margin-left-sm;
+    .margin-right-sm;
+}
+
+.margin-side-md {
+    .margin-left-md;
+    .margin-right-md;
+}
+
+.margin-side-lg {
+    .margin-left-lg;
+    .margin-right-lg;
+}
+
+.table-margin {
+    margin-top: 175px;
+}
+
+.margin-more-details {
+    margin-left: 0px;
+    margin-right: 0px;
+}
