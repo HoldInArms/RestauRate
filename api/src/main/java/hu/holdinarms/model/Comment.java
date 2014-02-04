@@ -90,6 +90,9 @@ public class Comment implements Serializable {
     @Column(name = "worthmoney")
     private Boolean worthMoney;
 
+    @Column(name="dispatch_behaviour")
+    private Boolean dispatchBehaviour;
+
     @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
@@ -187,6 +190,14 @@ public class Comment implements Serializable {
     public void setWorthMoney(Boolean worthMoney) {
         this.worthMoney = worthMoney;
     }
+        
+    public Boolean isDispatchBehaviour() {
+        return dispatchBehaviour;
+    }
+
+    public void setDispatchBehaviour(Boolean dispatchBehaviour) {
+        this.dispatchBehaviour = dispatchBehaviour;
+    }
 
     public Date getCreateDate() {
         return createDate;
@@ -203,4 +214,5 @@ public class Comment implements Serializable {
     public void setNewRestaurantName(String newRestaurantName) {
         this.newRestaurantName = newRestaurantName;
     }
+
 }
