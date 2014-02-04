@@ -130,5 +130,24 @@ public class CommentResource {
 
         return comment;
     }
+
+    @POST
+    @UnitOfWork
+    @Path("/move/{commentId}/{restaurantId}")
+    public Comment move(@Auth Admin admin, @PathParam("commentId") Long commentId, @PathParam("restaurantId") Long restaurantId){
+        Comment comment = commentDao.findById(commentId);
+        if(comment == null){
+            return null;
+        }
+
+        Restaurant restaurant = restaurantDao.findById(restaurantId);
+        if(restaurant == null){
+            return null;
+        }
+
+        comment.setRestaurant(restaurant);
+        
+        return commentDao.update(comment);
+    }
     
 }
