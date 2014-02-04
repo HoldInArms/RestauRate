@@ -32,6 +32,14 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
     public RestaurantDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
+
+    public Restaurant findById(Long id){
+        return uniqueResult(namedQuery("restaurant.findById").setParameter("id", id));
+    }
+
+    public Restaurant update(Restaurant restaurant){
+        return persist(restaurant);
+    }
     
     public List<Restaurant> findAll(){
 //        return list(namedQuery("Restaurant.findAll"));

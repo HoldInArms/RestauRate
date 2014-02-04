@@ -15,6 +15,7 @@ import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -62,5 +63,29 @@ public class RestaurantResource {
 //    public Restaurant save(Restaurant restaurant){
 //        return restaurantDao.save(restaurant);
 //    }
+
+    @POST
+    @UnitOfWork
+    @Path("/delete/{restaurantId}")
+    public void delete(/*@Auth Admin admin,*/ @PathParam("restaurantId") Long restaurantId ){
+        Restaurant restaurant = restaurantDao.findById(restaurantId);
+        if(restaurant != null){
+            restaurant.setLive(Boolean.FALSE);
+            
+            restaurantDao.update(restaurant);
+        }
+    }
+
+    @POST
+    @UnitOfWork
+    @Path("/reinstate/{restaurantId}")
+    public void reinstate(/*@Auth Admin admin,*/ @PathParam("restaurantId") Long restaurantId){
+        Restaurant restaurant = restaurantDao.findById(restaurantId);
+        if(restaurant != null){
+            restaurant.setLive(Boolean.TRUE);
+
+            restaurantDao.update(restaurant);
+        }
+    }
     
 }
