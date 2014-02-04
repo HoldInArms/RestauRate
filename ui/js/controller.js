@@ -11,12 +11,30 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.itemPerpage = 10;
 		$scope.currentPage = 1;
 		$scope.direction = "DESC";
-		$scope.filterText ="";
-		$scope.orderby;
+		$scope.filterText = "";
+		$scope.orderby = "";
 
-		$scope.changeDirection = function(asc) {
-			asc ? $scope.direction = "DESC" : $scope.direction = "ASC";
+		$scope.changeDirection = function(pageChanged) {
+			if (pageChanged) {
+				$scope.direction = "ASC";
+			} else {
+				if ($scope.direction === 'ASC') {
+					$scope.direction = "DESC";
+				} else {
+					$scope.direction = "ASC";
+				}
+			}
+
 			$scope.goToPage($scope.currentPage);
+		};
+
+		$scope.changeOrderBy = function(orderby) {
+			if (orderby === $scope.orderby) {
+				$scope.changeDirection();
+			} else {
+				$scope.orderby = orderby;
+				$scope.changeDirection(true);
+			}
 		};
 
 		/**
@@ -50,7 +68,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				$scope.restaurants = tmp.restaurants;
 				$scope.allPages = Math.ceil(tmp.restaurantNumber / $scope.itemPerpage);
 				$scope.restaurantNumber = tmp.restaurantNumber;
-				$scope.filterText ="";
+				$scope.filterText = "";
 			});
 		};
 

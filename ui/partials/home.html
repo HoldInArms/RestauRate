@@ -23,20 +23,25 @@
             <thead>
                 <tr>
                     <th class="text-center">
-                        <span class="table-header-sorting">Restaurant Name</span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                        <span class="table-header-sorting" ng-click="changeOrderBy('name')">Restaurant Name</span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='name'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='name'"></span>
                     </th>
                     <th class="text-center">
-                        <span class="table-header-sorting">Latest Comment</span>
-                        <span class="glyphicon glyphicon-chevron-up"></span>
+                        <span class="table-header-sorting" ng-click="changeOrderBy('latest_comment')">Latest Comment</span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='latest_comment'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='latest_comment' || orderby ===''"></span>
+
                     </th>
                     <th class="text-center">
-                        <span class="table-header-sorting">Rating</span>
-                        <span class="glyphicon glyphicon-chevron-up color-light-blue"></span>
+                        <span class="table-header-sorting" ng-click="changeOrderBy('avarge')">Rating</span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='avarge'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='avarge'"></span>
                     </th>
                     <th class="text-center">
-                        <span class="table-header-sorting">Votes</span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                        <span class="table-header-sorting" ng-click="changeOrderBy('votes')">Votes</span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='votes'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='votes'"></span>
                     </th>
                 </tr>
             </thead>
