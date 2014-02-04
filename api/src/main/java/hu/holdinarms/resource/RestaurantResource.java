@@ -7,8 +7,10 @@
 package hu.holdinarms.resource;
 
 import com.google.inject.Inject;
+import com.yammer.dropwizard.auth.Auth;
 import com.yammer.dropwizard.hibernate.UnitOfWork;
 import hu.holdinarms.dao.RestaurantDao;
+import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
 import hu.holdinarms.model.dto.RestaurantPage;
 import java.util.List;
@@ -67,7 +69,7 @@ public class RestaurantResource {
     @POST
     @UnitOfWork
     @Path("/delete/{restaurantId}")
-    public void delete(/*@Auth Admin admin,*/ @PathParam("restaurantId") Long restaurantId ){
+    public void delete(@Auth Admin admin, @PathParam("restaurantId") Long restaurantId ){
         Restaurant restaurant = restaurantDao.findById(restaurantId);
         if(restaurant != null){
             restaurant.setLive(Boolean.FALSE);
@@ -79,7 +81,7 @@ public class RestaurantResource {
     @POST
     @UnitOfWork
     @Path("/reinstate/{restaurantId}")
-    public void reinstate(/*@Auth Admin admin,*/ @PathParam("restaurantId") Long restaurantId){
+    public void reinstate(@Auth Admin admin, @PathParam("restaurantId") Long restaurantId){
         Restaurant restaurant = restaurantDao.findById(restaurantId);
         if(restaurant != null){
             restaurant.setLive(Boolean.TRUE);
