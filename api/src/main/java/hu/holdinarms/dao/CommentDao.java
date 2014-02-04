@@ -10,6 +10,7 @@ import com.yammer.dropwizard.hibernate.AbstractDAO;
 import hu.holdinarms.model.Comment;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -20,6 +21,8 @@ import org.hibernate.SessionFactory;
  * @author zsurot
  */
 public class CommentDao extends AbstractDAO<Comment> {
+
+    private static final String[] ORDERBY_COLUMN_NAMES = new String[]{"vote", "createdate" };
 
     @Inject
     public CommentDao(SessionFactory sessionFactory) {
@@ -105,5 +108,68 @@ public class CommentDao extends AbstractDAO<Comment> {
         query.setParameter("restaurantId", restaurantId);
         System.out.println(query.uniqueResult());
         return ((Comment) get( ((BigInteger)query.uniqueResult()).longValue() )).getComment();
+    }
+
+    public List<Comment> getCommentsForAdmin(Long restaurantId, Integer from, Integer to, String orderby, String direction){
+        
+        if(from == null || to == null){
+            return new ArrayList();
+        }
+        
+        if(direction == null || direction.isEmpty()){
+            direction = "DESC";
+        }
+        
+        String queryString = "SELECT id FROM ("+
+        "   SELECT ROW_NUMBER() OVER ( ORDER BY :orderby :direction ) AS rowNumber, id, restaurant_id, createdate, vote "+
+        "   FROM RR_comments WHERE 1=1 ";
+        
+        if(restaurantId != null){
+            queryString += "AND restaurant_id = :restaurantId";
+        }
+
+        queryString += " ) as rowNumberSelect WHERE rowNumber BETWEEN :from AND :to ";
+        
+        queryString = queryString.replace(":direction", direction);
+        queryString = queryString.replace(":orderby", getOrderByProperty(orderby));
+        
+        
+        Query query = currentSession().createSQLQuery(queryString);
+        query.setParameter("from", from);
+        query.setParameter("to", to);
+        if(restaurantId != null){
+            query.setParameter("restaurantId", restaurantId);
+        }
+        
+        List<BigInteger> resultList = query.list();
+        List<Comment> result = new ArrayList<Comment>();
+        for(BigInteger bigInteger : resultList){
+            result.add(get(bigInteger.longValue()));
+        }
+        
+        return result;
+    }
+
+    public Integer countCommentsForAdmin(Long restaurantId){
+        String queryString = "SELECT COUNT(id) FROM RR_COMMENTS WHERE 1=1 ";
+        
+        if(restaurantId != null){
+            queryString += "AND restaurant_id = :restaurantId";
+        }
+
+        Query query = currentSession().createSQLQuery(queryString);
+        if(restaurantId != null){
+            query.setParameter("restaurantId", restaurantId);
+        }
+
+        return (Integer) query.uniqueResult();
+    }
+
+    public String getOrderByProperty(String orderBy){
+       if(Arrays.asList(ORDERBY_COLUMN_NAMES).contains(orderBy)){
+            return orderBy;
+        }
+
+        return "createdate"; 
     }
 }
