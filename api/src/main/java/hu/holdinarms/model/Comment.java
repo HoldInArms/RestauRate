@@ -32,9 +32,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "RR_comments")
-/*@NamedQueries({
-    @NamedQuery(name = "Comment.lastByRestaurantId", query = "SELECT TOP 1 c FROM Comment WHERE restaurant_id = :restaurantId AND live = 1 order by createdate DESC")
-})*/
+@NamedQueries({
+    @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id") 
+})
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
