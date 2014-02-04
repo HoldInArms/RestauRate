@@ -34,7 +34,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
     }
 
     public Restaurant findById(Long id){
-        return uniqueResult(namedQuery("restaurant.findById").setParameter("id", id));
+        return uniqueResult(namedQuery("Restaurant.findById").setParameter("id", id));
     }
 
     public Restaurant update(Restaurant restaurant){
