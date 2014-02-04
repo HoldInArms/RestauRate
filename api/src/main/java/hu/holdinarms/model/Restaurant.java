@@ -28,9 +28,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "RR_restaurants")
-/*@NamedQueries({
-    @NamedQuery(name="Restaurant.findAll", query = "SELECT r FROM Restaurant r WHERE r.live = true")
-})*/
+@NamedQueries({
+    @NamedQuery(name="Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE id = :id")
+})
 public class Restaurant implements Serializable {
     
     private static final long serialVersionUID = 1L;
