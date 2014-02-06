@@ -46,5 +46,5 @@ public class AdminDao extends AbstractDAO<Admin>{
     public Admin save(Admin admin){
         return persist(admin);
     }
-    
+
 }
