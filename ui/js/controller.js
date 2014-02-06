@@ -108,8 +108,10 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.onTimeSetArrive = function(newDate, oldDate) {
 			var d = new Date(newDate);
 			$scope.arrive = d.valueOf();
+			$scope.comment.deliveryTime = $scope.arrive - $scope.order;
+			var dd = new Date($scope.comment.deliveryTime);
+			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
 		};
-
 
 		$scope.addNewRestaurant = function(comment) {
 			RestaurantService.newRestaurant(comment, function() {

@@ -78,11 +78,11 @@
                 <span class="input-group-addon" ng-if="arrive">{{data.arrive| date:'yyyy.MM.dd. HH:mm'}}</span>
                 <span class="input-group-addon" ng-if="!arrive">Select arrive time</span>
                     <div class="dropdown">
-                        <button id="asd" class="btn dropdown-toggle my-toggle-select" style="background-color: #FFFFFF;" role="button" data-toggle="dropdown" data-target="#">
+                        <button id="arriveDate" class="btn dropdown-toggle my-toggle-select" style="background-color: #FFFFFF;" role="button" data-toggle="dropdown" data-target="#">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="data.arrive" data-on-set-time="onTimeSetArrive" data-datetimepicker-config="{startView: 'day', dropdownSelector: '#asd'}"></datetimepicker>
+                            <datetimepicker data-ng-model="data.arrive" data-on-set-time="onTimeSetArrive" data-datetimepicker-config="{startView: 'day', dropdownSelector: '#arriveDate'}"></datetimepicker>
                         </ul>
                     </div>
                 </span>
@@ -97,7 +97,7 @@
             </label>
         </div>
         <div class="col-md-9">
-            <input class="form-control custom-input-field" type="text" value="{{comment.deliveryTime}}" disabled="disabled" /> 
+            <input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" /> 
         </div>
     </div>
 
