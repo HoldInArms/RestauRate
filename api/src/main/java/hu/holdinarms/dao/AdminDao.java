@@ -27,6 +27,10 @@ public class AdminDao extends AbstractDAO<Admin>{
         return (Admin) uniqueResult(namedQuery("Admin.findById").setParameter("id", id));
     }
 
+    public Admin findByUsername(String username){
+        return (Admin) uniqueResult(namedQuery("Admin.findByUsername").setParameter("username", username));
+    }
+    
     public String authenticate(String username, String password){
         Admin admin = uniqueResult(namedQuery("Admin.authenticate").setParameter("username", username).setParameter("password", password));
 

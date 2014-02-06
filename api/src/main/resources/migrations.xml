@@ -82,5 +82,17 @@
         <renameTable oldTableName="RBL_restaurants" newTableName="RR_restaurants" />
         <renameTable oldTableName="RBL_admins" newTableName="RR_admins" />
     </changeSet>
+
+    <changeSet id="2014.02.06.15.00" author="Dgzt">
+        <comment>
+            Add initial admin:
+                username: admin
+                password: 12345
+        </comment>
+        <insert tableName="RR_admins">
+            <column name="username" value="admin"></column>
+            <column name="password" value="5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5"></column>
+        </insert>
+    </changeSet>
     
 </databaseChangeLog>

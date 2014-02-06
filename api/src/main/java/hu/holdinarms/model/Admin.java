@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hu.holdinarms.model;
 
 import java.io.Serializable;
@@ -26,26 +25,27 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "RR_admins")
 @NamedQueries({
-    @NamedQuery(name="Admin.findById",query="SELECT a FROM Admin a WHERE a.id = :id"),
-    @NamedQuery(name="Admin.authenticate", query="SELECT a FROM Admin a WHERE a.username = :username AND a.password = :password")
+    @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id"),
+    @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a where a.username = :username"),
+    @NamedQuery(name = "Admin.authenticate", query = "SELECT a FROM Admin a WHERE a.username = :username AND a.password = :password")
 })
 public class Admin implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
     @Column(name = "username")
     private String username;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
@@ -75,5 +75,5 @@ public class Admin implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }
