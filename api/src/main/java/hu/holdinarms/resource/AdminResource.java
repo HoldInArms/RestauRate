@@ -14,6 +14,7 @@ import hu.holdinarms.dao.AdminDao;
 import hu.holdinarms.model.Admin;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -57,5 +58,13 @@ public class AdminResource {
         newAdmin.setPassword(password);
         
         return adminDao.save(newAdmin);
+    }
+
+    @PUT
+    @UnitOfWork
+    @Path("/changepassword/{newPassword}")
+    public Admin changePassword(@Auth Admin admin, @PathParam("newPassword") String newPassword){
+        admin.setPassword(newPassword);
+        return adminDao.save(admin);
     }
 }
