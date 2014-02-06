@@ -19,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -39,7 +40,7 @@ public class AdminResource {
     @UnitOfWork
     @Path("/login/{username}/{password}")
     public String login(@PathParam("username")String username, @PathParam("password")String password){
-        return adminDao.authenticate(username, password);
+        return adminDao.authenticate(username, DigestUtils.sha256Hex(password));
     }
     
     @POST
@@ -52,10 +53,14 @@ public class AdminResource {
     @POST
     @UnitOfWork
     @Path("/add/{username}/{password}")
-    public Admin addAdmin(@Auth Admin admin, @PathParam("username") String username, @PathParam("password") String password){
+    public Admin addAdmin(/*@Auth Admin admin,*/ @PathParam("username") String username, @PathParam("password") String password){
+        if(adminDao.findByUsername(username) != null){
+            return null;
+        }
+        
         Admin newAdmin = new Admin();
         newAdmin.setUsername(username);
-        newAdmin.setPassword(password);
+        newAdmin.setPassword(DigestUtils.sha256Hex(password));
         
         return adminDao.save(newAdmin);
     }
@@ -64,7 +69,7 @@ public class AdminResource {
     @UnitOfWork
     @Path("/changepassword/{newPassword}")
     public Admin changePassword(@Auth Admin admin, @PathParam("newPassword") String newPassword){
-        admin.setPassword(newPassword);
+        admin.setPassword(DigestUtils.sha256Hex(newPassword));
         return adminDao.save(admin);
     }
 }
