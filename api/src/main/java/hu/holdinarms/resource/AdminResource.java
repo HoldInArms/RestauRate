@@ -47,4 +47,15 @@ public class AdminResource {
     public void logout(@Auth Admin admin){
         TokenStorage.removeUsertoken(admin.getId());
     }
+
+    @POST
+    @UnitOfWork
+    @Path("/add/{username}/{password}")
+    public Admin addAdmin(@Auth Admin admin, @PathParam("username") String username, @PathParam("password") String password){
+        Admin newAdmin = new Admin();
+        newAdmin.setUsername(username);
+        newAdmin.setPassword(password);
+        
+        return adminDao.save(newAdmin);
+    }
 }

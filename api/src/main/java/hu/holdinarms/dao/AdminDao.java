@@ -14,7 +14,7 @@ import org.hibernate.SessionFactory;
 
 /**
  *
- * @author zsurot
+ * @author Dgzt
  */
 public class AdminDao extends AbstractDAO<Admin>{
 
@@ -28,7 +28,7 @@ public class AdminDao extends AbstractDAO<Admin>{
     }
 
     public String authenticate(String username, String password){
-        Admin admin = uniqueResult(namedQuery("Admin.authenticate").setParameter("username", username).setParameter("password", "1234"));
+        Admin admin = uniqueResult(namedQuery("Admin.authenticate").setParameter("username", username).setParameter("password", password));
 
         if(admin == null){
             return null;
@@ -41,6 +41,10 @@ public class AdminDao extends AbstractDAO<Admin>{
         TokenStorage.extendExpirationDate(admin.getId());
         
         return tokenValue;
+    }
+    
+    public Admin save(Admin admin){
+        return persist(admin);
     }
     
 }
