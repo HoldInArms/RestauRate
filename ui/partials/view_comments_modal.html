@@ -3,48 +3,50 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-right: 15px;"><span class="glyphicon glyphicon-remove"></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-right: 15px;">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
                     <h3 class="text-center">
                         {{comments[0].restaurant.name}} - View Comments
-                        <button ng-disabled="currentCommentPage <= 1" ng-click ="getCommentsById(currentRestaurant, currentCommentPage - 1)"> < </button>
-                        <button ng-disabled="currentCommentPage == allCommentPages" ng-click ="getCommentsById(currentRestaurant, currentCommentPage + 1)"> > </button>
-                    </h3>
-                </div>
-            </div>
-            <div class="modal-body">
-                <section ng-repeat="comment in comments" class="margin-top-sm margin-bot-md">
-                    <div class="row comment-box-design">
-                        <div class="row comment-box-header">
-                            <div class="col-md-6 text-right">
-                                <h4 style="line-height: 25px;">{{comment.createDate| date:'yyyy/MM/dd'}}</h4>
-                            </div>
-                            <div class="col-md-6 text-left">
-                                <rating style="line-height: 50px;" value="comment.vote" max="5" readonly="true" ng-class="{1 : 'color-rating-1', 2 : 'color-rating-2', 3 : 'color-rating-3', 4 : 'color-rating-4', 5 : 'color-rating-5'
-                                        }
-                                        [comment.vote]"></rating>
-                            </div>
-                        </div>
-                        <div class="row margin-side-md margin-top-md margin-bot-md">
-                            {{comment.comment}}
-                        </div>
-
-                        <div class="row margin-top-md comment-box-accordion-margin margin-bot-sm" ng-if="comment.foodName || comment.foodPrice || comment.worthMoney != undefined || comment.orderTime || comment.arriveTime || comment.dispatchBehaviour != undefined">
-                            <accordion class="comment-box-accordion">
-                                <accordion-group is-open="isopen">
-                                    <accordion-heading stlye="border-radius: 30px !important;">
-                                        <span style="cursor: pointer; font-style: normal;">View more details</span> <i class="pull-right glyphicon" style="cursor: pointer;" ng-class="{'glyphicon-chevron-right': isopen, 'glyphicon-chevron-down': !isopen}"></i>
-                                    </accordion-heading>
-                                    <ng-include src="'partials/view_more_details.html'"></ng-include>
-                                </accordion-group>
-                            </accordion>
+                        <button ng-disabled="currentCommentPage <= 1" ng-click ="getCommentsById(currentRestaurant, currentCommentPage - 1)">
+                            < </button>
+                                <button ng-disabled="currentCommentPage == allCommentPages" ng-click ="getCommentsById(currentRestaurant, currentCommentPage + 1)">></button>
+                            </h3>
                         </div>
                     </div>
-                </section>
-            </div>
-            <!--                <div class="modal-footer">
-                                <button type="button" class="btn btn-restaurant">Send Request</button>
-                            </div>-->
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+                    <div class="modal-body">
+                        <section ng-repeat="comment in comments" class="margin-top-sm margin-bot-md">
+                            <div class="row comment-box-design">
+                                <div class="row comment-box-header">
+                                    <div class="col-md-6 text-right">
+                                        <h4 style="line-height: 25px;">{{comment.createDate| date:'yyyy/MM/dd'}}</h4>
+                                    </div>
+                                    <div class="col-md-6 text-left">
+                                        <rating style="line-height: 50px;" value="comment.vote" max="5" readonly="true" ng-class="{1 : 'color-rating-1', 2 : 'color-rating-2', 3 : 'color-rating-3', 4 : 'color-rating-4', 5 : 'color-rating-5'
+                                        }
+                                        [comment.vote]"></rating>
+                                    </div>
+                                </div>
+                                <div class="row margin-side-md margin-top-md margin-bot-md">{{comment.comment}}</div>
 
+                                <div class="row margin-top-md comment-box-accordion-margin margin-bot-sm" ng-if="comment.foodName || comment.foodPrice || comment.worthMoney != undefined || comment.orderTime || comment.arriveTime || comment.dispatchBehaviour != undefined">
+                                    <accordion class="comment-box-accordion">
+                                        <accordion-group is-open="isopen">
+                                            <accordion-heading stlye="border-radius: 30px !important;">
+                                                <span style="cursor: pointer; font-style: normal;">View more details</span> <i class="pull-right glyphicon" style="cursor: pointer;" ng-class="{'glyphicon-chevron-right': isopen, 'glyphicon-chevron-down': !isopen}"></i>
+                                            </accordion-heading>
+                                            <ng-include src="'partials/view_more_details.html'"></ng-include>
+                                        </accordion-group>
+                                    </accordion>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!--                <div class="modal-footer">
+                    <button type="button" class="btn btn-restaurant">Send Request</button>
+                </div>
+                -->
+            </div>
+            <!-- /.modal-content --> </div>
+        <!-- /.modal-dialog --> </div>
+    <!-- /.modal -->

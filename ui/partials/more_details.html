@@ -48,8 +48,8 @@
     </div>
     <div class ="col-md-9">
         <div class="input-group">
-            <span class="input-group-addon" ng-if="order">{{data.comment.orderTime| date:'yyyy.MM.dd. HH:mm'}}</span>
-            <span class="input-group-addon" ng-if="!order">Select order time</span>
+            <span class="input-group-addon" ng-if="comment.orderTime">{{comment.orderTime| date:'yyyy.MM.dd. HH:mm'}}</span>
+            <span class="input-group-addon" ng-if="!comment.orderTime">Select order time</span>
             <div class="dropdown">
                 <button class="btn dropdown-toggle" style="background-color: #FFFFFF;" role="button" data-toggle="dropdown" data-target="#">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -58,49 +58,47 @@
                     <datetimepicker data-ng-model="data.comment.orderTime" data-on-set-time="onTimeSetOrder" data-datetimepicker-config="{startView: 'day', dropdownSelector: '.dropdown-toggle'}"></datetimepicker>
                 </ul>
             </div>
-        </span>
+        </div>
     </div>
 </div>
-</div>
 <div class="row margin-top-sm margin-bot-sm margin-more-details">
-<div class="col-md-3">
-    <label class="custom-input-field-label">Arrive Time:</label>
-</div>
-<div class ="col-md-9">
-    <div class="input-group">
-        <span class="input-group-addon" ng-if="arrive">{{data.comment.arriveTime| date:'yyyy.MM.dd. HH:mm'}}</span>
-        <span class="input-group-addon" ng-if="!arrive">Select arrive time</span>
-        <div class="dropdown">
-            <button id="arriveDate" class="btn dropdown-toggle my-toggle-select" style="background-color: #FFFFFF;" role="button" data-toggle="dropdown" data-target="#">
-                <span class="glyphicon glyphicon-calendar"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <datetimepicker data-ng-model="data.comment.arriveTime" data-on-set-time="onTimeSetArrive" data-datetimepicker-config="{startView: 'day', dropdownSelector: '#arriveDate'}"></datetimepicker>
-            </ul>
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Arrive Time:</label>
+    </div>
+    <div class ="col-md-9">
+        <div class="input-group">
+            <span class="input-group-addon" ng-if="comment.arriveTime">{{comment.arriveTime| date:'yyyy.MM.dd. HH:mm'}}</span>
+            <span class="input-group-addon" ng-if="!comment.arriveTime">Select arrive time</span>
+            <div class="dropdown">
+                <button id="arriveDate" class="btn dropdown-toggle my-toggle-select" style="background-color: #FFFFFF;" role="button" data-toggle="dropdown" data-target="#">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <datetimepicker data-ng-model="data.comment.arriveTime" data-on-set-time="onTimeSetArrive" data-datetimepicker-config="{startView: 'day', dropdownSelector: '#arriveDate'}"></datetimepicker>
+                </ul>
+            </div>
         </div>
-    </span>
-</div>
-</div>
+    </div>
 </div>
 
 <div class="row margin-top-sm margin-bot-sm margin-more-details">
-<div class="col-md-3">
-<label class="custom-input-field-label">Delivery Time:</label>
-</div>
-<div class="col-md-9">
-<input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" />
-</div>
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Delivery Time:</label>
+    </div>
+    <div class="col-md-9">
+        <input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" />
+    </div>
 </div>
 
 <div class="row margin-top-sm margin-bot-sm margin-more-details">
-<div class="col-md-3">
-<label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
-</div>
-<div class="col-md-9">
-<div class="btn-group">
-    <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" btn-radio="true">Nice/Acceptable</button>
-    <button type="button" class="btn btn-restaurant-color-red" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
-</div>
-</div>
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
+    </div>
+    <div class="col-md-9">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" btn-radio="true">Nice/Acceptable</button>
+            <button type="button" class="btn btn-restaurant-color-red" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
+        </div>
+    </div>
 </div>
 </section>
