@@ -102,15 +102,12 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 		$scope.onTimeSetOrder = function(newDate, oldDate) {
 			var d = new Date(newDate);
-			$scope.order = d.valueOf();
+			$scope.comment.orderTime = d.valueOf();
 		};
 
 		$scope.onTimeSetArrive = function(newDate, oldDate) {
 			var d = new Date(newDate);
-			$scope.arrive = d.valueOf();
-			$scope.comment.deliveryTime = $scope.arrive - $scope.order;
-			var dd = new Date($scope.comment.deliveryTime);
-			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
+			$scope.comment.arriveTime = d.valueOf();
 		};
 
 		$scope.addNewRestaurant = function(comment) {
@@ -159,7 +156,8 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				$scope.comments = tmp.comments;
 				$scope.allCommentPages = Math.ceil(tmp.countComments / $scope.commentPerpage);
 				$scope.commentCount = tmp.countComments;
-
+				var dd = new Date($scope.comment.arrive - $scope.comment.order);
+				$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
 			});
 		};
 
