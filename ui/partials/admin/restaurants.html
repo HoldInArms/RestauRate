@@ -24,7 +24,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody class="text-center" data-toggle="modal" data-target="#viewComments" >
+        <tbody class="text-center">
             <tr>
                 <td>
                     <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
@@ -34,37 +34,43 @@
                     1234
                 </td>
                 <td>
-                  <progressbar class="custom-progressbar" value="5" max="5" type="success">
-                    <span class="">5 / 5</span>
-                  </progressbar>
-                </td>
-                <td>
-                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant from the site" popover-trigger="mouseenter" popover-placement="left">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </td>
-          </tr>
+        <progressbar class="custom-progressbar" value="5" max="5" type="success">
+            <span class="">5 / 5</span>
+        </progressbar>
+        </td>
+        <td>
+            <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+            <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant's visibility" popover-trigger="mouseenter" popover-placement="left">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </td>
+        </tr>
 
-          <tr>
-                <td>
-                    <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
-                    <span class="">Gulasch II</span>
-                </td>
-                <td>
-                    9876
-                </td>
-                <td>
-                  <progressbar class="custom-progressbar" value="1" max="5" type="danger">
-                    <span class="">1 / 5</span>
-                  </progressbar>
-                </td>
-                <td>
-                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Show this restaurant on the site" popover-trigger="mouseenter" popover-placement="left">
-                        <span class="glyphicon glyphicon-repeat"></span>
-                    </button>
-                </td>
-          </tr>
-          
+        <tr>
+            <td>
+                <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
+                <span class="">Gulasch II</span>
+            </td>
+            <td>
+                9876
+            </td>
+            <td>
+        <progressbar class="custom-progressbar" value="1" max="5" type="danger">
+            <span class="">1 / 5</span>
+        </progressbar>
+        </td>
+        <td>
+            <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+            <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this restaurant visible" popover-trigger="mouseenter" popover-placement="left">
+                <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+        </td>
+        </tr>
+
         </tbody>
     </table>
 </div>

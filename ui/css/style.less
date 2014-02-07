@@ -113,6 +113,22 @@
     border-radius: @common-border-radius;
 }
 
+.custom-table-selection,
+.custom-table-selection:active,
+.custom-table-selection:focus,
+.custom-table-selection:hover {
+    border-radius: @common-border-radius;
+    border-width: 2px;
+    border-color: @button-border-color;
+    border-style: solid;
+    background-color: @button-bg-color;
+    font-weight: bold;
+}
+
+.custom-table-selection > option {
+    background-color: #FFFFFF;
+}
+
 .custom-input-field-label {
     line-height: 30px;
 }
