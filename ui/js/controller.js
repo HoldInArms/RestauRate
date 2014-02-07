@@ -87,6 +87,32 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		};
 
 		$scope.comment = {};
+
+		$scope.dateOptions = {
+			'year-format': "'yy'",
+			'starting-day': 1
+		};
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
+		};
+
+		$scope.onTimeSetOrder = function(newDate, oldDate) {
+			var d = new Date(newDate);
+			$scope.order = d.valueOf();
+		};
+
+		$scope.onTimeSetArrive = function(newDate, oldDate) {
+			var d = new Date(newDate);
+			$scope.arrive = d.valueOf();
+			$scope.comment.deliveryTime = $scope.arrive - $scope.order;
+			var dd = new Date($scope.comment.deliveryTime);
+			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
+		};
+
 		$scope.addNewRestaurant = function(comment) {
 			RestaurantService.newRestaurant(comment, function() {
 				//Refreshing retaurant list
@@ -133,10 +159,10 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				$scope.comments = tmp.comments;
 				$scope.allCommentPages = Math.ceil(tmp.countComments / $scope.commentPerpage);
 				$scope.commentCount = tmp.countComments;
+
 			});
 		};
 
-		$scope.comment = {};
 		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
 			var postData = {};
 			postData.restaurant = restaurant;
