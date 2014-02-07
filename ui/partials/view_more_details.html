@@ -1,0 +1,82 @@
+<section class="margin-side-md">
+    <div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.foodName">
+        <div class="col-md-3">
+            <label class="custom-input-field-label">Food Name:</label>
+        </div>
+        <div class="col-md-9">
+            <input class="form-control custom-input-field" type="text" ng-model="comment.foodName" disabled="disabled"/>
+        </div>
+    </div>
+
+    <div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.foodPrice">
+        <div class="col-md-3">
+            <label class=custom-input-field-label>Food Price:</label>
+        </div>
+        <div class="col-md-9">
+            <div class="input-group">
+                <input type="number" class="form-control custom-input-field input-group-btn" ng-model="comment.foodPrice" disabled="disabled"/>
+                <span class="input-group-addon custom-input-field">HUF</span>
+                <!--                    <select class="form-control custom-input-field input-group-addon" style="width: 90px;">
+                <option selected="selected">HUF</option>
+                <option>EUR</option>
+                <option>USD</option>
+                <option>GBP</option>
+            </select>
+            -->
+        </div>
+    </div>
+
+</div>
+
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.worthMoney != undefined">
+    <div class="col-md-3 text-right">
+        <label class="custom-input-field-label">Was it worth money?</label>
+    </div>
+    <div class="col-md-9">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant-color-green" ng-if="comment.worthMoney">Yes</button>
+            <button type="button" class="btn btn-restaurant-color-red" ng-if="!comment.worthMoney">No</button>
+        </div>
+    </div>
+</div>
+
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.orderTime">
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Order Time:</label>
+    </div>
+    <div class ="col-md-9">
+        <input class="form-control custom-input-field" type="text" value="{{comment.orderTime| date:'yyyy.MM.dd. HH:mm'}}" disabled="disabled" />
+    </div>
+</div>
+
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.arriveTime">
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Arrive Time:</label>
+    </div>
+    <div class ="col-md-9">
+        <input class="form-control custom-input-field" type="text" value="{{comment.arriveTime| date:'yyyy.MM.dd. HH:mm'}}" disabled="disabled" />
+
+    </div>
+</div>
+
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.orderTime && comment.arriveTime">
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Delivery Time:</label>
+    </div>
+    <div class="col-md-9">
+        <input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" />
+    </div>
+</div>
+
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.dispatchBehaviour != undefined">
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
+    </div>
+    <div class="col-md-9">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant-color-green" ng-if="comment.dispatchBehaviour">Nice/Acceptable</button>
+            <button type="button" class="btn btn-restaurant-color-red" ng-if="!comment.dispatchBehaviour">Rude/Unacceptable</button>
+        </div>
+    </div>
+</div>
+</section>

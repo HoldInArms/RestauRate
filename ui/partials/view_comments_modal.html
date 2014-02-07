@@ -28,13 +28,13 @@
                             {{comment.comment}}
                         </div>
 
-                        <div class="row margin-top-md comment-box-accordion-margin margin-bot-sm">
+                        <div class="row margin-top-md comment-box-accordion-margin margin-bot-sm" ng-if="comment.foodName || comment.foodPrice || comment.worthMoney != undefined || comment.orderTime || comment.arriveTime || comment.dispatchBehaviour != undefined">
                             <accordion class="comment-box-accordion">
                                 <accordion-group is-open="isopen">
                                     <accordion-heading stlye="border-radius: 30px !important;">
-                                        <span style="cursor: pointer; font-style: normal;">More details (Optional)</span> <i class="pull-right glyphicon" style="cursor: pointer;" ng-class="{'glyphicon-chevron-right': isopen, 'glyphicon-chevron-down': !isopen}"></i>
+                                        <span style="cursor: pointer; font-style: normal;">View more details</span> <i class="pull-right glyphicon" style="cursor: pointer;" ng-class="{'glyphicon-chevron-right': isopen, 'glyphicon-chevron-down': !isopen}"></i>
                                     </accordion-heading>
-                                    <ng-include src="'partials/more_details.html'"></ng-include>
+                                    <ng-include src="'partials/view_more_details.html'"></ng-include>
                                 </accordion-group>
                             </accordion>
                         </div>
