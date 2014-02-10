@@ -200,8 +200,14 @@ controller('AdminPage', ['$state', 'CredentialHolder',
 	}
 ]).
 
-controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'AdminLoginService',
-	function($rootScope, $scope, $state, AdminLoginService) {
+controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'AdminLoginService',
+	function($rootScope, $scope, $state,CredentialHolder,  AdminLoginService) {
+		// Redirect if already logged in.
+		if (CredentialHolder.isLoggedIn()) {
+			$state.go("admin.restaurants");
+			return;
+		}
+
 		$('#admin_menu').hide();
 		AdminLoginService.setErrorFunction(function() {
 			$state.go('public.error');
@@ -228,7 +234,6 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 			$state.go("admin.login");
 			return;
 		}
-		
 	}
 ]).
 
@@ -238,7 +243,7 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			$state.go("admin.login");
 			return;
 		}
-		
+
 	}
 ]).
 
@@ -248,7 +253,7 @@ controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'Cr
 			$state.go("admin.login");
 			return;
 		}
-		
+
 	}
 ]).
 
@@ -258,6 +263,6 @@ controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state
 			$state.go("admin.login");
 			return;
 		}
-		
+
 	}
 ]);
