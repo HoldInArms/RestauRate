@@ -188,4 +188,11 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		};
 
 	}
+]).
+
+controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'RestaurantService',
+	function($rootScope, $scope, $state, RestaurantService) {
+		$('#admin_menu').hide();
+
+	}
 ]);
