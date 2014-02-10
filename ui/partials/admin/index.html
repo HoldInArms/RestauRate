@@ -2,22 +2,22 @@
     <div class="row margin-top-md margin-bot-lg text-center">
         <img class="logo-style" src="pics/logo.png" alt="LOGO" popover="There is a popover on this logo. It's SO funny. I hope you are happy now Gergely Peidl." popover-trigger="mouseenter" popover-placement="bottom"/>
     </div>
-    <div  id="admin_menu">
+    <div id="admin_menu">
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant-admin-color-green" style="width: 100%;">Restaurant List</button>
+            <button type=button" class="btn btn-restaurant-admin-color-green" style="width: 100%;" ui-sref="admin.restaurants">Restaurant List</button>
         </div>
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;">Comment List</button>
+            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.comments">Comment List</button>
         </div>
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;">New Admin</button>
+            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.new-admin">New Admin</button>
         </div>
         <div class="row text-center margin-top-md margin-bot-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;">Change Password</button>
+            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.change_password">Change Password</button>
         </div>
     </div>
 </div>
 
-<div class="col-md-9" id="admin_content">
+<div class="col-md-9">
     <div ui-view></div>
 </div>
