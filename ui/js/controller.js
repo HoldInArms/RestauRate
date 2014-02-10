@@ -188,4 +188,76 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		};
 
 	}
+]).
+
+controller('AdminPage', ['$state', 'CredentialHolder',
+	function($state, CredentialHolder) {
+		if (CredentialHolder.isLoggedIn()) {
+			$state.go("admin.restaurants");
+		} else {
+			$state.go("admin.login");
+		}
+	}
+]).
+
+controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'AdminLoginService',
+	function($rootScope, $scope, $state, AdminLoginService) {
+		$('#admin_menu').hide();
+		AdminLoginService.setErrorFunction(function() {
+			$state.go('public.error');
+		});
+
+		$scope.login = function() {
+			AdminLoginService.login($scope.username, $scope.password,
+				function() {
+					$('#admin_menu').show();
+					$state.go("admin.restaurants");
+				},
+
+				function() {
+					$scope.wronglogin = true
+				});
+
+		};
+	}
+]).
+
+controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
+	function($rootScope, $scope, $state, CredentialHolder) {
+		if (!CredentialHolder.isLoggedIn()) {
+			$state.go("admin.login");
+			return;
+		}
+		
+	}
+]).
+
+controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
+	function($rootScope, $scope, $state, CredentialHolder) {
+		if (!CredentialHolder.isLoggedIn()) {
+			$state.go("admin.login");
+			return;
+		}
+		
+	}
+]).
+
+controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
+	function($rootScope, $scope, $state, CredentialHolder) {
+		if (!CredentialHolder.isLoggedIn()) {
+			$state.go("admin.login");
+			return;
+		}
+		
+	}
+]).
+
+controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
+	function($rootScope, $scope, $state, CredentialHolder) {
+		if (!CredentialHolder.isLoggedIn()) {
+			$state.go("admin.login");
+			return;
+		}
+		
+	}
 ]);

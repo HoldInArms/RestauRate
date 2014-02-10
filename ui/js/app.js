@@ -36,6 +36,11 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
         abstract: true,
         templateUrl: "partials/admin/index.html"
     })
+         
+    .state('admin.home', {
+        url: "/admin",
+        controller: 'AdminPage'
+    })
 
     .state('admin.login', {
         url: "/admin/login",

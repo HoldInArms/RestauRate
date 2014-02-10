@@ -2,6 +2,43 @@
 var baseUrl = "/api/";
 angular.module('RestaurantBlacklist.services', [])
 
+/**
+ * CredentialHolder factory
+ * Used for, saving/geting login tokens
+ */
+.factory('CredentialHolder', function() {
+	var holder = {
+		credentials: null
+	};
+
+	holder.load = function() {
+		var c = angular.fromJson(sessionStorage.credentials);
+		holder.credentials = c ? c : null;
+	};
+
+	holder.save = function() {
+		sessionStorage.credentials = angular.toJson(holder.credentials);
+	};
+
+	holder.isLoggedIn = function() {
+		return holder.credentials !== null;
+	};
+
+	holder.getAuthToken = function() {
+		return holder.credentials ? holder.credentials.key : null;
+	};
+
+	// logut function removes also from session storage
+	holder.logout = function() {
+		holder.credentials = null;
+		sessionStorage.credentials = null;
+	};
+
+	holder.load();
+
+	return holder;
+})
+
 .factory('RestaurantService', ['$http',
 	function($http) {
 		var api = {};
@@ -88,3 +125,60 @@ angular.module('RestaurantBlacklist.services', [])
 		return api;
 	}
 ])
+
+.factory('AdminLoginService', ['$http', 'CredentialHolder',
+	function($http, CredentialHolder) {
+		var api = {};
+
+		/**
+		 * Set the error function.
+		 *
+		 * @param errorFunction The error function.
+		 */
+		api.setErrorFunction = function(errorFunction) {
+			api.errorFunction = errorFunction;
+		};
+
+
+		api.login = function(username, password, successFunction, wrongLoginFunction) {
+			$http({
+				url: baseUrl + 'admin/login/' + username + '/' + password,
+				method: 'GET',
+			}).success(function(data, status, headers, config) {
+				if (data) {
+					var authData = {
+						key: data
+					};
+
+					CredentialHolder.credentials = authData;
+					CredentialHolder.save();
+
+					successFunction();
+				} else {
+					wrongLoginFunction();
+				}
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
+		return api;
+	}
+])
+
+
+.config(['$httpProvider',
+	function($httpProvider) {
+		$httpProvider.interceptors.push(function(CredentialHolder) {
+			var requestHandler = function(config) {
+				// example Bearer 4ac4fb7d-cdcf-4e5e-bb2f-a6b845d50e0d				
+				config.headers.Authorization = 'Bearer ' + CredentialHolder.getAuthToken();
+				return config;
+			};
+
+			return {
+				'request': requestHandler
+			};
+		});
+	}
+]);
