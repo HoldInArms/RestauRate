@@ -34,7 +34,7 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
     .state('admin', {
         url: "",
         abstract: true,
-        templateUrl: "partials/admin/index.html",
+        templateUrl: "partials/admin/index.html"
     })
          
     .state('admin.home', {
