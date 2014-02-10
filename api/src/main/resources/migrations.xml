@@ -98,5 +98,14 @@
     <changeSet id="2014.02.10.10.30" author="Dgzt">
         <dropColumn tableName="RR_comments" columnName="arrivetime" />
     </changeSet>
+
+    <changeSet id="2014.02.10.11.30" author="Dgzt">
+        <dropColumn tableName="RR_comments" columnName="deliverytime" />
+        <addColumn tableName="RR_comments">
+            <column name="arrivetime" type="DATETIME">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
     
 </databaseChangeLog>

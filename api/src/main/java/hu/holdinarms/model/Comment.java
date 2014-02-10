@@ -73,8 +73,8 @@ public class Comment implements Serializable {
     private Date orderTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "deliverytime")
-    private Date deliveryTime;
+    @Column(name = "arrivetime")
+    private Date arriveTime;
 
     @Size(min = 1, max = 32)
     @Column(name = "foodname")
@@ -147,12 +147,12 @@ public class Comment implements Serializable {
         this.orderTime = orderTime;
     }
 
-    public Date getDeliveryTime() {
-        return deliveryTime;
+    public Date getArriveTime() {
+        return arriveTime;
     }
 
-    public void setDeliveryTime(Date deliveryTime) {
-        this.deliveryTime = deliveryTime;
+    public void setArriveTime(Date arriveTime) {
+        this.arriveTime = arriveTime;
     }
 
     public String getFoodName() {
