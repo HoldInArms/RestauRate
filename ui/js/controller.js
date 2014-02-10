@@ -190,16 +190,30 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 	}
 ]).
 
-controller('AdminPage', ['$rootScope', '$scope', '$state', 'RestaurantService',
-	function($rootScope, $scope, $state, RestaurantService) {
+controller('AdminPage', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
 		$('#admin_menu').hide();
+		$state.go("admin.login");
 	}
 ]).
 
-controller('AdminLoginPageController', ['$rootScope', '$scope', '$state',
-	function($rootScope, $scope, $state) {
+controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'AdminLoginService',
+	function($rootScope, $scope, $state, AdminLoginService) {
 		$('#admin_menu').hide();
+		AdminLoginService.setErrorFunction(function(){
+			$state.go('public.error');
+		});
 
+		$scope.login = function() {
+			AdminLoginService.login($scope.username, $scope.password, 
+				function() {
+					$state.go("admin.restaurants");
+				},
+				function() {
+					$scope.wronglogin = true
+				});
+
+		};
 	}
 ]).
 

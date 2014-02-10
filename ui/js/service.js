@@ -88,3 +88,36 @@ angular.module('RestaurantBlacklist.services', [])
 		return api;
 	}
 ])
+
+.factory('AdminLoginService', ['$http',
+	function($http) {
+		var api = {};
+
+		/**
+		 * Set the error function.
+		 *
+		 * @param errorFunction The error function.
+		 */
+		api.setErrorFunction = function(errorFunction) {
+			api.errorFunction = errorFunction;
+		};
+
+
+		api.login = function(username, password, successFunction, wrongLoginFunction) {
+			$http({
+				url: baseUrl + 'admin/login/' + username + '/' + password,
+				method: 'GET',
+			}).success(function(data, status, headers, config) {
+				if (data) {
+					successFunction();
+				} else {
+					wrongLoginFunction();
+				}
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
+		return api;
+	}
+])
