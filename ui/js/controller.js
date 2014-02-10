@@ -155,11 +155,17 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			var tmp = {};
 			$scope.comments = [];
 			RestaurantService.getCommentsById($scope.restaurants[index].id, tmp, from, to, function() {
+				//Adding delevery time
+				angular.forEach(tmp.comments, function(value, key) {
+					if (value.arriveTime && value.orderTime) {
+						var d = new Date(value.arriveTime - value.orderTime);
+						value.deliveryTime = d.getUTCHours() + ":" + d.getUTCMinutes();
+					}
+				});
+
 				$scope.comments = tmp.comments;
 				$scope.allCommentPages = Math.ceil(tmp.countComments / $scope.commentPerpage);
 				$scope.commentCount = tmp.countComments;
-				var dd = new Date($scope.comment.arrive - $scope.comment.order);
-				$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
 			});
 		};
 
