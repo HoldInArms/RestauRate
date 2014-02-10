@@ -32,38 +32,42 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
 
     // --------------- ADMIN ZONE --------------------       
     .state('admin', {
-        url: "/admin",
+        url: "",
         abstract: true,
         templateUrl: "partials/admin/index.html",
+    })
+         
+    .state('admin.home', {
+        url: "/admin",
         controller: 'AdminPage'
     })
 
     .state('admin.login', {
-        url: "/login",
+        url: "/admin/login",
         templateUrl: "partials/admin/login.html",
         controller: 'AdminLoginPageController'
     })
 
     .state('admin.restaurants', {
-        url: "/restaurants",
+        url: "/admin/restaurants",
         templateUrl: "partials/admin/restaurants.html",
         controller: 'AdminRestaurantsPageController'
     })
 
     .state('admin.comments', {
-        url: "/comments",
+        url: "/admin/comments",
         templateUrl: "partials/admin/comments.html",
         controller: 'AdminCommentsPageController'
     })
 
     .state('admin.new-admin', {
-        url: "/new-admin",
+        url: "/admin/new-admin",
         templateUrl: "partials/admin/new-admin.html",
         controller: 'AdminNewAdminPageController'
     })
 
     .state('admin.change_password', {
-        url: "/change-password",
+        url: "/admin/change-password",
         templateUrl: "partials/admin/change_password.html",
         controller: 'AdminChangePasswordPageController'
     });
