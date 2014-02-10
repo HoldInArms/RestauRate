@@ -192,7 +192,6 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 controller('AdminPage', ['$rootScope', '$scope', '$state',
 	function($rootScope, $scope, $state) {
-		$('#admin_menu').hide();
 		$state.go("admin.login");
 	}
 ]).
@@ -207,8 +206,10 @@ controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'Admin
 		$scope.login = function() {
 			AdminLoginService.login($scope.username, $scope.password, 
 				function() {
+					$('#admin_menu').show();
 					$state.go("admin.restaurants");
 				},
+				
 				function() {
 					$scope.wronglogin = true
 				});
