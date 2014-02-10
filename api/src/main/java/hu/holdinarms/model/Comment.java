@@ -68,15 +68,11 @@ public class Comment implements Serializable {
     @Column(name = "live")
     private Boolean live;
 
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ordertime")
     private Date orderTime;
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "arrivetime")
-    private Date arriveTime;
-
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deliverytime")
     private Date deliveryTime;
 
@@ -149,14 +145,6 @@ public class Comment implements Serializable {
 
     public void setOrderTime(Date orderTime) {
         this.orderTime = orderTime;
-    }
-
-    public Date getArriveTime() {
-        return arriveTime;
-    }
-
-    public void setArriveTime(Date arriveTime) {
-        this.arriveTime = arriveTime;
     }
 
     public Date getDeliveryTime() {
