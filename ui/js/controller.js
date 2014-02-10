@@ -190,9 +190,39 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 	}
 ]).
 
-controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'RestaurantService',
+controller('AdminPage', ['$rootScope', '$scope', '$state', 'RestaurantService',
 	function($rootScope, $scope, $state, RestaurantService) {
 		$('#admin_menu').hide();
+	}
+]).
+
+controller('AdminLoginPageController', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
+		$('#admin_menu').hide();
+
+	}
+]).
+
+controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
+
+	}
+]).
+
+controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
+
+	}
+]).
+
+controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
+
+	}
+]).
+
+controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state',
+	function($rootScope, $scope, $state) {
 
 	}
 ]);
