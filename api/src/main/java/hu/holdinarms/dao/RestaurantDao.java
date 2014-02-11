@@ -8,6 +8,7 @@ package hu.holdinarms.dao;
 
 import com.google.inject.Inject;
 import com.yammer.dropwizard.hibernate.AbstractDAO;
+import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -58,10 +59,10 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return results;
     }
 
-    public Integer countRestaurants(String filterText){
+    public Integer countRestaurants( Admin admin, String filterText){
         StringBuilder filterBuilder = new StringBuilder();
 
-        addFilter(filterBuilder, filterText);
+        addFilter(filterBuilder, admin, filterText);
 
         String queryString = "select COUNT(id) from RR_restaurants where 1=1 ";
 
@@ -76,7 +77,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return (Integer) query.uniqueResult();
     }
 
-    public List<Restaurant> getRestaurants(Integer from, Integer to, String orderby, String direction, String filterText){
+    public List<Restaurant> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
         if(from == null || to == null){
             return new ArrayList<Restaurant>();
         }
@@ -86,7 +87,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         }
 
         StringBuilder filterBuilder = new StringBuilder();
-        addFilter(filterBuilder,filterText);
+        addFilter(filterBuilder, admin, filterText);
         
         String queryString = "select id from (" +
         "	select ROW_NUMBER() over (order by :orderby :direction ) as rowNumber, * from (" +
@@ -150,7 +151,11 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return persist(newRestaurant);
     }
 
-    private void addFilter(StringBuilder filterBuilder, String filterText){
+    private void addFilter(StringBuilder filterBuilder, Admin admin, String filterText){
+        if( admin == null ){
+            filterBuilder.append("and live = 1 ");
+        }
+        
         if(filterText != null && !filterText.isEmpty()){
             filterBuilder.append("and name like :filterText ");
         }
