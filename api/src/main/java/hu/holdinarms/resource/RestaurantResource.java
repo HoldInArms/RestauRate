@@ -47,14 +47,14 @@ public class RestaurantResource {
     @GET
     @UnitOfWork
     @Path("/list")
-    public RestaurantPage getRestaurants(@QueryParam("from") Integer from, @QueryParam("to") Integer to,
+    public RestaurantPage getRestaurants( @Auth(required = false) Admin admin, @QueryParam("from") Integer from, @QueryParam("to") Integer to,
             @QueryParam("orderby") String orderby, @QueryParam("direction") String direction,
             @QueryParam("filtertext") String filterText){
 
         RestaurantPage rp = new RestaurantPage();
 
-        rp.setRestaurants(restaurantDao.getRestaurants(from, to, orderby, direction, filterText));
-        rp.setRestaurantNumber(restaurantDao.countRestaurants(filterText));
+        rp.setRestaurants(restaurantDao.getRestaurants(admin, from, to, orderby, direction, filterText));
+        rp.setRestaurantNumber(restaurantDao.countRestaurants(admin, filterText));
         
         return rp;
     }

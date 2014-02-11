@@ -53,7 +53,7 @@ public class AdminResource {
     @POST
     @UnitOfWork
     @Path("/add/{username}/{password}")
-    public Admin addAdmin(/*@Auth Admin admin,*/ @PathParam("username") String username, @PathParam("password") String password){
+    public Admin addAdmin(@Auth Admin admin, @PathParam("username") String username, @PathParam("password") String password){
         if(adminDao.findByUsername(username) != null){
             return null;
         }
