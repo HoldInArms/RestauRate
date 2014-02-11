@@ -9,11 +9,14 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,7 +41,7 @@ public class Admin implements Serializable {
     @NotNull
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Basic(optional = false)
     @NotNull
@@ -52,11 +55,16 @@ public class Admin implements Serializable {
     @Column(name = "password")
     private String password;
 
-    public long getId() {
+    //@Basic(optional = false)
+    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY)
+    private Admin whoAdded;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,5 +83,12 @@ public class Admin implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public Admin getWhoAdded() {
+        return whoAdded;
+    }
 
+    public void setWhoAdded(Admin whoAdded) {
+        this.whoAdded = whoAdded;
+    }
 }
