@@ -61,6 +61,7 @@ public class AdminResource {
         Admin newAdmin = new Admin();
         newAdmin.setUsername(username);
         newAdmin.setPassword(DigestUtils.sha256Hex(password));
+        newAdmin.setWhoAdded(admin);
         
         return adminDao.save(newAdmin);
     }

@@ -107,5 +107,13 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="2014.02.11.10.30" author="Dgzt">
+        <addColumn tableName="RR_admins">
+            <column name="whoadded" type="bigint">
+                <constraints foreignKeyName="fk_whoadded_id" references="RR_admins(id)" />
+            </column>
+        </addColumn>
+    </changeSet>
     
 </databaseChangeLog>
