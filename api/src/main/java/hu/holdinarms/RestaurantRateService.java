@@ -16,7 +16,9 @@ import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
 import com.yammer.dropwizard.migrations.MigrationsBundle;
+import hu.holdinarms.authentication.UserAuthenticator;
 import hu.holdinarms.model.Admin;
+import hu.holdinarms.dao.AdminDao;
 import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
 import org.slf4j.Logger;
@@ -43,8 +45,8 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
         }
     };
     
-    //@Inject
-    //private UserDao userDao;
+    @Inject
+    private AdminDao adminDao;
     
     //~-----------------------------------------------------   
     //~ Main method
@@ -92,6 +94,6 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
     @Override
     public void run(RestaurantRateConfiguration configuration, Environment environment) throws Exception {
         super.run(configuration, environment);
-        //environment.addProvider(new OAuthProvider<User>(new UserAuthenticator(userDao), "SUPER SECRET STUFF"));
+        environment.addProvider(new OAuthProvider<Admin>(new UserAuthenticator(adminDao), "SUPER SECRET STUFF"));
     }
 }
