@@ -234,7 +234,9 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 			$state.go("admin.login");
 			return;
 		}
-
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
 
 		RestaurantService.setErrorFunction($rootScope.functionError);
 		$scope.restaurants = [];
@@ -345,10 +347,11 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 		$scope.restaurantIndex = {
 			id: undefined
 		};
-		// Go to specified page
+
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
 		RestaurantService.getAllRestaurants($scope.restaurants);
-
-
 		AdminCommentService.setErrorFunction($rootScope.functionError);
 		$scope.comments = [];
 		$scope.itemPerpage = 10;
