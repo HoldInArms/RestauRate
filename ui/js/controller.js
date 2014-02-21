@@ -402,8 +402,12 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 				$scope.currentPage = 1;
 			}
 
-			var tmp = {};
-			// Go to specified page 			
+			var tmp = {};		
+			if(!$scope.restaurantIndex){
+				$scope.restaurantIndex = {id:undefined};
+			}	
+
+			// Go to specified page 
 			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
 				$scope.comments = tmp.comments;
 				$scope.allPages = Math.ceil(tmp.commentNumber / $scope.itemPerpage);
