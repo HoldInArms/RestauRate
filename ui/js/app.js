@@ -55,7 +55,7 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
     })
 
     .state('admin.comments', {
-        url: "/admin/comments",
+        url: "/admin/comments/:restaurantId",
         templateUrl: "partials/admin/comments.html",
         controller: 'AdminCommentsPageController'
     })

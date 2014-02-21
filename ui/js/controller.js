@@ -331,11 +331,17 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 				$scope.goToPage($scope.currentPage);
 			});
 		};
+
+		$scope.gotoComments = function(index) {
+			$state.go('admin.comments', {
+				'restaurantId': $scope.restaurants[index].id
+			});
+		};
 	}
 ]).
 
-controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'RestaurantService', 'AdminCommentService',
-	function($rootScope, $scope, $state, CredentialHolder, RestaurantService, AdminCommentService) {
+controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', '$stateParams', 'CredentialHolder', 'RestaurantService', 'AdminCommentService',
+	function($rootScope, $scope, $state, $stateParams, CredentialHolder, RestaurantService, AdminCommentService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
@@ -344,14 +350,26 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 		RestaurantService.setErrorFunction($rootScope.functionError);
 		//get restaurants
 		$scope.restaurants = [];
-		$scope.restaurantIndex = {
-			id: undefined
-		};
+		if ($stateParams.restaurantId) {
+			$scope.restaurantIndex = {
+				id: $stateParams.restaurantId
+			};
+		} else {
+			$scope.restaurantIndex = {
+				id: undefined
+			};
+		}
 
 		$rootScope.functionError = function() {
 			$state.go('public.error');
 		};
-		RestaurantService.getAllRestaurants($scope.restaurants);
+		RestaurantService.getAllRestaurants($scope.restaurants, function() {
+			angular.forEach($scope.restaurants, function(value,key){
+				if(value.id == $stateParams.restaurantId){
+					$scope.restaurantIndex = value;
+				}
+			});
+		});
 		AdminCommentService.setErrorFunction($rootScope.functionError);
 		$scope.comments = [];
 		$scope.itemPerpage = 10;
@@ -441,8 +459,8 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			});
 		};
 
-		$scope.moveCommentTo = function(index, restaurantId){
-			AdminCommentService.move($scope.comments[index].id, restaurantId, function(){
+		$scope.moveCommentTo = function(index, restaurantId) {
+			AdminCommentService.move($scope.comments[index].id, restaurantId, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
 			})
