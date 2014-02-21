@@ -12,16 +12,17 @@
                     </select>
                 </th>
                 <th class="text-center">
-                    <span class="table-header-sorting" style="line-height: 30px;">Rating</span>
-                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                    <span class="table-header-sorting" style="line-height: 30px;" ng-click="changeOrderBy('vote')">Rating</span>
+                    <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='vote'"></span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='vote'"></span>
                 </th>
                 <th class="text-center">
-                    <span class="table-header-sorting" style="line-height: 30px;">Comment</span>
-                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                    <span class="table-header-sorting" style="line-height: 30px;" ng-click="changeOrderBy('createdate')">Comment</span>
+                    <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='createdate'"></span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='createdate' || orderby ===''""></span>
                 </th>
                 <th class="text-center" colspan="2">
                     <span class="table-header-sorting" style="line-height: 30px;">Actions</span>
-                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
                 </th>
             </tr>
         </thead>
