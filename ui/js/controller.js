@@ -441,6 +441,13 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			});
 		};
 
+		$scope.moveCommentTo = function(index, restaurantId){
+			AdminCommentService.move($scope.comments[index].id, restaurantId, function(){
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+			})
+		}
+
 	}
 ]).
 
