@@ -84,6 +84,21 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+		api.getAllRestaurants = function(restaurants, successFunction) {
+
+			$http({
+				url: baseUrl + 'restaurant/all',
+				method: 'GET'
+			}).success(function(data, status, headers, config) {
+				angular.copy(data, restaurants);
+				if (successFunction) {
+					successFunction();
+				}
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
 		api.newRestaurant = function(comment, successFunction) {
 			$http({
 				url: baseUrl + 'comment/saveWithNewRestaurant',
@@ -203,6 +218,50 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+
+		return api;
+	}
+])
+
+
+.factory('AdminCommentService', ['$http',
+	function($http) {
+		var api = {};
+
+		/**
+		 * Set the error function.
+		 *
+		 * @param errorFunction The error function.
+		 */
+		api.setErrorFunction = function(errorFunction) {
+			api.errorFunction = errorFunction;
+		};
+
+		api.getCommentsById = function(comments, restaurantId, from, to, orderby, direction, successFunction) {
+			var query = "?from=" + from + "&to=" + to;
+			if (restaurantId) {
+				query += "&restaurantid=" + restaurantId;
+			}
+			if (orderby) {
+				query += "&orderby=" + orderby;
+			}
+
+			if (direction) {
+				query += "&direction=" + direction;
+			}
+
+			$http({
+				url: baseUrl + 'comment/adminlist' + query,
+				method: 'GET'
+			}).success(function(data, status, headers, config) {
+				angular.copy(data, comments);
+				if (successFunction) {
+					successFunction();
+				}
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
 
 		return api;
 	}

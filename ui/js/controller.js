@@ -317,14 +317,14 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 		};
 
 		$scope.hideRestaurant = function(index) {
-			AdminRestaurantService.hide($scope.restaurants[index].id, function(){
+			AdminRestaurantService.hide($scope.restaurants[index].id, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
 			});
 		};
 
 		$scope.reInstateRestaurant = function(index) {
-			AdminRestaurantService.reInstate($scope.restaurants[index].id, function(){
+			AdminRestaurantService.reInstate($scope.restaurants[index].id, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
 			});
@@ -332,12 +332,86 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 	}
 ]).
 
-controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
-	function($rootScope, $scope, $state, CredentialHolder) {
+controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'RestaurantService', 'AdminCommentService',
+	function($rootScope, $scope, $state, CredentialHolder, RestaurantService, AdminCommentService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
 		}
+
+		RestaurantService.setErrorFunction($rootScope.functionError);
+		//get restaurants
+		$scope.restaurants = [];
+		$scope.restaurantIndex = {id:undefined};
+		// Go to specified page
+		RestaurantService.getAllRestaurants($scope.restaurants);
+
+
+		AdminCommentService.setErrorFunction($rootScope.functionError);
+		$scope.comments = [];
+		$scope.itemPerpage = 10;
+		$scope.currentPage = 1;
+		$scope.direction = "DESC";
+		$scope.orderby = "";
+
+		$scope.changeDirection = function(pageChanged) {
+			if (pageChanged) {
+				$scope.direction = "ASC";
+			} else {
+				if ($scope.direction === 'ASC') {
+					$scope.direction = "DESC";
+				} else {
+					$scope.direction = "ASC";
+				}
+			}
+
+			$scope.goToPage($scope.currentPage);
+		};
+
+		$scope.changeOrderBy = function(orderby) {
+			if (orderby === $scope.orderby) {
+				$scope.changeDirection();
+			} else {
+				$scope.orderby = orderby;
+				$scope.changeDirection(true);
+			}
+		};
+
+		/**
+		 * Go to specificted page
+		 */
+		$scope.goToPage = function(page) {
+			if (!page) {
+				$scope.currentPage = 1;
+			} else if (page > $scope.allPages) {
+				$scope.currentPage = 1;
+			} else {
+				$scope.currentPage = page;
+			}
+
+			var from = ($scope.currentPage - 1) * $scope.itemPerpage + 1;
+			var to = $scope.currentPage * $scope.itemPerpage;
+
+			if (page === $scope.allPages) {
+				to = $scope.commentNumber;
+				$scope.comments.splice(to - from, $scope.itemPerpage - (to - from));
+			}
+
+			if (page < 0) {
+				$scope.comments.splice($scope.itemPerpage, (-1 * page));
+				$scope.currentPage = 1;
+			}
+
+			var tmp = {};
+			// Go to specified page 			
+			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
+				$scope.comments = tmp.comments;
+				$scope.allPages = Math.ceil(tmp.commentNumber / $scope.itemPerpage);
+				$scope.commentNumber = tmp.commentNumber;
+			});
+		};
+
+		$scope.goToPage(1);
 
 	}
 ]).

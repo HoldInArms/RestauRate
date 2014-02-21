@@ -7,11 +7,8 @@
         <thead>
             <tr>
                 <th class="text-center">
-                    <select class="form-control custom-table-selection">
-                        <option selected="selected">All Restaurant</option>
-                        <option>Elixir</option>
-                        <option>Gulasch I</option>
-                        <option>Longest Restaurant Name Ever Imaginable By Human Mind</option>
+                    <select class="form-control custom-table-selection" ng-options="r.name for r in restaurants" ng-model="restaurantIndex" ng-change="goToPage(currentPage)">
+                        <option value="">All Restaurant</option>
                     </select>
                 </th>
                 <th class="text-center">
@@ -28,18 +25,18 @@
                 </th>
             </tr>
         </thead>
-        <tbody class="text-center" data-toggle="modal" data-target="#viewComments" >
+        <tbody class="text-center" data-toggle="modal" data-target="#viewComments" ng-repeat="comment in comments">
             <tr>
                 <td style="width: 20%; line-height: 30px;">
                     <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
-                    <span class="">Gulasch I</span>
+                    <span class="">{{comment.restaurant.name}}</span>
                 </td>
                 <td style="width: 15%; padding: 0; margin: 0; line-height: 30px;">
-                    <span class=""><rating style="line-height: 50px;" value="5" max="5" readonly="true" class="color-rating-5" readonly="true" style="padding: 0; margin: 0;"></rating></span>
+                    <span class="">
+                        <rating style="line-height: 50px;" value="comment.vote" max="5" readonly="true" class="color-rating-{{comment.vote}}" readonly="true" style="padding: 0; margin: 0;"></rating>
+                    </span>
                 </td>
-                <td style="width: 35%; line-height: 30px;">
-                    This meal was...
-                </td>
+                <td style="width: 35%; line-height: 30px;">{{comment.comment}}</td>
                 <td style="width: 25%;">
                     <select class="form-control custom-table-selection" width="auto;">
                         <option selected="selected">Move comment to...</option>
@@ -48,36 +45,15 @@
                     </select>
                 </td>
                 <td style="width: 5%;">
-                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left">
+                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="comment.live">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
-                </td>
-            </tr> 
-            
-            <tr>
-                <td style="width: 20%; line-height: 30px;">
-                    <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
-                    <span class="">Gulasch II</span>
-                </td>
-                <td style="width: 15%; padding: 0; margin: 0; line-height: 30px;">
-                    <span class=""><rating style="line-height: 50px;" value="5" max="5" readonly="true" class="color-rating-5" readonly="true" style="padding: 0; margin: 0;"></rating></span>
-                </td>
-                <td style="width: 35%; line-height: 30px;">
-                    This meal was awful...
-                </td>
-                <td style="width: 25%;">
-                    <select class="form-control custom-table-selection" width="auto;">
-                        <option selected="selected">Move comment to...</option>
-                        <option>Elixir</option>
-                        <option>Gulasch I</option>
-                    </select>
-                </td>
-                <td style="width: 5%;">
-                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this comment visible" popover-trigger="mouseenter" popover-placement="left">
+
+                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this comment visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!comment.live">
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
                 </td>
-            </tr> 
+            </tr>
         </tbody>
     </table>
 </div>
