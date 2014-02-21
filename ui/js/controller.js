@@ -342,7 +342,9 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 		RestaurantService.setErrorFunction($rootScope.functionError);
 		//get restaurants
 		$scope.restaurants = [];
-		$scope.restaurantIndex = {id:undefined};
+		$scope.restaurantIndex = {
+			id: undefined
+		};
 		// Go to specified page
 		RestaurantService.getAllRestaurants($scope.restaurants);
 
@@ -402,10 +404,12 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 				$scope.currentPage = 1;
 			}
 
-			var tmp = {};		
-			if(!$scope.restaurantIndex){
-				$scope.restaurantIndex = {id:undefined};
-			}	
+			var tmp = {};
+			if (!$scope.restaurantIndex) {
+				$scope.restaurantIndex = {
+					id: undefined
+				};
+			}
 
 			// Go to specified page 
 			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
@@ -416,6 +420,20 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 		};
 
 		$scope.goToPage(1);
+
+		$scope.hideComment = function(index) {
+			AdminCommentService.hide($scope.comments[index].id, function() {
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+			});
+		};
+
+		$scope.reInstateComment = function(index) {
+			AdminCommentService.reInstate($scope.comments[index].id, function() {
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+			});
+		};
 
 	}
 ]).

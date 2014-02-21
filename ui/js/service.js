@@ -263,6 +263,28 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+		api.hide = function(id, successFunction) {
+			$http({
+				url: baseUrl + 'comment/delete/' + id,
+				method: 'POST'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
+		api.reInstate = function(id, successFunction) {
+			$http({
+				url: baseUrl + 'comment/reinstate/' + id,
+				method: 'POST'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
 		return api;
 	}
 ])

@@ -46,11 +46,11 @@
                     </select>
                 </td>
                 <td style="width: 5%;">
-                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="comment.live">
+                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="comment.live" ng-click="hideComment($index)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
 
-                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this comment visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!comment.live">
+                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this comment visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!comment.live" ng-click="reInstateComment($index)">
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
                 </td>
