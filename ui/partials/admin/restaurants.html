@@ -36,7 +36,7 @@
                     </progressbar>
                 </td>
                 <td>
-                    <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
+                    <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left" ng-click="gotoComments($index)">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                     <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="restaurant.live" ng-click="hideRestaurant($index)">
