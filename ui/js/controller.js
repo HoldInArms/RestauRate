@@ -395,8 +395,8 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			}
 
 			var from = ($scope.currentPage - 1) * $scope.itemPerpage + 1;
-			var to = $scope.currentPage * $scope.itemPerpage;
 
+			var to = $scope.currentPage * $scope.itemPerpage;
 			if (page === $scope.allPages) {
 				to = $scope.commentNumber;
 				$scope.comments.splice(to - from, $scope.itemPerpage - (to - from));
@@ -409,6 +409,7 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 
 			var tmp = {};
 			if (!$scope.restaurantIndex) {
+				var to = $scope.currentPage * $scope.itemPerpage;
 				$scope.restaurantIndex = {
 					id: undefined
 				};
@@ -418,7 +419,7 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
 				$scope.comments = tmp.comments;
 				$scope.allPages = Math.ceil(tmp.countComments / $scope.itemPerpage);
-				$scope.commentNumber = tmp.commentNumber;
+				$scope.commentNumber = tmp.countComments;
 			});
 		};
 
@@ -426,8 +427,9 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 
 		$scope.hideComment = function(index) {
 			AdminCommentService.hide($scope.comments[index].id, function() {
-				//Refresh list
+				//Refresh list	
 				$scope.goToPage($scope.currentPage);
+
 			});
 		};
 
@@ -435,6 +437,7 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			AdminCommentService.reInstate($scope.comments[index].id, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
+
 			});
 		};
 
