@@ -201,7 +201,7 @@ controller('AdminPage', ['$state', 'CredentialHolder',
 ]).
 
 controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'AdminLoginService',
-	function($rootScope, $scope, $state,CredentialHolder,  AdminLoginService) {
+	function($rootScope, $scope, $state, CredentialHolder, AdminLoginService) {
 		// Redirect if already logged in.
 		if (CredentialHolder.isLoggedIn()) {
 			$state.go("admin.restaurants");
@@ -228,12 +228,107 @@ controller('AdminLoginPageController', ['$rootScope', '$scope', '$state', 'Crede
 	}
 ]).
 
-controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
-	function($rootScope, $scope, $state, CredentialHolder) {
+controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'RestaurantService', 'AdminRestaurantService',
+	function($rootScope, $scope, $state, CredentialHolder, RestaurantService, AdminRestaurantService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
 		}
+
+
+		RestaurantService.setErrorFunction($rootScope.functionError);
+		$scope.restaurants = [];
+		$scope.itemPerpage = 10;
+		$scope.currentPage = 1;
+		$scope.direction = "DESC";
+		$scope.filterText = "";
+		$scope.orderby = "";
+
+		$scope.changeDirection = function(pageChanged) {
+			if (pageChanged) {
+				$scope.direction = "ASC";
+			} else {
+				if ($scope.direction === 'ASC') {
+					$scope.direction = "DESC";
+				} else {
+					$scope.direction = "ASC";
+				}
+			}
+
+			$scope.goToPage($scope.currentPage);
+		};
+
+		$scope.changeOrderBy = function(orderby) {
+			if (orderby === $scope.orderby) {
+				$scope.changeDirection();
+			} else {
+				$scope.orderby = orderby;
+				$scope.changeDirection(true);
+			}
+		};
+
+		/**
+		 * Go to specificted page
+		 */
+		$scope.goToPage = function(page) {
+			if (!page) {
+				$scope.currentPage = 1;
+			} else if (page > $scope.allPages) {
+				$scope.currentPage = 1;
+			} else {
+				$scope.currentPage = page;
+			}
+
+			var from = ($scope.currentPage - 1) * $scope.itemPerpage + 1;
+			var to = $scope.currentPage * $scope.itemPerpage;
+
+			if (page === $scope.allPages) {
+				to = $scope.restaurantNumber;
+				$scope.restaurants.splice(to - from, $scope.itemPerpage - (to - from));
+			}
+
+			if (page < 0) {
+				$scope.restaurants.splice($scope.itemPerpage, (-1 * page));
+				$scope.currentPage = 1;
+			}
+
+			var tmp = {};
+			// Go to specified page
+			RestaurantService.getRestaurants(tmp, from, to, $scope.filterText, $scope.orderby, $scope.direction, function() {
+				$scope.restaurants = tmp.restaurants;
+				$scope.allPages = Math.ceil(tmp.restaurantNumber / $scope.itemPerpage);
+				$scope.restaurantNumber = tmp.restaurantNumber;
+				$scope.filterText = "";
+			});
+		};
+
+		$scope.goToPage(1);
+
+		$scope.type = function(value) {
+			if (value < 2) {
+				return 'danger';
+			} else if (value < 3) {
+				return 'warning';
+			} else if (value < 4) {
+				return 'info';
+			} else {
+				return 'success';
+			}
+		};
+
+		$scope.hideRestaurant = function(index) {
+			AdminRestaurantService.hide($scope.restaurants[index].id, function(){
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+			});
+		};
+
+		$scope.reInstateRestaurant = function(index) {
+			AdminRestaurantService.reInstate($scope.restaurants[index].id, function(){
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+			});
+		};
 	}
 ]).
 

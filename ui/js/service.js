@@ -167,6 +167,47 @@ angular.module('RestaurantBlacklist.services', [])
 ])
 
 
+
+.factory('AdminRestaurantService', ['$http',
+	function($http) {
+		var api = {};
+
+		/**
+		 * Set the error function.
+		 *
+		 * @param errorFunction The error function.
+		 */
+		api.setErrorFunction = function(errorFunction) {
+			api.errorFunction = errorFunction;
+		};
+
+		api.hide = function(id, successFunction) {
+			$http({
+				url: baseUrl + 'restaurant/delete/' + id,
+				method: 'POST'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
+		api.reInstate = function(id, successFunction) {
+			$http({
+				url: baseUrl + 'restaurant/reinstate/' + id,
+				method: 'POST'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
+
+		return api;
+	}
+])
+
 .config(['$httpProvider',
 	function($httpProvider) {
 		$httpProvider.interceptors.push(function(CredentialHolder) {

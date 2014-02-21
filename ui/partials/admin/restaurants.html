@@ -20,57 +20,52 @@
                 </th>
                 <th class="text-center">
                     <span class="table-header-sorting">Actions</span>
-                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
                 </th>
             </tr>
         </thead>
-        <tbody class="text-center">
+        <tbody class="text-center" ng-repeat="restaurant in restaurants">
             <tr>
                 <td>
                     <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
-                    <span class="">Gulasch I</span>
+                    <span class="">{{restaurant.name}}</span>
+                </td>
+                <td>{{restaurant.votes}}</td>
+                <td>
+                    <progressbar class="custom-progressbar" value="restaurant.avarge" max="5" type="{{type(restaurant.avarge)}}">
+                        <span class="">{{restaurant.avarge| number:1}} / 5</span>
+                    </progressbar>
                 </td>
                 <td>
-                    1234
+                    <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="restaurant.live" ng-click="hideRestaurant($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this restaurant visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!restaurant.live" ng-click="reInstateRestaurant($index)">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
                 </td>
-                <td>
-        <progressbar class="custom-progressbar" value="5" max="5" type="success">
-            <span class="">5 / 5</span>
-        </progressbar>
-        </td>
-        <td>
-            <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
-            <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant's visibility" popover-trigger="mouseenter" popover-placement="left">
-                <span class="glyphicon glyphicon-remove"></span>
-            </button>
-        </td>
-        </tr>
-
-        <tr>
-            <td>
-                <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
-                <span class="">Gulasch II</span>
-            </td>
-            <td>
-                9876
-            </td>
-            <td>
-        <progressbar class="custom-progressbar" value="1" max="5" type="danger">
-            <span class="">1 / 5</span>
-        </progressbar>
-        </td>
-        <td>
-            <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
-            <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this restaurant visible" popover-trigger="mouseenter" popover-placement="left">
-                <span class="glyphicon glyphicon-repeat"></span>
-            </button>
-        </td>
-        </tr>
-
+            </tr>
         </tbody>
     </table>
+    <div class="row table-footer-design text-right">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-fast-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled">
+                <span style="">Page: {{currentPage || 0}}/{{allPages}}</span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-forward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-fast-forward"></span>
+            </button>
+        </div>
+    </div>
 </div>
