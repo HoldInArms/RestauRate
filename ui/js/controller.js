@@ -410,7 +410,7 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'Cr
 			// Go to specified page 
 			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
 				$scope.comments = tmp.comments;
-				$scope.allPages = Math.ceil(tmp.commentNumber / $scope.itemPerpage);
+				$scope.allPages = Math.ceil(tmp.countComments / $scope.itemPerpage);
 				$scope.commentNumber = tmp.commentNumber;
 			});
 		};

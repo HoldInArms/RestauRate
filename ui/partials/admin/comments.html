@@ -57,4 +57,23 @@
             </tr>
         </tbody>
     </table>
+    <div class="row table-footer-design text-right">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-fast-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled">
+                <span style="">Page: {{currentPage || 0}}/{{allPages}}</span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-forward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-fast-forward"></span>
+            </button>
+        </div>
+    </div>
 </div>
