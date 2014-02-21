@@ -234,7 +234,9 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 			$state.go("admin.login");
 			return;
 		}
-
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
 
 		RestaurantService.setErrorFunction($rootScope.functionError);
 		$scope.restaurants = [];
@@ -317,14 +319,14 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 		};
 
 		$scope.hideRestaurant = function(index) {
-			AdminRestaurantService.hide($scope.restaurants[index].id, function(){
+			AdminRestaurantService.hide($scope.restaurants[index].id, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
 			});
 		};
 
 		$scope.reInstateRestaurant = function(index) {
-			AdminRestaurantService.reInstate($scope.restaurants[index].id, function(){
+			AdminRestaurantService.reInstate($scope.restaurants[index].id, function() {
 				//Refresh list
 				$scope.goToPage($scope.currentPage);
 			});
@@ -332,12 +334,112 @@ controller('AdminRestaurantsPageController', ['$rootScope', '$scope', '$state', 
 	}
 ]).
 
-controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
-	function($rootScope, $scope, $state, CredentialHolder) {
+controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'RestaurantService', 'AdminCommentService',
+	function($rootScope, $scope, $state, CredentialHolder, RestaurantService, AdminCommentService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
 		}
+
+		RestaurantService.setErrorFunction($rootScope.functionError);
+		//get restaurants
+		$scope.restaurants = [];
+		$scope.restaurantIndex = {
+			id: undefined
+		};
+
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
+		RestaurantService.getAllRestaurants($scope.restaurants);
+		AdminCommentService.setErrorFunction($rootScope.functionError);
+		$scope.comments = [];
+		$scope.itemPerpage = 10;
+		$scope.currentPage = 1;
+		$scope.direction = "DESC";
+		$scope.orderby = "";
+
+		$scope.changeDirection = function(pageChanged) {
+			if (pageChanged) {
+				$scope.direction = "ASC";
+			} else {
+				if ($scope.direction === 'ASC') {
+					$scope.direction = "DESC";
+				} else {
+					$scope.direction = "ASC";
+				}
+			}
+
+			$scope.goToPage($scope.currentPage);
+		};
+
+		$scope.changeOrderBy = function(orderby) {
+			if (orderby === $scope.orderby) {
+				$scope.changeDirection();
+			} else {
+				$scope.orderby = orderby;
+				$scope.changeDirection(true);
+			}
+		};
+
+		/**
+		 * Go to specificted page
+		 */
+		$scope.goToPage = function(page) {
+			if (!page) {
+				$scope.currentPage = 1;
+			} else if (page > $scope.allPages) {
+				$scope.currentPage = 1;
+			} else {
+				$scope.currentPage = page;
+			}
+
+			var from = ($scope.currentPage - 1) * $scope.itemPerpage + 1;
+
+			var to = $scope.currentPage * $scope.itemPerpage;
+			if (page === $scope.allPages) {
+				to = $scope.commentNumber;
+				$scope.comments.splice(to - from, $scope.itemPerpage - (to - from));
+			}
+
+			if (page < 0) {
+				$scope.comments.splice($scope.itemPerpage, (-1 * page));
+				$scope.currentPage = 1;
+			}
+
+			var tmp = {};
+			if (!$scope.restaurantIndex) {
+				var to = $scope.currentPage * $scope.itemPerpage;
+				$scope.restaurantIndex = {
+					id: undefined
+				};
+			}
+
+			// Go to specified page 
+			AdminCommentService.getCommentsById(tmp, $scope.restaurantIndex.id, from, to, $scope.orderby, $scope.direction, function() {
+				$scope.comments = tmp.comments;
+				$scope.allPages = Math.ceil(tmp.countComments / $scope.itemPerpage);
+				$scope.commentNumber = tmp.countComments;
+			});
+		};
+
+		$scope.goToPage(1);
+
+		$scope.hideComment = function(index) {
+			AdminCommentService.hide($scope.comments[index].id, function() {
+				//Refresh list	
+				$scope.goToPage($scope.currentPage);
+
+			});
+		};
+
+		$scope.reInstateComment = function(index) {
+			AdminCommentService.reInstate($scope.comments[index].id, function() {
+				//Refresh list
+				$scope.goToPage($scope.currentPage);
+
+			});
+		};
 
 	}
 ]).
