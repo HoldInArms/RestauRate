@@ -13,6 +13,10 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.direction = "DESC";
 		$scope.filterText = "";
 		$scope.orderby = "";
+		
+		//Get all restaurants
+		$scope.allRestaurants = [];
+		RestaurantService.getAllRestaurants($scope.allRestaurants);
 
 		$scope.changeDirection = function(pageChanged) {
 			if (pageChanged) {
@@ -364,8 +368,8 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', '$s
 			$state.go('public.error');
 		};
 		RestaurantService.getAllRestaurants($scope.restaurants, function() {
-			angular.forEach($scope.restaurants, function(value,key){
-				if(value.id == $stateParams.restaurantId){
+			angular.forEach($scope.restaurants, function(value, key) {
+				if (value.id == $stateParams.restaurantId) {
 					$scope.restaurantIndex = value;
 				}
 			});
