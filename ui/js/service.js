@@ -285,6 +285,17 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+		api.move = function(commentId, restaurantId, successFunction) {
+			$http({
+				url: baseUrl + 'comment/move/' + commentId + "/" + restaurantId,
+				method: 'POST'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
 		return api;
 	}
 ])

@@ -39,11 +39,10 @@
                 </td>
                 <td style="width: 35%; line-height: 30px;">{{comment.comment}}</td>
                 <td style="width: 25%;">
-                    <select class="form-control custom-table-selection" width="auto;">
-                        <option selected="selected">Move comment to...</option>
-                        <option>Elixir</option>
-                        <option>Gulasch I</option>
+                    <select class="form-control custom-table-selection" width="auto;" ng-options="r.name for r in restaurants" ng-model="restaurantIndex" ng-change="moveCommentTo($index, restaurantIndex.id)">
+                        <option value="">Move comment to...</option>
                     </select>
+                        
                 </td>
                 <td style="width: 5%;">
                     <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="comment.live" ng-click="hideComment($index)">
