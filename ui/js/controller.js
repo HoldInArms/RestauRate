@@ -13,7 +13,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.direction = "DESC";
 		$scope.filterText = "";
 		$scope.orderby = "";
-		
+
 		//Get all restaurants
 		$scope.allRestaurants = [];
 		RestaurantService.getAllRestaurants($scope.allRestaurants);
@@ -473,13 +473,23 @@ controller('AdminCommentsPageController', ['$rootScope', '$scope', '$state', '$s
 	}
 ]).
 
-controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
-	function($rootScope, $scope, $state, CredentialHolder) {
+controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'AdminUserService',
+	function($rootScope, $scope, $state, CredentialHolder, AdminUserService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
 		}
 
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
+
+		AdminUserService.setErrorFunction($rootScope.functionError);
+		$scope.saveNewUser = function() {
+			AdminUserService.addNewAdmin($scope.username, $scope.password, function() {
+				console.log("success");
+			});
+		}
 	}
 ]).
 
