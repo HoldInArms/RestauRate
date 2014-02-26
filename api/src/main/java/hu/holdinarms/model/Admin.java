@@ -38,7 +38,6 @@ public class Admin implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
