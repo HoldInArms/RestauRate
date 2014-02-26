@@ -5,6 +5,9 @@
  */
 package hu.holdinarms.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -27,6 +31,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "RR_admins")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@whoAdded")
 @NamedQueries({
     @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id"),
     @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a where a.username = :username"),
@@ -54,9 +59,9 @@ public class Admin implements Serializable {
     @Column(name = "password")
     private String password;
 
-    //@Basic(optional = false)
-    @PrimaryKeyJoinColumn
-    @OneToOne(fetch = FetchType.LAZY)
+    @Basic(optional = false)
+    @JoinColumn(name = "whoadded", referencedColumnName = "id")
+    @OneToOne
     private Admin whoAdded;
 
     public Long getId() {
@@ -82,7 +87,7 @@ public class Admin implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public Admin getWhoAdded() {
         return whoAdded;
     }
