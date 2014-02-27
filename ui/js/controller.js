@@ -493,12 +493,24 @@ controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'Cr
 	}
 ]).
 
-controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder',
-	function($rootScope, $scope, $state, CredentialHolder) {
+controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state', 'CredentialHolder', 'AdminUserService',
+	function($rootScope, $scope, $state, CredentialHolder, AdminUserService) {
 		if (!CredentialHolder.isLoggedIn()) {
 			$state.go("admin.login");
 			return;
 		}
 
+
+		$rootScope.functionError = function() {
+			$state.go('public.error');
+		};
+
+		AdminUserService.setErrorFunction($rootScope.functionError);
+
+		$scope.changePassword = function() {
+			AdminUserService.changePassword($scope.newPassword, function() {
+				$scope.success = true;
+			});
+		}
 	}
 ]);
