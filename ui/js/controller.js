@@ -486,8 +486,12 @@ controller('AdminNewAdminPageController', ['$rootScope', '$scope', '$state', 'Cr
 
 		AdminUserService.setErrorFunction($rootScope.functionError);
 		$scope.saveNewUser = function() {
-			AdminUserService.addNewAdmin($scope.username, $scope.password, function() {
-				console.log("success");
+			AdminUserService.addNewAdmin($scope.username, $scope.password, function(success) {
+				if (success) {
+					$scope.success = true;
+				} else {
+					$scope.fail = true;
+				}
 			});
 		}
 	}
