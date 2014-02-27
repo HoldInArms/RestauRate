@@ -23,6 +23,17 @@ http:
 
   # Minimum number of thread to keep alive.
   minThreads: 10
+  
+  #
+  #connectorType: nonblockling+ssl
+  
+  # For secury connection
+  #ssl:
+      # Path of the ssl key
+      #keyStore: ./path/of/key.jks
+      
+      #Password for the ssl key
+      #keyStorePassword: password
 
   # HTTP request log settings
   requestLog:
