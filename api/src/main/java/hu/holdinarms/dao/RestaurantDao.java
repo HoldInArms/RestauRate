@@ -110,7 +110,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
             queryString += filterBuilder.toString();
         }
 
-        queryString += " ) AS rowNumberSekect ) AS rowNumberFilter WHERE rowNumber BETWEEN :from AND :to ";
+        queryString += " ) AS rowNumberSelect ) AS rowNumberFilter WHERE rowNumber BETWEEN :from AND :to ";
         
         queryString = queryString.replace(":direction", direction);
         queryString = queryString.replace(":orderby", getOrderByProperty(orderby));
