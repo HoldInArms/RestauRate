@@ -40,8 +40,8 @@ public class RestaurantResource {
     @GET
     @UnitOfWork
     @Path("/all")
-    public List<Restaurant> getAll(){
-        return restaurantDao.findAll();
+    public List<Restaurant> getAll( @Auth(required = false) Admin admin ){
+        return restaurantDao.findAll( admin );
     }
 
     @GET

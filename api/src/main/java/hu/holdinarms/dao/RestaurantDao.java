@@ -42,9 +42,11 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return persist(restaurant);
     }
     
-    public List<Restaurant> findAll(){
-//        return list(namedQuery("Restaurant.findAll"));
-        String queryString = "SELECT id FROM RR_restaurants WHERE live = 1";
+    public List<Restaurant> findAll( Admin admin ){
+        String queryString = "SELECT id FROM RR_restaurants";
+        if( admin == null ){
+            queryString += " WHERE live = 1";
+        }
         Query query = currentSession().createSQLQuery(queryString);
 
         List<BigInteger> queryResult = query.list();
