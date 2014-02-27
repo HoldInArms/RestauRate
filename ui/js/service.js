@@ -324,6 +324,17 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+		api.changePassword = function(newPassword, successFunction) {
+			$http({
+				url: baseUrl + 'admin/changepassword/' + newPassword,
+				method: 'PUT'
+			}).success(function(data, status, headers, config) {
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
+
 		return api;
 	}
 ])
