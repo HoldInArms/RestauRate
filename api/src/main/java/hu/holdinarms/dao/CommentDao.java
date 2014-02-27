@@ -114,7 +114,9 @@ public class CommentDao extends AbstractDAO<Comment> {
 
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
-        System.out.println(query.uniqueResult());
+        if(query.uniqueResult() == null){
+            return "";
+        }
         return ((Comment) get( ((BigInteger)query.uniqueResult()).longValue() )).getComment();
     }
 
