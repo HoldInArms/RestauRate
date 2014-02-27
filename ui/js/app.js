@@ -4,7 +4,7 @@ var RestaurantBlacklist = angular.module('RestaurantBlacklist', [
     "ui.router",
     "ui.bootstrap",
     "ui.bootstrap.datetimepicker"
-    
+
 ]);
 
 RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
@@ -36,7 +36,7 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
         abstract: true,
         templateUrl: "partials/admin/index.html"
     })
-         
+
     .state('admin.home', {
         url: "/admin",
         controller: 'AdminPage'
@@ -70,5 +70,10 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
         url: "/admin/change-password",
         templateUrl: "partials/admin/change_password.html",
         controller: 'AdminChangePasswordPageController'
+    })
+
+    .state('admin.logout', {
+        url: "/admin/logout",
+        controller: 'AdminLogoutController'
     });
 });

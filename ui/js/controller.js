@@ -517,4 +517,21 @@ controller('AdminChangePasswordPageController', ['$rootScope', '$scope', '$state
 			});
 		}
 	}
+]).
+
+controller('AdminLogoutController', ['$state', 'CredentialHolder', 'AdminLoginService',
+	function($state, CredentialHolder, AdminLoginService) {
+		if (!CredentialHolder.isLoggedIn()) {
+			$state.go("admin.login");
+			return;
+		} else {
+			AdminLoginService.setErrorFunction(function() {
+				$state.go('public.error');
+			});
+
+			AdminLoginService.logout(function() {
+				$state.go('public.home');
+			});
+		}
+	}
 ]);

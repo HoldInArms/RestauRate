@@ -177,6 +177,18 @@ angular.module('RestaurantBlacklist.services', [])
 			});
 		};
 
+		api.logout = function(successFunction) {
+			$http({
+				url: baseUrl + 'admin/logout',
+				method: 'POST',
+			}).success(function(data, status, headers, config) {
+				CredentialHolder.logout();
+				CredentialHolder.save();
+				successFunction();
+			}).error(function(data, status, headers, config) {
+				api.errorFunction();
+			});
+		};
 		return api;
 	}
 ])
