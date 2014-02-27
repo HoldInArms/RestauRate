@@ -318,7 +318,11 @@ angular.module('RestaurantBlacklist.services', [])
 				url: baseUrl + 'admin/add/' + username + '/' + password,
 				method: 'POST'
 			}).success(function(data, status, headers, config) {
-				successFunction();
+				if (data) {
+					successFunction(true);
+				} else {
+					successFunction(false);
+				}
 			}).error(function(data, status, headers, config) {
 				api.errorFunction();
 			});
