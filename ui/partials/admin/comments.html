@@ -1,0 +1,78 @@
+<div class="row margin-top-md">
+    <h1 class="text-center font-default">Restaurant Comments</h1>
+</div>
+
+<div class="row margin-top-lg">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    <select class="form-control custom-table-selection" ng-options="r.name for r in restaurants" ng-model="restaurantIndex" ng-change="goToPage(currentPage)">
+                        <option value="">All Restaurant</option>
+                    </select>
+                </th>
+                <th class="text-center">
+                    <span class="table-header-sorting" style="line-height: 30px;" ng-click="changeOrderBy('vote')">Rating</span>
+                    <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='vote'"></span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='vote'"></span>
+                </th>
+                <th class="text-center">
+                    <span class="table-header-sorting" style="line-height: 30px;" ng-click="changeOrderBy('createdate')">Comment</span>
+                    <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='createdate'"></span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='createdate' || orderby ===''""></span>
+                </th>
+                <th class="text-center" colspan="2">
+                    <span class="table-header-sorting" style="line-height: 30px;">Actions</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-center" data-toggle="modal" data-target="#viewComments" ng-repeat="comment in comments">
+            <tr>
+                <td style="width: 20%; line-height: 30px;">
+                    <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
+                    <span class="">{{comment.restaurant.name}}</span>
+                </td>
+                <td style="width: 15%; padding: 0; margin: 0; line-height: 30px;">
+                    <span class="">
+                        <rating style="line-height: 50px;" value="comment.vote" max="5" readonly="true" class="color-rating-{{comment.vote}}" readonly="true" style="padding: 0; margin: 0;"></rating>
+                    </span>
+                </td>
+                <td style="width: 35%; line-height: 30px;">{{comment.comment}}</td>
+                <td style="width: 25%;">
+                    <select class="form-control custom-table-selection" width="auto;" ng-options="r.name for r in restaurants" ng-model="restaurantIndex" ng-change="moveCommentTo($index, restaurantIndex.id)">
+                        <option value="">Move comment to...</option>
+                    </select>
+                        
+                </td>
+                <td style="width: 5%;">
+                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this comment's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="comment.live" ng-click="hideComment($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+
+                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this comment visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!comment.live" ng-click="reInstateComment($index)">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row table-footer-design text-right">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-fast-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled">
+                <span style="">Page: {{currentPage || 0}}/{{allPages}}</span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-forward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-fast-forward"></span>
+            </button>
+        </div>
+    </div>
+</div>
