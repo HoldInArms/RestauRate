@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
  * @author dgzt
  */
 @Entity
-@Table(name = "RR_comments")
+@Table(name = "rr_comments")
 @NamedQueries({
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id") 
 })

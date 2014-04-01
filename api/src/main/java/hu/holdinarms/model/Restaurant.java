@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
  * @author Dgzt
  */
 @Entity
-@Table(name = "RR_restaurants")
+@Table(name = "rr_restaurants")
 @NamedQueries({
     @NamedQuery(name="Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE id = :id")
 })

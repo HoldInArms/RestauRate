@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author dgzt
  */
 @Entity
-@Table(name = "RR_admins")
+@Table(name = "rr_admins")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@whoAdded")
 @NamedQueries({
     @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id"),
