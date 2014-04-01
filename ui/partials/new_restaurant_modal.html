@@ -16,7 +16,7 @@
                             <label class="custom-input-field-label">Restaurant Name: </label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control custom-input-field" type="text" placeholder="Gulasch I"  ng-model="comment.newRestaurantName"/>
+                            <input name="name" class="form-control custom-input-field" type="text" maxlength="32" placeholder="Gulasch I" required="true" ng-model="comment.newRestaurantName"/>
                         </div>
                     </div>
                     <ng-include src="'partials/restaurant_template.html'"></ng-include>

@@ -4,7 +4,7 @@
             <label class="custom-input-field-label">Food Name:</label>
         </div>
         <div class="col-md-9">
-            <input class="form-control custom-input-field" type="text" placeholder="Bajai Halászlé" ng-model="comment.foodName"/>
+            <input class="form-control custom-input-field" type="text" placeholder="Bajai Halászlé" ng-model="comment.foodName" maxlength="32" />
         </div>
     </div>
 
@@ -14,8 +14,9 @@
                 <label class=custom-input-field-label>Food Price:</label>
             </div>
             <div class="col-md-6">
+            <form name="form">
                 <div class="input-group" style="margin-left: 8px;">
-                    <input type="number" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice"/>
+                    <input name="money" type="number" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice"/>
                     <span class="input-group-addon custom-input-field">HUF</span>
                     <!--                    <select class="form-control custom-input-field input-group-addon" style="width: 90px;">
                     <option selected="selected">HUF</option>
@@ -24,7 +25,11 @@
                     <option>GBP</option>
                 </select>
                 -->
+            
             </div>
+            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$error.number">
+                    Not valid number!</label>
+            </form>
 
         </div>
     </div>

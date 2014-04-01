@@ -117,14 +117,21 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		};
 
 		$scope.addNewRestaurant = function(comment) {
-			RestaurantService.newRestaurant(comment, function() {
-				//Refreshing retaurant list
-				$scope.restaurants = [];
-				$scope.goToPage(1);
-				//Close modal if list is refreshed
-				$('#newRestaurant').modal('toggle');
-				$scope.comment = {};
-			});
+			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote)) {
+				$scope.missingDatas = false;
+				
+				RestaurantService.newRestaurant(comment, function() {
+					//Refreshing retaurant list
+					$scope.restaurants = [];
+					$scope.goToPage(1);
+					//Close modal if list is refreshed
+					$('#newRestaurant').modal('toggle');
+					$scope.comment = {};
+				});
+
+			} else {
+				$scope.missingDatas = true;
+			}
 		};
 		/**
 		 * Get comments, pagination
