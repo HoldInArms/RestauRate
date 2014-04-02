@@ -92,7 +92,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         addFilter(filterBuilder, admin, filterText);
         
         String queryString = "select id from (" +
-        "	select ROW_NUMBER() over (order by :orderby :direction ) as rowNumber, * from (" +
+        "	select row_number() over (order by :orderby :direction ) as rowNumber, * from (" +
         "		select restaurants.id, restaurants.name ," +
         "		(select comments.createdate from rr_comments as comments" +
         "			where comments.live = true and comments.restaurant_id = restaurants.id" +

@@ -116,4 +116,13 @@
         </addColumn>
     </changeSet>
     
+    <changeSet id="2014.04.02.14.30" author="geripgeri">
+        <createSequence sequenceName="restaurant_id_seq"/>
+        <createSequence sequenceName="comment_id_seq"/>
+        <createSequence sequenceName="admin_id_seq"/>
+    </changeSet>
+    <changeSet id="2014.04.02.14.35" author="geripgeri">
+        <dropSequence sequenceName="admin_id_seq"/>
+        <createSequence sequenceName="admin_id_seq" minValue="2"/>
+    </changeSet>
 </databaseChangeLog>
