@@ -49,7 +49,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a where a.username = :username"),
     @NamedQuery(name = "Admin.authenticate", query = "SELECT a FROM Admin a WHERE a.username = :username AND a.password = :password")
 })
-@SequenceGenerator (name = "admin_seq_gen", sequenceName = "admin_id_seq")
 public class Admin implements Serializable {
 
 	//~-----------------------------------------------------   
@@ -66,7 +65,8 @@ public class Admin implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_seq_gen")
+    @SequenceGenerator (name = "admin_seq_gen", sequenceName = "admin_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "admin_seq_gen")
     private Long id;
 
     /**

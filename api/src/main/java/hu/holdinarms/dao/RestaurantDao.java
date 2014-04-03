@@ -71,8 +71,6 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
             Restaurant restaurant = get(bigInteger.longValue());
             RestaurantDTO restaurantDto = new RestaurantDTO();
             restaurantDto.setName(restaurant.getName());
-            //restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
-            //restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
             results.add(restaurantDto);
         }
         

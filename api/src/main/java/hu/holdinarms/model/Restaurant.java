@@ -44,7 +44,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name="Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE id = :id")
 })
-@SequenceGenerator (name = "restaurant_seq_gen", sequenceName = "restaurant_id_seq")
 public class Restaurant implements Serializable {
     
 	//~-----------------------------------------------------   
@@ -61,8 +60,9 @@ public class Restaurant implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "restaurant_seq_gen")
+    @SequenceGenerator (name = "restaurant_seq_gen", sequenceName = "restaurant_id_seq", allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.AUTO, generator = "restaurant_seq_gen")
+    @Column(name = "id", unique = true)
     private long id;
 
     /**

@@ -47,17 +47,24 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource { 
 
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+    /**
+     * The dao for comment.
+     */
+	@Inject
+	private CommentDao commentDao;
 
-    private CommentDao commentDao;
-
+    /**
+     * The dao for restaurant.
+     */
     @Inject
     private RestaurantDao restaurantDao;
-
-    @Inject
-    public CommentResource(CommentDao commentDao){
-        this.commentDao = commentDao;
-    }
    
+    //~-----------------------------------------------------   
+    //~ Services
+    //~----------------------------------------------------- 
     /**
      * Save the new comment with new restaurant.
      * 
@@ -109,6 +116,17 @@ public class CommentResource {
         return commentPage;
     }
 
+    /**
+     * Get the comment list for admin side. 
+     * 
+     * @param admin The admin.
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by value.
+     * @param direction The deriction value.
+     * @return The comment page DTO.
+     */
     @GET
     @UnitOfWork
     @Path("/adminlist")
@@ -126,6 +144,13 @@ public class CommentResource {
         return commentPage;
     }
 
+    /**
+     * Delete the comment on admin side.
+     * 
+     * @param admin The admin.
+     * @param commentId The id of comment.
+     * @return The deleted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/delete/{commentId}")
@@ -139,6 +164,13 @@ public class CommentResource {
         return comment;
     }
 
+    /**
+     * The reinstate the comment on admin side..
+     * 
+     * @param admin The admin.
+     * @param commentId The id of comment.
+     * @return The reinstated comment.
+     */
     @POST
     @UnitOfWork
     @Path("/reinstate/{commentId}")
@@ -152,6 +184,14 @@ public class CommentResource {
         return comment;
     }
 
+    /**
+     * Move the comment to other restaurant on the admin side.
+     * 
+     * @param admin The admin.
+     * @param commentId The if od comment.
+     * @param restaurantId The id of new restaurant.
+     * @return The moved comment.
+     */
     @POST
     @UnitOfWork
     @Path("/move/{commentId}/{restaurantId}")

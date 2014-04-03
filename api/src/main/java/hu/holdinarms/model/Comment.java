@@ -48,7 +48,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id") 
 })
-@SequenceGenerator (name = "comment_seq_gen", sequenceName = "comment_id_seq")
 public class Comment implements Serializable {
 
 	//~-----------------------------------------------------   
@@ -65,8 +64,9 @@ public class Comment implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @SequenceGenerator (name = "comment_seq_gen", sequenceName = "comment_id_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "comment_seq_gen")
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq_gen")
     private long id;
 
     /**
