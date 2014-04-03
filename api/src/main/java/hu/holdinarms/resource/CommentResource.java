@@ -14,7 +14,7 @@ import hu.holdinarms.dao.RestaurantDao;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
-import hu.holdinarms.model.dto.CommentPage;
+import hu.holdinarms.model.dto.CommentPageDTO;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -78,10 +78,10 @@ public class CommentResource {
     @GET
     @UnitOfWork
     @Path("/list/{restaurantId}")
-    public CommentPage getComments(@PathParam("restaurantId") Long restaurantId, 
+    public CommentPageDTO getComments(@PathParam("restaurantId") Long restaurantId, 
             @QueryParam("from") Integer from, @QueryParam("to") Integer to)
     {
-        CommentPage commentPage = new CommentPage();
+        CommentPageDTO commentPage = new CommentPageDTO();
         commentPage.setComments(commentDao.getComments(restaurantId, from, to));
         commentPage.setCountComments(commentDao.countComments(restaurantId));
         
@@ -91,13 +91,13 @@ public class CommentResource {
     @GET
     @UnitOfWork
     @Path("/adminlist")
-    public CommentPage getCommentsForAdmin(@Auth Admin admin, 
+    public CommentPageDTO getCommentsForAdmin(@Auth Admin admin, 
             @QueryParam("restaurantid") Long restaurantId, 
             @QueryParam("from") Integer from, @QueryParam("to") Integer to,
             @QueryParam("orderby") String orderby, @QueryParam("direction") String direction){
 
         
-        CommentPage commentPage = new CommentPage();
+        CommentPageDTO commentPage = new CommentPageDTO();
 
         commentPage.setComments(commentDao.getCommentsForAdmin(restaurantId, from, to, orderby, direction));
         commentPage.setCountComments(commentDao.countCommentsForAdmin(restaurantId));
