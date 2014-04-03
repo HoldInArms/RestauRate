@@ -153,13 +153,6 @@ public class Comment implements Serializable {
     @Column(name = "createdate")
     private Date createDate;
 
-    /**
-     * The name of the new restaurant.
-     */
-    @Transient
-    @Size(max = 32)
-    private String newRestaurantName;
-
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
@@ -257,14 +250,6 @@ public class Comment implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public String getNewRestaurantName() {
-        return newRestaurantName;
-    }
-
-    public void setNewRestaurantName(String newRestaurantName) {
-        this.newRestaurantName = newRestaurantName;
     }
 
 }

@@ -17,11 +17,19 @@
 package hu.holdinarms.model.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class RestaurantDTO implements Serializable {
+/**
+ * This DTO object contains the comment information.
+ * 
+ * @author Dgzt
+ */
+public class CommentDTO implements Serializable{
 
 	//~-----------------------------------------------------   
     //~ Static fields
@@ -30,73 +38,118 @@ public class RestaurantDTO implements Serializable {
 	
 	//~-----------------------------------------------------   
     //~ Member fields
-    //~-----------------------------------------------------
+    //~----------------------------------------------------- 
 	/**
-	 * The primary key.
+	 * The comment.
 	 */
-	private Long id;
+	@NotNull
+    @Size(min = 1, max = 256)
+	private String comment;
 	
 	/**
-	 * The name of the restaurant.
+	 * The number of vote.
 	 */
-	private String name;
-	
-	/**
-	 * The number of votes.
-	 */
-    private Integer votes;
+	@NotNull
+    @Min(1)
+    @Max(5)
+	private Integer vote;
 
     /**
-     * The average of the votes.
+     * The order time.
      */
-    private Double average;
+    private Date orderTime;
 
     /**
-     * The last comment.
+     * The arrive time.
      */
-    private String lastComment;
+    private Date arriveTime;
+
+    /**
+     * The name of the food.
+     */
+    @Size(min = 1, max = 32)
+    private String foodName;
+
+    /**
+     * The price of the food.
+     */
+    private Float foodPrice;
+
+    /**
+     * The food worth of money.
+     */
+    private Boolean worthMoney;
+
+    /**
+     * The dispatch's behaviour.
+     */
+    private Boolean dispatchBehaviour;
 
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
-    public Long getId() {
-		return id;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-    
-    public String getName() {
-		return name;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public Integer getVote() {
+		return vote;
 	}
 
-	public Integer getVotes() {
-		return votes;
+	public void setVote(Integer vote) {
+		this.vote = vote;
 	}
 
-	public void setVotes(Integer votes) {
-		this.votes = votes;
+	public Date getOrderTime() {
+		return orderTime;
 	}
 
-	public Double getAverage() {
-		return average;
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
 	}
 
-	public void setAverage(Double average) {
-		this.average = average;
+	public Date getArriveTime() {
+		return arriveTime;
 	}
 
-	public String getLastComment() {
-		return lastComment;
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
 	}
 
-	public void setLastComment(String lastComment) {
-		this.lastComment = lastComment;
+	public String getFoodName() {
+		return foodName;
 	}
-    
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public Float getFoodPrice() {
+		return foodPrice;
+	}
+
+	public void setFoodPrice(Float foodPrice) {
+		this.foodPrice = foodPrice;
+	}
+
+	public Boolean getWorthMoney() {
+		return worthMoney;
+	}
+
+	public void setWorthMoney(Boolean worthMoney) {
+		this.worthMoney = worthMoney;
+	}
+
+	public Boolean getDispatchBehaviour() {
+		return dispatchBehaviour;
+	}
+
+	public void setDispatchBehaviour(Boolean dispatchBehaviour) {
+		this.dispatchBehaviour = dispatchBehaviour;
+	}
+
 }
