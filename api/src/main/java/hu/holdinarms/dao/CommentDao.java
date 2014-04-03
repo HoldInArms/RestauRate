@@ -19,7 +19,6 @@ package hu.holdinarms.dao;
 import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
 import hu.holdinarms.model.dto.CommentDTO;
-import hu.holdinarms.model.dto.CommentWithNewRestaurantDTO;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

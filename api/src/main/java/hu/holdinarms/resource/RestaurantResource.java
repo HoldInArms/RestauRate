@@ -44,14 +44,31 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
 @Path("/restaurant")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestaurantResource {
-    
-    private final RestaurantDao restaurantDao;
-    
+	
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+	/**
+	 * The dao for restaurant.
+	 */
     @Inject
-    public RestaurantResource(RestaurantDao restaurantDao){
-        this.restaurantDao = restaurantDao;
-    }
+    private RestaurantDao restaurantDao;
     
+//    @Inject
+//    public RestaurantResource(RestaurantDao restaurantDao){
+//        this.restaurantDao = restaurantDao;
+//    }
+    
+    //~-----------------------------------------------------   
+    //~ Services
+    //~----------------------------------------------------- 
+    /**
+     * Get the all restaurant in DTO list.
+     * If admin call then add other information.
+     * 
+     * @param admin The admin.
+     * @return The restaurant dto list.
+     */
     @GET
     @UnitOfWork
     @Path("/all")
@@ -59,6 +76,18 @@ public class RestaurantResource {
         return restaurantDao.findAll( admin );
     }
 
+    /**
+     * Get the restaurants in list.
+     * If admin call then add other information.
+     * 
+     * @param admin Tha admin or null.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by property.
+     * @param direction The direction property.
+     * @param filterText The filter text value.
+     * @return The restaurant page dto.
+     */
     @GET
     @UnitOfWork
     @Path("/list")
@@ -73,14 +102,13 @@ public class RestaurantResource {
         
         return rp;
     }
-    
-//    @POST
-//    @UnitOfWork
-//    @Path("/save")
-//    public Restaurant save(Restaurant restaurant){
-//        return restaurantDao.save(restaurant);
-//    }
 
+    /**
+     * Delete the given restaurant.
+     * 
+     * @param admin The admin.
+     * @param restaurantId The id of restaurant.
+     */
     @POST
     @UnitOfWork
     @Path("/delete/{restaurantId}")
@@ -93,6 +121,12 @@ public class RestaurantResource {
         }
     }
 
+    /**
+     * Reinstate the given restaurant.
+     * 
+     * @param admin The admin.
+     * @param restaurantId The id of restaurant.
+     */
     @POST
     @UnitOfWork
     @Path("/reinstate/{restaurantId}")

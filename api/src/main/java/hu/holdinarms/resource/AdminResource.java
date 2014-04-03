@@ -40,13 +40,30 @@ import org.apache.commons.codec.digest.DigestUtils;
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminResource {
 
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+	/**
+	 * The dao for admin.
+	 */
+	@Inject
     private AdminDao adminDao;
+//    
+//    @Inject
+//    AdminResource(AdminDao adminDao){
+//        this.adminDao = adminDao;
+//    }
     
-    @Inject
-    AdminResource(AdminDao adminDao){
-        this.adminDao = adminDao;
-    }
-    
+	//~-----------------------------------------------------   
+    //~ Services
+    //~----------------------------------------------------- 
+	/**
+	 * Login for admin.
+	 * 
+	 * @param username The admin's username.
+	 * @param password The admin's password.
+	 * @return The token.
+	 */
     @GET
     @UnitOfWork
     @Path("/login/{username}/{password}")
@@ -54,6 +71,11 @@ public class AdminResource {
         return adminDao.authenticate(username, DigestUtils.sha256Hex(password));
     }
     
+    /**
+     * The logout.
+     * 
+     * @param admin The admin.
+     */
     @POST
     @UnitOfWork
     @Path("/logout")
@@ -61,6 +83,14 @@ public class AdminResource {
         TokenStorage.removeUsertoken(admin.getId());
     }
 
+    /**
+     * Add new admin.
+     * 
+     * @param admin The admin who add the new admin.
+     * @param username The new admin's username.
+     * @param password The new admin's password.
+     * @return The new admin.
+     */
     @POST
     @UnitOfWork
     @Path("/add/{username}/{password}")
@@ -77,6 +107,13 @@ public class AdminResource {
         return adminDao.save(newAdmin);
     }
 
+    /**
+     * Change password.
+     * 
+     * @param admin The admin.
+     * @param newPassword The new password.
+     * @return The admin with new password.
+     */
     @PUT
     @UnitOfWork
     @Path("/changepassword/{newPassword}")
