@@ -23,7 +23,9 @@ import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
 import hu.holdinarms.model.dto.CommentPageDTO;
 import hu.holdinarms.model.dto.CommentWithNewRestaurantDTO;
+import hu.holdinarms.model.dto.CommentWithoutNewRestaurantDTO;
 
+import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -56,30 +58,44 @@ public class CommentResource {
         this.commentDao = commentDao;
     }
    
+    /**
+     * Save the new comment with new restaurant.
+     * 
+     * @param commentWithNewRestaurantDTO The new comment DTO object.
+     * @return The persisted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/saveWithNewRestaurant")
-    public Comment saveWithNewRestaurant(CommentWithNewRestaurantDTO commentWithNewRestaurantDTO){
-        if(commentWithNewRestaurantDTO.getNewRestaurantName().isEmpty()){
-            return null;
-        }
-        
+    public Comment saveWithNewRestaurant(@Valid CommentWithNewRestaurantDTO commentWithNewRestaurantDTO){
         Restaurant restaurant = restaurantDao.save(commentWithNewRestaurantDTO.getNewRestaurantName());
         
-        return commentDao.saveWithNewRestaurant(commentWithNewRestaurantDTO, restaurant);
+        return commentDao.save(commentWithNewRestaurantDTO, restaurant);
     }
 
+    /**
+     * Save the new comment for a restaurant.
+     * 
+     * @param commentWithoutNewRestaurantDTO The new comment DTO object.
+     * @return The persisted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/saveWithoutNewRestaurant")
-    public Comment saveWithoutNewRestaurant(Comment comment){
-        if(comment.getRestaurant() == null){
-            return null;
-        }
+    public Comment saveWithoutNewRestaurant(@Valid CommentWithoutNewRestaurantDTO commentWithoutNewRestaurantDTO){
+    	Restaurant restaurant = restaurantDao.findById(commentWithoutNewRestaurantDTO.getRestaurantId());
         
-        return commentDao.save(comment);
+        return commentDao.save(commentWithoutNewRestaurantDTO, restaurant);
     }
 
+    /**
+     * Get a comment list by a restaurant id.
+     * 
+     * @param restaurantId The restaurant id.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @return The comment page DTO.
+     */
     @GET
     @UnitOfWork
     @Path("/list/{restaurantId}")
