@@ -6,27 +6,37 @@
 
 package hu.holdinarms.model.dto;
 
-import hu.holdinarms.model.Comment;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This DTO contains the comment page information.
  *
  * @author Dgzt
  */
 public class CommentPageDTO implements Serializable {
     
-    
-    private List<Comment> comments = new ArrayList<Comment>();
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
+
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
     private Integer countComments = 0;
     
-    public List<Comment> getComments() {
+    //~-----------------------------------------------------   
+    //~ Getters / setters
+    //~-----------------------------------------------------
+    public List<CommentDTO> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
     }
 
