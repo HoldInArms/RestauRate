@@ -6,14 +6,14 @@
 
 package hu.holdinarms.resource;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.auth.Auth;
-import com.yammer.dropwizard.hibernate.UnitOfWork;
 import hu.holdinarms.dao.RestaurantDao;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
+import hu.holdinarms.model.dto.RestaurantDTO;
 import hu.holdinarms.model.dto.RestaurantPageDTO;
+
 import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,6 +21,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import com.google.inject.Inject;
+import com.yammer.dropwizard.auth.Auth;
+import com.yammer.dropwizard.hibernate.UnitOfWork;
 
 /**
  *
@@ -40,7 +44,7 @@ public class RestaurantResource {
     @GET
     @UnitOfWork
     @Path("/all")
-    public List<Restaurant> getAll( @Auth(required = false) Admin admin ){
+    public List<RestaurantDTO> getAll( @Auth(required = false) Admin admin ){
         return restaurantDao.findAll( admin );
     }
 
