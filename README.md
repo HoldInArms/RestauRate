@@ -1,4 +1,4 @@
-RestauRate
+﻿RestauRate
 ==========
 This software is designed for community restaurant rating.
 
@@ -9,7 +9,7 @@ JavaJDK >= 1.6.10
 Postgresql >= 8.4
 </code></pre>
 
-<b>Intsalling:</b>
+<b>Installing:</b>
 ==========
 Adding new user and database for postgresql:
 Windows: open pgAdmin:
