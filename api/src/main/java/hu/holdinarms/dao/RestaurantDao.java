@@ -70,6 +70,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         for(BigInteger bigInteger : queryResult){
             Restaurant restaurant = get(bigInteger.longValue());
             RestaurantDTO restaurantDto = new RestaurantDTO();
+            restaurantDto.setId(restaurant.getId());
             restaurantDto.setName(restaurant.getName());
             results.add(restaurantDto);
         }
