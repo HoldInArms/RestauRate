@@ -19,7 +19,7 @@ public class RestaurantPage implements Serializable {
     
     List<Restaurant> restaurants = new ArrayList<Restaurant>();
     
-    Integer restaurantNumber = 0;
+    Long restaurantNumber = new Long(0);
 
     public List<Restaurant> getRestaurants() {
         return restaurants;
@@ -29,11 +29,11 @@ public class RestaurantPage implements Serializable {
         this.restaurants = restaurants;
     }
 
-    public Integer getRestaurantNumber() {
+    public Long getRestaurantNumber() {
         return restaurantNumber;
     }
 
-    public void setRestaurantNumber(Integer restaurantNumber) {
+    public void setRestaurantNumber(Long restaurantNumber) {
         this.restaurantNumber = restaurantNumber;
     }
     

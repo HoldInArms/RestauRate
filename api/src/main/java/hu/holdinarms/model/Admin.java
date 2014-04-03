@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,13 +31,14 @@ import javax.validation.constraints.Size;
  * @author dgzt
  */
 @Entity
-@Table(name = "RR_admins")
+@Table(name = "rr_admins")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@whoAdded")
 @NamedQueries({
     @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id"),
     @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a where a.username = :username"),
     @NamedQuery(name = "Admin.authenticate", query = "SELECT a FROM Admin a WHERE a.username = :username AND a.password = :password")
 })
+@SequenceGenerator (name = "admin_seq_gen", sequenceName = "admin_id_seq")
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class Admin implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_seq_gen")
     private Long id;
 
     @Basic(optional = false)

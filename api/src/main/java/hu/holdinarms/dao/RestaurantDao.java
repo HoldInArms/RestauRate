@@ -43,9 +43,9 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
     }
     
     public List<Restaurant> findAll( Admin admin ){
-        String queryString = "SELECT id FROM RR_restaurants";
+        String queryString = "SELECT id FROM rr_restaurants";
         if( admin == null ){
-            queryString += " WHERE live = 1";
+            queryString += " WHERE live = TRUE";
         }
         Query query = currentSession().createSQLQuery(queryString);
 
@@ -61,12 +61,12 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return results;
     }
 
-    public Integer countRestaurants( Admin admin, String filterText){
+    public Long countRestaurants( Admin admin, String filterText){
         StringBuilder filterBuilder = new StringBuilder();
 
         addFilter(filterBuilder, admin, filterText);
 
-        String queryString = "select COUNT(id) from RR_restaurants where 1=1 ";
+        String queryString = "select COUNT(id) from rr_restaurants where true=true ";
 
         if(!filterBuilder.toString().isEmpty()){
             queryString += filterBuilder.toString();
@@ -76,7 +76,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
 
         addFilterQueryParameters(query, filterText);
         
-        return (Integer) query.uniqueResult();
+        return ((BigInteger)query.uniqueResult()).longValue();
     }
 
     public List<Restaurant> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
@@ -92,27 +92,28 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         addFilter(filterBuilder, admin, filterText);
         
         String queryString = "select id from (" +
-        "	select ROW_NUMBER() over (order by :orderby :direction ) as rowNumber, * from (" +
+        "	select row_number() over (order by :orderby :direction ) as rowNumber, * from (" +
         "		select restaurants.id, restaurants.name ," +
-        "		(select TOP 1 comments.createdate from RR_comments as comments" +
-        "			where comments.live = 1 and comments.restaurant_id = restaurants.id" +
-        "			order by comments.createdate DESC" +
+        "		(select comments.createdate from rr_comments as comments" +
+        "			where comments.live = true and comments.restaurant_id = restaurants.id" +
+        "			order by comments.createdate DESC LIMIT 1" +
         "		) as latest_comment," +
-        "		(select SUM(comments.vote)/CONVERT(float,count(comments.id)) " +
-        "			from RR_comments as comments " +
-        "			where comments.live = 1 and comments.restaurant_id = restaurants.id" +
+ //       "		(select SUM(comments.vote)/CONVERT(float4,count(comments.id)) " +
+        "		(select SUM(comments.vote)/CAST(count(comments.id) AS float4) " +
+        "			from rr_comments as comments " +
+        "			where comments.live = true and comments.restaurant_id = restaurants.id" +
         "		) as avarge," +
-        "		(select COUNT(id) from RR_comments as comments " +
-        "			where comments.live = 1 and" +
+        "		(select COUNT(id) from rr_comments as comments " +
+        "			where comments.live = true and" +
         "			comments.restaurant_id = restaurants.id" +
         "		) as votes" +
-        "		from RR_restaurants as restaurants where 1=1 ";
+        "		from rr_restaurants as restaurants where true=true ";
         
         if(!filterBuilder.toString().isEmpty()){
             queryString += filterBuilder.toString();
         }
 
-        queryString += " ) AS rowNumberSelect ) AS rowNumberFilter WHERE rowNumber BETWEEN :from AND :to ";
+        queryString += " ) AS rowNumberSelect ) AS rowNumberFilter WHERE rowNumber BETWEEN :from AND :to";
         
         queryString = queryString.replace(":direction", direction);
         queryString = queryString.replace(":orderby", getOrderByProperty(orderby));
@@ -155,7 +156,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
 
     private void addFilter(StringBuilder filterBuilder, Admin admin, String filterText){
         if( admin == null ){
-            filterBuilder.append("and live = 1 ");
+            filterBuilder.append("and live = true ");
         }
         
         if(filterText != null && !filterText.isEmpty()){

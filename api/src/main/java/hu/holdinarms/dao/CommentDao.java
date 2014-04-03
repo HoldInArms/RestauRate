@@ -60,11 +60,11 @@ public class CommentDao extends AbstractDAO<Comment> {
 
     public Integer countComments(Long restaurantId){
 
-        String queryString = "SELECT COUNT(id) FROM RR_comments WHERE restaurant_id = :restaurantId AND live = 1";
+        String queryString = "SELECT COUNT(id) FROM rr_comments WHERE restaurant_id = :restaurantId AND live = true";
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
         
-        return (Integer) query.uniqueResult();
+        return ((BigInteger) query.uniqueResult()).intValue();
     }
 
     public List<Comment> getComments(Long restaurantId, Integer from, Integer to){
@@ -75,7 +75,7 @@ public class CommentDao extends AbstractDAO<Comment> {
         
         String queryString = "SELECT id FROM (" +
         "	    SELECT ROW_NUMBER() OVER (ORDER BY createdate DESC ) AS rowNumber, id, restaurant_id, createdate "+
-        "         FROM RR_comments WHERE restaurant_id = :restaurantId AND live = 1" +
+        "         FROM rr_comments WHERE restaurant_id = :restaurantId AND live = true" +
         "   ) AS rowNumberSelect WHERE rowNumber BETWEEN :from AND :to";
         
         Query query = currentSession().createSQLQuery(queryString);
@@ -94,15 +94,15 @@ public class CommentDao extends AbstractDAO<Comment> {
     }
 
     public Integer getVotesByRestaurantId(Long restaurantId){
-        String queryString = "SELECT COUNT(id) FROM RR_comments WHERE live = 1 AND restaurant_id = :restaurantId";
+        String queryString = "SELECT COUNT(id) FROM rr_comments WHERE live = true AND restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
         
-        return (Integer) query.uniqueResult();
+        return ((BigInteger) query.uniqueResult()).intValue();
     }
 
     public Double getAvargeByRestaurantId(Long restaurantId){
-        String queryString = "select SUM(vote)/convert(float,COUNT(id)) from RR_comments where live = 1 and restaurant_id = :restaurantId";
+        String queryString = "select SUM(vote)/CAST(COUNT(id) AS float4) from rr_comments where live = true and restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
         
@@ -110,7 +110,7 @@ public class CommentDao extends AbstractDAO<Comment> {
     }
 
     public String lastCommentByRestaurantId(Long restaurantId){
-        String queryString = "SELECT TOP 1 id from RR_comments WHERE restaurant_id = :restaurantId AND live = 1 order by createdate DESC";
+        String queryString = "SELECT id from rr_comments WHERE restaurant_id = :restaurantId AND live = true order by createdate DESC LIMIT 1";
 
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
@@ -132,7 +132,7 @@ public class CommentDao extends AbstractDAO<Comment> {
         
         String queryString = "SELECT id FROM ("+
         "   SELECT ROW_NUMBER() OVER ( ORDER BY :orderby :direction ) AS rowNumber, id, restaurant_id, createdate, vote "+
-        "   FROM RR_comments WHERE 1=1 ";
+        "   FROM rr_comments WHERE true=true ";
         
         if(restaurantId != null){
             queryString += "AND restaurant_id = :restaurantId";
@@ -161,7 +161,7 @@ public class CommentDao extends AbstractDAO<Comment> {
     }
 
     public Integer countCommentsForAdmin(Long restaurantId){
-        String queryString = "SELECT COUNT(id) FROM RR_COMMENTS WHERE 1=1 ";
+        String queryString = "SELECT COUNT(id) FROM rr_COMMENTS WHERE true=true ";
         
         if(restaurantId != null){
             queryString += "AND restaurant_id = :restaurantId";
@@ -172,7 +172,7 @@ public class CommentDao extends AbstractDAO<Comment> {
             query.setParameter("restaurantId", restaurantId);
         }
 
-        return (Integer) query.uniqueResult();
+        return ((BigInteger) query.uniqueResult()).intValue();
     }
 
     public String getOrderByProperty(String orderBy){
