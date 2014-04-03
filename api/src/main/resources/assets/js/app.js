@@ -38,20 +38,20 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
 
     .state('public.home', {
         url: "/home",
-        templateUrl: "partials/home.html",
+        templateUrl: "assets/partials/home.html",
         controller: 'HomePageController'
     })
 
     .state('public.error', {
         url: "/error",
-        templateUrl: "partials/error.html"
+        templateUrl: "assets/partials/error.html"
     })
 
     // --------------- ADMIN ZONE --------------------       
     .state('admin', {
         url: "",
         abstract: true,
-        templateUrl: "partials/admin/index.html"
+        templateUrl: "assets/partials/admin/index.html"
     })
 
     .state('admin.home', {
@@ -61,31 +61,31 @@ RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
 
     .state('admin.login', {
         url: "/admin/login",
-        templateUrl: "partials/admin/login.html",
+        templateUrl: "assets/partials/admin/login.html",
         controller: 'AdminLoginPageController'
     })
 
     .state('admin.restaurants', {
         url: "/admin/restaurants",
-        templateUrl: "partials/admin/restaurants.html",
+        templateUrl: "assets/partials/admin/restaurants.html",
         controller: 'AdminRestaurantsPageController'
     })
 
     .state('admin.comments', {
         url: "/admin/comments/:restaurantId",
-        templateUrl: "partials/admin/comments.html",
+        templateUrl: "assets/partials/admin/comments.html",
         controller: 'AdminCommentsPageController'
     })
 
     .state('admin.new-admin', {
         url: "/admin/new-admin",
-        templateUrl: "partials/admin/new-admin.html",
+        templateUrl: "assets/partials/admin/new-admin.html",
         controller: 'AdminNewAdminPageController'
     })
 
     .state('admin.change_password', {
         url: "/admin/change-password",
-        templateUrl: "partials/admin/change_password.html",
+        templateUrl: "assets/partials/admin/change_password.html",
         controller: 'AdminChangePasswordPageController'
     })
 
