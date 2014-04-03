@@ -39,7 +39,6 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
     private final HibernateBundle<RestaurantRateConfiguration> hibernateBundle = 
             new HibernateBundle<RestaurantRateConfiguration>(Restaurant.class, Comment.class,Admin.class) {
 
-        @Override
         public DatabaseConfiguration getDatabaseConfiguration(RestaurantRateConfiguration configuration) {
             return configuration.getDatabaseConfiguration();
         }
@@ -83,7 +82,6 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
         LOGGER.debug("*** initialize called...");
         bootstrap.addBundle(new MigrationsBundle<RestaurantRateConfiguration>() {
 
-            @Override
             public DatabaseConfiguration getDatabaseConfiguration(RestaurantRateConfiguration configuration) {
                 return configuration.getDatabaseConfiguration();
             }
