@@ -2,17 +2,17 @@
     <div class="row margin-top-md margin-bot-lg text-center">
         <img class="logo-style" src="pics/logo.png" alt="LOGO" popover="There is a popover on this logo. It's SO funny. I hope you are happy now Gergely Peidl." popover-trigger="mouseenter" popover-placement="bottom"/>
     </div>
-    <div class="row text-center margin-bot-sm margin-side-xs">
+    <div class="row text-center margin-bot-md margin-side-xs">
         <span class="">
-        <form  ng-submit ="goToPage(1)">
-            <input type="text" class="form-control custom-input-field" ng-model="$parent.filterText" placeholder="&#128269; Search" popover="You can filter the table here" popover-trigger="mouseenter" popover-placement="top" maxlength="30" />
-        </form>
+            <form  ng-submit ="goToPage(1)">
+                <input type="text" class="form-control custom-input-field" ng-model="$parent.filterText" placeholder="&#128269; Search" popover="You can filter the table here" popover-trigger="mouseenter" popover-placement="top" maxlength="30" /> <!-- &#128269; -->
+            </form>
         </span>
     </div>
-    <div class="row text-center margin-top-md margin-side-xs">
-        <button type=button" class="btn btn-restaurant" style="width: 100%;" data-toggle="modal" data-target="#newRestaurant" popover="You can add a new restaurant here." popover-trigger="mouseenter" popover-placement="bottom">New Restaurant</button>
+    <div class="row text-center margin-top-lg margin-side-xs">
+        <button type=button" class="btn btn-restaurant" style="width: 100%;" data-toggle="modal" data-target="#newRestaurant" popover="You can add a new restaurant here." popover-trigger="mouseenter" popover-placement="top">New Restaurant</button>
     </div>
-    <div class="row text-center margin-top-md margin-bot-md margin-side-xs">
+    <div class="row text-center margin-top-lg margin-bot-md margin-side-xs">
         <button type=button" class="btn btn-restaurant" style="width: 100%;" data-toggle="modal" data-target="#rateRestaurant" popover="You can rate existing restaurants here." popover-trigger="mouseenter" popover-placement="bottom">Rate Restaurant</button>
     </div>
 </div>
@@ -22,62 +22,64 @@
         <table class="table table-hover table-striped">
             <thead>
                 <tr>
-                    <th class="text-center">
+                    <th class="text-center table-header-rounded-left">
                         <span class="table-header-sorting" ng-click="changeOrderBy('name')">Restaurant Name</span>
-                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='name'"></span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='name'"></span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby === 'name'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby === 'name'"></span>
                     </th>
                     <th class="text-center">
                         <span class="table-header-sorting" ng-click="changeOrderBy('latest_comment')">Latest Comment</span>
-                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='latest_comment'"></span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='latest_comment' || orderby ===''"></span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby === 'latest_comment'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby === 'latest_comment' || orderby === ''"></span>
 
                     </th>
                     <th class="text-center">
                         <span class="table-header-sorting" ng-click="changeOrderBy('avarge')">Rating</span>
-                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='avarge'"></span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='avarge'"></span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby === 'avarge'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby === 'avarge'"></span>
                     </th>
-                    <th class="text-center">
+                    <th class="text-center table-header-rounded-right">
                         <span class="table-header-sorting" ng-click="changeOrderBy('votes')">Votes</span>
-                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby ==='votes'"></span>
-                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby ==='votes'"></span>
+                        <span class="glyphicon glyphicon-chevron-up color-light-blue" ng-if="direction === 'ASC' && orderby === 'votes'"></span>
+                        <span class="glyphicon glyphicon-chevron-down color-light-blue" ng-if="direction === 'DESC' && orderby === 'votes'"></span>
                     </th>
                 </tr>
             </thead>
             <tbody class="text-center" data-toggle="modal" data-target="#viewComments" ng-click="getCommentsById($index, 1)" ng-repeat="restaurant in restaurants">
                 <tr>
                     <td>
-                        <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
+                        <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="right"></span>
                         <span class="">{{restaurant.name}}</span>
                     </td>
                     <td>
                         {{restaurant.lastComment}}
                     </td>
                     <td>
-                      <progressbar class="custom-progressbar" value="restaurant.avarge" max="5" type="{{type(restaurant.avarge)}}">
-                          <span class="">{{restaurant.avarge| number:1}} / 5</span>
-                      </progressbar>
+                        <span class="">
+                            <progressbar class="custom-progressbar" value="restaurant.avarge" max="5" type="{{type(restaurant.avarge)}}">
+                            </progressbar>
+                            <span style="margin-top: -20px; margin-left: -30px; position: absolute; z-index: 15;">{{restaurant.avarge| number:1}} / 5.0</span>
+                        </span>
                     </td>
-            <td>
-                {{restaurant.votes}}
-            </td>
-            </tr>
+                    <td>
+                        {{restaurant.votes}}
+                    </td>
+                </tr>
 
             </tbody>
         </table>
-        <div class="row table-footer-design text-right">
-         <!--<pagination class="pagination-sm" total-items ="restaurantNumber" page="currentPage" max-size="allPages" total-items="restaurantNumber" items-per-page="itemPerpage" boundary-links="true" num-pages="allPages" on-select-page="goToPage(page)"></pagination>-->   
-         <div class="btn-group">
-             <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1"><span class="glyphicon glyphicon-fast-backward"></span></button>
-             <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1"><span class="glyphicon glyphicon-backward"></span></button>
-             <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled"><span style="">Page: {{currentPage || 0}}/{{allPages}}</span></button>
-             <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages"><span class="glyphicon glyphicon-forward"></span></button>
-             <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages"><span class="glyphicon glyphicon-fast-forward"></span></button>
-             
-         </div>
+        <div class="row table-footer-design text-center">
+            <!--<pagination class="pagination-sm" total-items ="restaurantNumber" page="currentPage" max-size="allPages" total-items="restaurantNumber" items-per-page="itemPerpage" boundary-links="true" num-pages="allPages" on-select-page="goToPage(page)"></pagination>-->   
+            <div class="btn-group">
+                <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1"><span class="glyphicon glyphicon-fast-backward"></span></button>
+                <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1"><span class="glyphicon glyphicon-backward"></span></button>
+                <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled"><span style="">Page: {{currentPage|| 0}}/{{allPages}}</span></button>
+                <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages"><span class="glyphicon glyphicon-forward"></span></button>
+                <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages"><span class="glyphicon glyphicon-fast-forward"></span></button>
+            </div>
         </div>
     </div>
+    <div class="margin-top-sm margin-bot-md"></div>
 </div>
 
 <!-- New Restaurant Modal -->
