@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,10 +28,11 @@ import javax.validation.constraints.Size;
  * @author Dgzt
  */
 @Entity
-@Table(name = "RR_restaurants")
+@Table(name = "rr_restaurants")
 @NamedQueries({
     @NamedQuery(name="Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE id = :id")
 })
+@SequenceGenerator (name = "restaurant_seq_gen", sequenceName = "restaurant_id_seq")
 public class Restaurant implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -39,7 +41,7 @@ public class Restaurant implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "restaurant_seq_gen")
     private long id;
 
     @Basic(optional = false)

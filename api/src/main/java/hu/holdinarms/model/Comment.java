@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,10 +32,11 @@ import javax.validation.constraints.Size;
  * @author dgzt
  */
 @Entity
-@Table(name = "RR_comments")
+@Table(name = "rr_comments")
 @NamedQueries({
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id") 
 })
+@SequenceGenerator (name = "comment_seq_gen", sequenceName = "comment_id_seq")
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,7 +45,7 @@ public class Comment implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq_gen")
     private long id;
 
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")

@@ -2,12 +2,13 @@
 # Database settings.
 database:
 
-  driverClass: net.sourceforge.jtds.jdbc.Driver
-  user: sa
-  password: password
-  url: jdbc:jtds:sqlserver://localhost:1433;databaseName=restaurant_rate;
-  
-  
+  driverClass: org.postgresql.Driver
+  user: restaurate
+  password: restaurate
+  url: jdbc:postgresql://localhost:5432/restaurate
+  properties:
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
 # HTTP-specific options.
 
 http:
@@ -23,15 +24,13 @@ http:
 
   # Minimum number of thread to keep alive.
   minThreads: 10
-  
   #
   #connectorType: nonblockling+ssl
-  
   # For secury connection
   #ssl:
       # Path of the ssl key
       #keyStore: ./path/of/key.jks
-      
+
       #Password for the ssl key
       #keyStorePassword: password
 

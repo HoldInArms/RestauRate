@@ -63,6 +63,13 @@
             <artifactId>jtds</artifactId>
             <version>1.2.4</version>
         </dependency>
+        <!-- POSTGRES jdbc -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.3-606.jdbc4</version>
+        </dependency>
+            
         <dependency>
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
