@@ -17,7 +17,7 @@
 
 <div class="col-md-3">
     <div class="row margin-top-md margin-bot-lg text-center">
-        <img class="logo-style" src="pics/logo.png" alt="LOGO" popover="There is a popover on this logo. It's SO funny. I hope you are happy now Gergely Peidl." popover-trigger="mouseenter" popover-placement="bottom"/>
+        <img class="logo-style" src="assets/pics/logo.png" alt="LOGO" popover="There is a popover on this logo. It's SO funny. I hope you are happy now Gergely Peidl." popover-trigger="mouseenter" popover-placement="bottom"/>
     </div>
     <div class="row text-center margin-bot-md margin-side-xs">
         <span class="">
@@ -65,7 +65,11 @@
             <tbody class="text-center" data-toggle="modal" data-target="#viewComments">
                 <tr ng-click="getCommentsById($index, 1)" ng-repeat="restaurant in restaurants">
                     <td style="width: 10%;">
-                        <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="right"></span>
+                        <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="right" ng-if="restaurant.votes < 4"></span>
+
+                        <span class="glyphicon glyphicon-question-sign" popover="This restaurant is not recommended by the community" popover-trigger="mouseenter" popover-placement="right" ng-if="restaurant.votes > 4 && restaurant.average < 3"></span>
+
+                         <span class="glyphicon glyphicon-question-sign" popover="This restaurant is recommended by the community" popover-trigger="mouseenter" popover-placement="right" ng-if="restaurant.votes > 4 && restaurant.average >= 3"></span>
                         <span class="">{{restaurant.name}}</span>
                     </td>
                     <td style="width: 65%;">
@@ -100,10 +104,10 @@
 </div>
 
 <!-- New Restaurant Modal -->
-<ng-include src="'partials/new_restaurant_modal.html'"></ng-include>
+<ng-include src="'assets/partials/new_restaurant_modal.html'"></ng-include>
 
 <!-- Rate Restaurant Modal -->
-<ng-include src="'partials/rate_restaurant_modal.html'"></ng-include>
+<ng-include src="'assets/partials/rate_restaurant_modal.html'"></ng-include>
 
 <!-- Add Comment Modal -->
-<ng-include src="'partials/view_comments_modal.html'"></ng-include>
+<ng-include src="'assets/partials/view_comments_modal.html'"></ng-include>
