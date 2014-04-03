@@ -1,3 +1,20 @@
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/ 
+
 /* ******************** Variables ******************** */
 
 @margin-xs: 5px;
@@ -26,6 +43,7 @@
 @color-rating-5: #3dbe1b;
 
 @font-default: 'Hammersmith One', cursive;
+@font-size-big: 20px;
 
 /* ******************** Background Related ******************** */
 .bg-main {
@@ -289,9 +307,21 @@
     background-color: @btn-color-red;
 }
 
+.btn-restaurant-comment-switcher {
+    .btn-restaurant;
+    padding: 0;
+    margin: 0;
+    line-height: 14px;
+    background-color: #FFFFFF;
+}
+
 /* ******************** Custom Fonts ******************* */
 .font-default {
     font-family: @font-default;
+}
+
+.font-size-big {
+    font-size: @font-size-big;
 }
 
 /* ******************** Custom Logo Style ******************* */
