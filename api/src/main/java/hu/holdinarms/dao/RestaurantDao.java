@@ -6,17 +6,21 @@
 
 package hu.holdinarms.dao;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.hibernate.AbstractDAO;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
+import hu.holdinarms.model.dto.RestaurantDTO;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+
+import com.google.inject.Inject;
+import com.yammer.dropwizard.hibernate.AbstractDAO;
 
 /**
  *
@@ -42,7 +46,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return persist(restaurant);
     }
     
-    public List<Restaurant> findAll( Admin admin ){
+    public List<RestaurantDTO> findAll( Admin admin ){
         String queryString = "SELECT id FROM rr_restaurants";
         if( admin == null ){
             queryString += " WHERE live = TRUE";
@@ -50,12 +54,14 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         Query query = currentSession().createSQLQuery(queryString);
 
         List<BigInteger> queryResult = query.list();
-        List<Restaurant> results = new ArrayList<Restaurant>();
+        List<RestaurantDTO> results = new ArrayList<RestaurantDTO>();
         for(BigInteger bigInteger : queryResult){
             Restaurant restaurant = get(bigInteger.longValue());
-            restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
-            restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
-            results.add(restaurant);
+            RestaurantDTO restaurantDto = new RestaurantDTO();
+            restaurantDto.setName(restaurant.getName());
+            //restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
+            //restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
+            results.add(restaurantDto);
         }
         
         return results;
@@ -79,9 +85,9 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return ((BigInteger)query.uniqueResult()).longValue();
     }
 
-    public List<Restaurant> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
+    public List<RestaurantDTO> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
         if(from == null || to == null){
-            return new ArrayList<Restaurant>();
+            return new ArrayList<RestaurantDTO>();
         }
 
         if(direction == null || direction.isEmpty()){
@@ -98,7 +104,6 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         "			where comments.live = true and comments.restaurant_id = restaurants.id" +
         "			order by comments.createdate DESC LIMIT 1" +
         "		) as latest_comment," +
- //       "		(select SUM(comments.vote)/CONVERT(float4,count(comments.id)) " +
         "		(select SUM(comments.vote)/CAST(count(comments.id) AS float4) " +
         "			from rr_comments as comments " +
         "			where comments.live = true and comments.restaurant_id = restaurants.id" +
@@ -124,16 +129,20 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
 
         addFilterQueryParameters(query, filterText);
 
-        List<BigInteger> queryResult = query.list();
-        List<Restaurant> result = new ArrayList<Restaurant>();
+        @SuppressWarnings("unchecked")
+		List<BigInteger> queryResult = query.list();
+        List<RestaurantDTO> result = new ArrayList<RestaurantDTO>();
         System.out.println(queryString);
         for(BigInteger bigInteger : queryResult){
             Restaurant restaurant = get(bigInteger.longValue());
-            restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
-            restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
-            restaurant.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
             
-            result.add(restaurant);
+            RestaurantDTO restaurantDto = new RestaurantDTO();
+            restaurantDto.setName(restaurant.getName());
+            restaurantDto.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setAverage(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
+            
+            result.add(restaurantDto);
         }
         
         return result;

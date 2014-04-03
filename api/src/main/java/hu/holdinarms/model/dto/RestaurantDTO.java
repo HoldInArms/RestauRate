@@ -17,51 +17,70 @@
 package hu.holdinarms.model.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * This object contains a page of the restaurant.
- *
- * @author Dgzt
- */
-public class RestaurantPageDTO implements Serializable {
-    
+public class RestaurantDTO implements Serializable {
+
 	//~-----------------------------------------------------   
     //~ Static fields
     //~-----------------------------------------------------
 	private static final long serialVersionUID = 1L;
-
+	
 	//~-----------------------------------------------------   
     //~ Member fields
     //~-----------------------------------------------------
 	/**
-	 * The list of the restaurants.
+	 * The name of the restaurant.
 	 */
-	List<RestaurantDTO> restaurants = new ArrayList<RestaurantDTO>();
-    
+	private String name;
+	
 	/**
-	 * The number of the all restaurants.
+	 * The number of votes.
 	 */
-    Long restaurantNumber = new Long(0);
+    private Integer votes;
+
+    /**
+     * The average of the votes.
+     */
+    private Double average;
+
+    /**
+     * The last comment.
+     */
+    private String lastComment;
 
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
-    public List<RestaurantDTO> getRestaurants() {
-        return restaurants;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setRestaurants(List<RestaurantDTO> restaurants) {
-        this.restaurants = restaurants;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Long getRestaurantNumber() {
-        return restaurantNumber;
-    }
+	public Integer getVotes() {
+		return votes;
+	}
 
-    public void setRestaurantNumber(Long restaurantNumber) {
-        this.restaurantNumber = restaurantNumber;
-    }
+	public void setVotes(Integer votes) {
+		this.votes = votes;
+	}
+
+	public Double getAverage() {
+		return average;
+	}
+
+	public void setAverage(Double average) {
+		this.average = average;
+	}
+
+	public String getLastComment() {
+		return lastComment;
+	}
+
+	public void setLastComment(String lastComment) {
+		this.lastComment = lastComment;
+	}
     
 }

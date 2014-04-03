@@ -18,6 +18,7 @@ package hu.holdinarms.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -91,15 +91,6 @@ public class Restaurant implements Serializable {
     @Column(name = "createdate")
     private Date createDate;
 
-    @Transient
-    private Integer votes;
-
-    @Transient
-    private Double avarge;
-
-    @Transient
-    private String lastComment;
-
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
@@ -134,28 +125,5 @@ public class Restaurant implements Serializable {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
-
-    public Integer getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Integer votes) {
-        this.votes = votes;
-    }
     
-    public Double getAvarge() {
-        return avarge;
-    }
-
-    public void setAvarge(Double avarge) {
-        this.avarge = avarge;
-    }
-    
-    public String getLastComment() {
-        return lastComment;
-    }
-    
-    public void setLastComment(String lastComment) {
-        this.lastComment = lastComment;
-    }
 }
