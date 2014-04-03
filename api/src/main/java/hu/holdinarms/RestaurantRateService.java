@@ -20,17 +20,21 @@ import com.fiestacabin.dropwizard.guice.AutoConfigService;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.auth.oauth.OAuthProvider;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
 import com.yammer.dropwizard.migrations.MigrationsBundle;
+
 import hu.holdinarms.authentication.UserAuthenticator;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.dao.AdminDao;
 import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
+import hu.holdinarms.resource.HtmlPageResource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,6 +100,8 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
                 return configuration.getDatabaseConfiguration();
             }
         });
+        
+        bootstrap.addBundle(new AssetsBundle("/assets/"));
         bootstrap.addBundle(hibernateBundle);
     }
 
