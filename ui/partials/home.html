@@ -47,21 +47,21 @@
             </thead>
             <tbody class="text-center" data-toggle="modal" data-target="#viewComments" ng-click="getCommentsById($index, 1)" ng-repeat="restaurant in restaurants">
                 <tr>
-                    <td>
+                    <td style="width: 10%;">
                         <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="right"></span>
                         <span class="">{{restaurant.name}}</span>
                     </td>
-                    <td>
+                    <td style="width: 65%;">
                         {{restaurant.lastComment}}
                     </td>
-                    <td>
+                    <td style="width: 15%;">
                         <span class="">
                             <progressbar class="custom-progressbar" value="restaurant.avarge" max="5" type="{{type(restaurant.avarge)}}">
                             </progressbar>
                             <span style="margin-top: -20px; margin-left: -30px; position: absolute; z-index: 15;">{{restaurant.avarge| number:1}} / 5.0</span>
                         </span>
                     </td>
-                    <td>
+                    <td style="width: 10%;">
                         {{restaurant.votes}}
                     </td>
                 </tr>
