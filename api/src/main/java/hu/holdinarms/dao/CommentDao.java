@@ -50,27 +50,29 @@ public class CommentDao extends AbstractDAO<Comment> {
     public Comment findById(Long id){
         return uniqueResult(namedQuery("Comment.findById").setParameter("id", id));
     }
-
-    public Comment save(Comment comment) {
-        comment.setLive(Boolean.TRUE);
-        comment.setCreateDate(new Date());
-        return persist(comment);
-    }
     
-    public Comment saveWithNewRestaurant( CommentWithNewRestaurantDTO commentWithNewRestaurantDTO, Restaurant restaurant ){
-    	
+    /**
+     * Save the new comment.
+     * 
+     * @param commentDto The new comment.
+     * @param restaurant The restaurant of comment.
+     * @return Ther persisted comment.
+     */
+    public Comment save( CommentDTO commentDto, Restaurant restaurant ){
     	Comment comment = new Comment();
     	comment.setRestaurant(restaurant);
-    	comment.setComment(commentWithNewRestaurantDTO.getComment());
-    	comment.setVote(commentWithNewRestaurantDTO.getVote());
-    	comment.setOrderTime(commentWithNewRestaurantDTO.getOrderTime());
-    	comment.setArriveTime(commentWithNewRestaurantDTO.getArriveTime());
-    	comment.setFoodName(commentWithNewRestaurantDTO.getFoodName());
-    	comment.setFoodPrice(commentWithNewRestaurantDTO.getFoodPrice());
-    	comment.setWorthMoney(commentWithNewRestaurantDTO.getWorthMoney());
-    	comment.setDispatchBehaviour(commentWithNewRestaurantDTO.getDispatchBehaviour());
+    	comment.setComment(commentDto.getComment());
+    	comment.setVote(commentDto.getVote());
+    	comment.setOrderTime(commentDto.getOrderTime());
+    	comment.setArriveTime(commentDto.getArriveTime());
+    	comment.setFoodName(commentDto.getFoodName());
+    	comment.setFoodPrice(commentDto.getFoodPrice());
+    	comment.setWorthMoney(commentDto.getWorthMoney());
+    	comment.setDispatchBehaviour(commentDto.getDispatchBehaviour());
+    	comment.setLive(Boolean.TRUE);
+    	comment.setCreateDate(new Date());
     	
-    	return save(comment);
+    	return persist(comment);
     }
 
     public Comment update(Comment comment){
