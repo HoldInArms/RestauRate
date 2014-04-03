@@ -1,9 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/
 package hu.holdinarms.resource;
 
 import com.google.inject.Inject;
@@ -22,20 +32,38 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
+ * The resource for {@file Admin}.
  *
- * @author zsurot
+ * @author Dgzt
  */
 @Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminResource {
 
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+	/**
+	 * The dao for admin.
+	 */
+	@Inject
     private AdminDao adminDao;
+//    
+//    @Inject
+//    AdminResource(AdminDao adminDao){
+//        this.adminDao = adminDao;
+//    }
     
-    @Inject
-    AdminResource(AdminDao adminDao){
-        this.adminDao = adminDao;
-    }
-    
+	//~-----------------------------------------------------   
+    //~ Services
+    //~----------------------------------------------------- 
+	/**
+	 * Login for admin.
+	 * 
+	 * @param username The admin's username.
+	 * @param password The admin's password.
+	 * @return The token.
+	 */
     @GET
     @UnitOfWork
     @Path("/login/{username}/{password}")
@@ -43,6 +71,11 @@ public class AdminResource {
         return adminDao.authenticate(username, DigestUtils.sha256Hex(password));
     }
     
+    /**
+     * The logout.
+     * 
+     * @param admin The admin.
+     */
     @POST
     @UnitOfWork
     @Path("/logout")
@@ -50,6 +83,14 @@ public class AdminResource {
         TokenStorage.removeUsertoken(admin.getId());
     }
 
+    /**
+     * Add new admin.
+     * 
+     * @param admin The admin who add the new admin.
+     * @param username The new admin's username.
+     * @param password The new admin's password.
+     * @return The new admin.
+     */
     @POST
     @UnitOfWork
     @Path("/add/{username}/{password}")
@@ -66,6 +107,13 @@ public class AdminResource {
         return adminDao.save(newAdmin);
     }
 
+    /**
+     * Change password.
+     * 
+     * @param admin The admin.
+     * @param newPassword The new password.
+     * @return The admin with new password.
+     */
     @PUT
     @UnitOfWork
     @Path("/changepassword/{newPassword}")

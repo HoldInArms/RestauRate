@@ -14,42 +14,42 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
+ * This DTO contains the new comment with new restaurant information.
  * 
  * @author Dgzt
  */
-public class RestaurantRateConfiguration extends Configuration{
-    
-    //~-----------------------------------------------------   
+public class CommentWithNewRestaurantDTO extends CommentDTO{
+
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
+	
+	//~-----------------------------------------------------   
     //~ Member fields
-    //~-----------------------------------------------------      
+    //~----------------------------------------------------- 
+	/**
+	 * The name of the new restaurant.
+	 */
+	@NotNull
+    @Size(min = 1, max = 32)
+	private String newRestaurantName;
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
-    
-    //~-----------------------------------------------------   
+	//~-----------------------------------------------------   
     //~ Getters / setters
-    //~-----------------------------------------------------  
-    
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
-    }
+    //~-----------------------------------------------------
+	public String getNewRestaurantName() {
+		return newRestaurantName;
+	}
 
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
-    
+	public void setNewRestaurantName(String newRestaurantName) {
+		this.newRestaurantName = newRestaurantName;
+	}
+	
 }

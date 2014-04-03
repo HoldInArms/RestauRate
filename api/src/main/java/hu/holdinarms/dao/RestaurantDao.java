@@ -1,24 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/
 package hu.holdinarms.dao;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.hibernate.AbstractDAO;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
+import hu.holdinarms.model.dto.RestaurantDTO;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
+import com.google.inject.Inject;
+import com.yammer.dropwizard.hibernate.AbstractDAO;
+
 /**
+ * The DAO for {@file Restaurant}.
  *
  * @author Dgzt
  */
@@ -42,20 +57,22 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return persist(restaurant);
     }
     
-    public List<Restaurant> findAll( Admin admin ){
+    public List<RestaurantDTO> findAll( Admin admin ){
         String queryString = "SELECT id FROM rr_restaurants";
         if( admin == null ){
             queryString += " WHERE live = TRUE";
         }
         Query query = currentSession().createSQLQuery(queryString);
 
-        List<BigInteger> queryResult = query.list();
-        List<Restaurant> results = new ArrayList<Restaurant>();
+        @SuppressWarnings("unchecked")
+		List<BigInteger> queryResult = query.list();
+        List<RestaurantDTO> results = new ArrayList<RestaurantDTO>();
         for(BigInteger bigInteger : queryResult){
             Restaurant restaurant = get(bigInteger.longValue());
-            restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
-            restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
-            results.add(restaurant);
+            RestaurantDTO restaurantDto = new RestaurantDTO();
+            restaurantDto.setId(restaurant.getId());
+            restaurantDto.setName(restaurant.getName());
+            results.add(restaurantDto);
         }
         
         return results;
@@ -79,9 +96,9 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return ((BigInteger)query.uniqueResult()).longValue();
     }
 
-    public List<Restaurant> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
+    public List<RestaurantDTO> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
         if(from == null || to == null){
-            return new ArrayList<Restaurant>();
+            return new ArrayList<RestaurantDTO>();
         }
 
         if(direction == null || direction.isEmpty()){
@@ -98,7 +115,6 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         "			where comments.live = true and comments.restaurant_id = restaurants.id" +
         "			order by comments.createdate DESC LIMIT 1" +
         "		) as latest_comment," +
- //       "		(select SUM(comments.vote)/CONVERT(float4,count(comments.id)) " +
         "		(select SUM(comments.vote)/CAST(count(comments.id) AS float4) " +
         "			from rr_comments as comments " +
         "			where comments.live = true and comments.restaurant_id = restaurants.id" +
@@ -124,26 +140,25 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
 
         addFilterQueryParameters(query, filterText);
 
-        List<BigInteger> queryResult = query.list();
-        List<Restaurant> result = new ArrayList<Restaurant>();
+        @SuppressWarnings("unchecked")
+		List<BigInteger> queryResult = query.list();
+        List<RestaurantDTO> result = new ArrayList<RestaurantDTO>();
         System.out.println(queryString);
         for(BigInteger bigInteger : queryResult){
             Restaurant restaurant = get(bigInteger.longValue());
-            restaurant.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
-            restaurant.setAvarge(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
-            restaurant.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
             
-            result.add(restaurant);
+            RestaurantDTO restaurantDto = new RestaurantDTO();
+            restaurantDto.setId(restaurant.getId());
+            restaurantDto.setName(restaurant.getName());
+            restaurantDto.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setAverage(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
+            
+            result.add(restaurantDto);
         }
         
         return result;
     }
-    
-//    public Restaurant save(Restaurant restaurant){
-//        restaurant.setLive(Boolean.TRUE);
-//        restaurant.setCreateDate(new Date());
-//        return persist(restaurant);
-//    }
 
     public Restaurant save(String name){
         Restaurant newRestaurant = new Restaurant();

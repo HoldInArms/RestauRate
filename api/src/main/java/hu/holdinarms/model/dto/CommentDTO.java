@@ -14,116 +14,142 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms.model;
+package hu.holdinarms.model.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * The entity contains the restaurant information.
- *
+ * This DTO object contains the comment information.
+ * 
  * @author Dgzt
  */
-@Entity
-@Table(name = "rr_restaurants")
-@NamedQueries({
-    @NamedQuery(name="Restaurant.findById", query = "SELECT r FROM Restaurant r WHERE id = :id")
-})
-public class Restaurant implements Serializable {
-    
+public class CommentDTO implements Serializable{
+
 	//~-----------------------------------------------------   
     //~ Static fields
     //~-----------------------------------------------------
-    private static final long serialVersionUID = 1L;
-
-    //~-----------------------------------------------------   
+	private static final long serialVersionUID = 1L;
+	
+	//~-----------------------------------------------------   
     //~ Member fields
     //~----------------------------------------------------- 
-    /**
-     * The primary key.
-     */
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @SequenceGenerator (name = "restaurant_seq_gen", sequenceName = "restaurant_id_seq", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.AUTO, generator = "restaurant_seq_gen")
-    @Column(name = "id", unique = true)
-    private long id;
+	/**
+	 * The comment.
+	 */
+	@NotNull
+    @Size(min = 1, max = 256)
+	private String comment;
+	
+	/**
+	 * The number of vote.
+	 */
+	@NotNull
+    @Min(1)
+    @Max(5)
+	private Integer vote;
 
     /**
-     * The name of the restaurant.
+     * The order time.
      */
-    @Basic(optional = false)
-    @NotNull
+    private Date orderTime;
+
+    /**
+     * The arrive time.
+     */
+    private Date arriveTime;
+
+    /**
+     * The name of the food.
+     */
     @Size(min = 1, max = 32)
-    @Column(name = "name")
-    private String name;
+    private String foodName;
 
     /**
-     * The status.
+     * The price of the food.
      */
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "live")
-    private Boolean live;
+    private Float foodPrice;
 
     /**
-     * The created date.
+     * The food worth of money.
      */
-    @Basic(optional = false)
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createdate")
-    private Date createDate;
+    private Boolean worthMoney;
+
+    /**
+     * The dispatch's behaviour.
+     */
+    private Boolean dispatchBehaviour;
 
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
-    public long getId() {
-        return id;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Integer getVote() {
+		return vote;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setVote(Integer vote) {
+		this.vote = vote;
+	}
 
-    public Boolean isLive() {
-        return live;
-    }
+	public Date getOrderTime() {
+		return orderTime;
+	}
 
-    public void setLive(Boolean live) {
-        this.live = live;
-    }
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	public Date getArriveTime() {
+		return arriveTime;
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-    
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+
+	public String getFoodName() {
+		return foodName;
+	}
+
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+
+	public Float getFoodPrice() {
+		return foodPrice;
+	}
+
+	public void setFoodPrice(Float foodPrice) {
+		this.foodPrice = foodPrice;
+	}
+
+	public Boolean getWorthMoney() {
+		return worthMoney;
+	}
+
+	public void setWorthMoney(Boolean worthMoney) {
+		this.worthMoney = worthMoney;
+	}
+
+	public Boolean getDispatchBehaviour() {
+		return dispatchBehaviour;
+	}
+
+	public void setDispatchBehaviour(Boolean dispatchBehaviour) {
+		this.dispatchBehaviour = dispatchBehaviour;
+	}
+
 }

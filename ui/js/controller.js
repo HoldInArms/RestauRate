@@ -201,7 +201,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote) && angular.isDefined(restaurant) && angular.isDefined(restaurant.name)) {
 				$scope.missingDatas = false;
 				var postData = {};
-				postData.restaurant = restaurant;
+				postData.restaurantId = restaurant.id;
 				angular.forEach(comment, function(value, key) {
 					postData[key] = value;
 				});
