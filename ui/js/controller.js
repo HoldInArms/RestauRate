@@ -119,7 +119,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.addNewRestaurant = function(comment) {
 			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote)) {
 				$scope.missingDatas = false;
-				
+
 				RestaurantService.newRestaurant(comment, function() {
 					//Refreshing retaurant list
 					$scope.restaurants = [];
@@ -181,21 +181,26 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		};
 
 		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
-			var postData = {};
-			postData.restaurant = restaurant;
-			angular.forEach(comment, function(value, key) {
-				postData[key] = value;
-			});
+			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote) && angular.isDefined(restaurant) && angular.isDefined(restaurant.name)) {
+				$scope.missingDatas = false;
+				var postData = {};
+				postData.restaurant = restaurant;
+				angular.forEach(comment, function(value, key) {
+					postData[key] = value;
+				});
 
-			RestaurantService.newCommentForRestaurant(postData, function() {
-				//Refreshing retaurant list
+				RestaurantService.newCommentForRestaurant(postData, function() {
+					//Refreshing retaurant list
 
-				$scope.restaurants = [];
-				$scope.goToPage(1);
-				//Close modal if list is refreshed
-				$('#rateRestaurant').modal('toggle');
-				$scope.comment = {};
-			});
+					$scope.restaurants = [];
+					$scope.goToPage(1);
+					//Close modal if list is refreshed
+					$('#rateRestaurant').modal('toggle');
+					$scope.comment = {};
+				});
+			} else {
+				$scope.missingDatas = true;
+			}
 		};
 
 	}

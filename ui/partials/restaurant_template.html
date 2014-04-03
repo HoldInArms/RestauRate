@@ -15,8 +15,8 @@
                             <rating  name="rating" value="comment.vote" max="5" class="custom-input-field-label custom-rater-size" style="cursor: pointer;" ng-class="{1 : 'color-rating-1', 2 : 'color-rating-2', 3 : 'color-rating-3', 4 : 'color-rating-4', 5 : 'color-rating-5'}[comment.vote]"></rating>
                         </div>
                     </div>
-                    <div class="row margin-top-md margin-side-md">
-                            <label class="alert alert-danger text-center" style="width: 100%;" ng-if="missingDatas">All fields are required!</label>
+                    <div class="row margin-top-md margin-side-md" ng-if="missingDatas">
+                            <label class="alert alert-danger text-center" style="width: 100%;">All fields are required!</label>
                     </div>
 
                     <div class="row margin-top-md custom-accordion-margin">
