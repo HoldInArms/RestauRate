@@ -12,7 +12,7 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
 import hu.holdinarms.dao.RestaurantDao;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Restaurant;
-import hu.holdinarms.model.dto.RestaurantPage;
+import hu.holdinarms.model.dto.RestaurantPageDTO;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -47,11 +47,11 @@ public class RestaurantResource {
     @GET
     @UnitOfWork
     @Path("/list")
-    public RestaurantPage getRestaurants( @Auth(required = false) Admin admin, @QueryParam("from") Integer from, @QueryParam("to") Integer to,
+    public RestaurantPageDTO getRestaurants( @Auth(required = false) Admin admin, @QueryParam("from") Integer from, @QueryParam("to") Integer to,
             @QueryParam("orderby") String orderby, @QueryParam("direction") String direction,
             @QueryParam("filtertext") String filterText){
 
-        RestaurantPage rp = new RestaurantPage();
+        RestaurantPageDTO rp = new RestaurantPageDTO();
 
         rp.setRestaurants(restaurantDao.getRestaurants(admin, from, to, orderby, direction, filterText));
         rp.setRestaurantNumber(restaurantDao.countRestaurants(admin, filterText));

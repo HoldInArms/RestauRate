@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author zsurot
  */
-public class RestaurantPage implements Serializable {
+public class RestaurantPageDTO implements Serializable {
     
     List<Restaurant> restaurants = new ArrayList<Restaurant>();
     

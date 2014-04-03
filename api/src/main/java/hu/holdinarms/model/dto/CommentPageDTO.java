@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Dgzt
  */
-public class CommentPage implements Serializable {
+public class CommentPageDTO implements Serializable {
     
     
     private List<Comment> comments = new ArrayList<Comment>();
