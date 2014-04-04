@@ -21,7 +21,7 @@
             <label class="custom-input-field-label">Food Name:</label>
         </div>
         <div class="col-md-9">
-            <input class="form-control custom-input-field" type="text" placeholder="Bajai Halászlé" ng-model="comment.foodName" maxlength="32" />
+            <input class="form-control custom-input-field" type="text" placeholder="Bajai Halászlé" ng-model="comment.foodName" maxlength="128" />
         </div>
     </div>
 
@@ -55,8 +55,8 @@
         </div>
         <div class="col-md-9">
             <div class="btn-group">
-                <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
-                <button type="button" class="btn btn-restaurant-color-red" ng-model="comment.worthMoney" btn-radio="false">No</button>
+                <button type="button" class="btn btn-restaurant-color-green" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.worthMoney]" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
+                <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.worthMoney == false]" ng-model="comment.worthMoney" btn-radio="false">No</button>
             </div>
         </div>
     </div>
@@ -116,8 +116,8 @@
     </div>
     <div class="col-md-9">
         <div class="btn-group">
-            <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" btn-radio="true">Nice/Acceptable</button>
-            <button type="button" class="btn btn-restaurant-color-red" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
+            <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.dispatchBehaviour]" btn-radio="true">Nice/Acceptable</button>
+            <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.dispatchBehaviour == false]" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
         </div>
     </div>
 </div>

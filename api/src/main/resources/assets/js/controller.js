@@ -35,9 +35,11 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.allRestaurants = [];
 		RestaurantService.getAllRestaurants($scope.allRestaurants);
 
-		$scope.changeDirection = function(pageChanged) {
+		$scope.changeDirection = function(pageChanged, rateOrVotes) {
 			if (pageChanged) {
 				$scope.direction = "ASC";
+			} else if (rateOrVotes) {
+				$scope.direction = "DESC";
 			} else {
 				if ($scope.direction === 'ASC') {
 					$scope.direction = "DESC";
@@ -54,7 +56,11 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				$scope.changeDirection();
 			} else {
 				$scope.orderby = orderby;
-				$scope.changeDirection(true);
+				if (orderby == "avarage" || orderby == "votes") {
+					$scope.changeDirection(true, true);
+				} else {
+					$scope.changeDirection(true);
+				}
 			}
 		};
 
@@ -133,10 +139,19 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
 		};
 
-		$scope.addNewRestaurant = function(comment) {
-			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote)) {
-				$scope.missingDatas = false;
 
+		$scope.isDatasCorrect = function(comment, isNewRestaurant) {
+			if (isNewRestaurant) {
+				$scope.missingDatas = !(angular.isDefined(comment.newRestaurantName) && !comment.newRestaurantName.length == 0 && angular.isDefined(comment) && angular.isDefined(comment.comment) && !comment.comment.length == 0 && angular.isDefined(comment.vote) && angular.isNumber(comment.vote));
+			} else {
+				$scope.missingDatas = !(angular.isDefined(comment) && angular.isDefined(comment.comment) && !comment.comment.length == 0 && angular.isDefined(comment.vote) && angular.isNumber(comment.vote));
+			}
+			return !$scope.missingDatas;
+		};
+
+		$scope.addNewRestaurant = function(comment) {
+			//Check datas
+			if ($scope.isDatasCorrect(comment, true)) {
 				RestaurantService.newRestaurant(comment, function() {
 					//Refreshing retaurant list
 					$scope.restaurants = [];
@@ -145,11 +160,30 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 					$('#newRestaurant').modal('toggle');
 					$scope.comment = {};
 				});
-
-			} else {
-				$scope.missingDatas = true;
 			}
 		};
+
+		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
+			//Check datas
+			if ($scope.isDatasCorrect(comment)) {
+				var postData = {};
+				postData.restaurantId = restaurant.id;
+				angular.forEach(comment, function(value, key) {
+					postData[key] = value;
+				});
+
+				RestaurantService.newCommentForRestaurant(postData, function() {
+					//Refreshing retaurant list
+
+					$scope.restaurants = [];
+					$scope.goToPage(1);
+					//Close modal if list is refreshed
+					$('#rateRestaurant').modal('toggle');
+					$scope.comment = {};
+				});
+			}
+		};
+
 		/**
 		 * Get comments, pagination
 		 * setup default values
@@ -197,29 +231,13 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			});
 		};
 
-		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
-			if (angular.isDefined(comment) && angular.isDefined(comment.comment) && angular.isDefined(comment.vote) && angular.isNumber(comment.vote) && angular.isDefined(restaurant) && angular.isDefined(restaurant.name)) {
-				$scope.missingDatas = false;
-				var postData = {};
-				postData.restaurantId = restaurant.id;
-				angular.forEach(comment, function(value, key) {
-					postData[key] = value;
-				});
-
-				RestaurantService.newCommentForRestaurant(postData, function() {
-					//Refreshing retaurant list
-
-					$scope.restaurants = [];
-					$scope.goToPage(1);
-					//Close modal if list is refreshed
-					$('#rateRestaurant').modal('toggle');
-					$scope.comment = {};
-				});
+		$scope.shorting = function(comment) {
+			if (comment.length > 64) {
+				return comment.substring(0, 65) + "...";
 			} else {
-				$scope.missingDatas = true;
+				return comment;
 			}
 		};
-
 	}
 ]).
 
