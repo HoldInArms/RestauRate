@@ -231,6 +231,14 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				$scope.commentCount = tmp.countComments;
 			});
 		};
+
+		$scope.shorting = function(comment) {
+			if (comment.length > 64) {
+				return comment.substring(0, 65) + "...";
+			} else {
+				return comment;
+			}
+		};
 	}
 ]).
 
