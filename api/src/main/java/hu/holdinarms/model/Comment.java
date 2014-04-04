@@ -81,7 +81,7 @@ public class Comment implements Serializable {
      */
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 256)
+    @Size(min = 1, max = 1024)
     @Column(name = "comment")
     private String comment;
 
@@ -121,7 +121,7 @@ public class Comment implements Serializable {
     /**
      * The name of the food.
      */
-    @Size(min = 1, max = 32)
+    @Size(min = 1, max = 128)
     @Column(name = "foodname")
     private String foodName;
 

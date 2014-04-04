@@ -43,7 +43,7 @@ public class CommentDTO implements Serializable{
 	 * The comment.
 	 */
 	@NotNull
-    @Size(min = 1, max = 256)
+    @Size(min = 1, max = 1024)
 	private String comment;
 	
 	/**
@@ -67,7 +67,7 @@ public class CommentDTO implements Serializable{
     /**
      * The name of the food.
      */
-    @Size(min = 1, max = 32)
+    @Size(min = 1, max = 128)
     private String foodName;
 
     /**
