@@ -190,6 +190,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
             restaurantDto.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
             restaurantDto.setAverage(commentDao.getAverageByRestaurantId(bigInteger.longValue()));
             restaurantDto.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setLive(restaurant.isLive());
             
             result.add(restaurantDto);
         }
