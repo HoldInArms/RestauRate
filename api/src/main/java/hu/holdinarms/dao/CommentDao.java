@@ -74,10 +74,22 @@ public class CommentDao extends AbstractDAO<Comment> {
     	return persist(comment);
     }
 
+    /**
+     * Update the comment.
+     * 
+     * @param comment The comment.
+     * @return The persisted comment.
+     */
     public Comment update(Comment comment){
         return persist(comment);
     }
 
+    /**
+     * Return with the number of comments of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of comments.
+     */
     public Integer countComments(Long restaurantId){
 
         String queryString = "SELECT COUNT(id) FROM rr_comments WHERE restaurant_id = :restaurantId AND live = true";
@@ -87,6 +99,14 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
+    /**
+     * Get the comments.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @return The comment list.
+     */
     public List<CommentDTO> getComments(Long restaurantId, Integer from, Integer to){
 
         if(from == null || to == null){
@@ -126,6 +146,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return result;
     }
 
+    /**
+     * Get the number of votes of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of votes.
+     */
     public Integer getVotesByRestaurantId(Long restaurantId){
         String queryString = "SELECT COUNT(id) FROM rr_comments WHERE live = true AND restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
@@ -134,7 +160,13 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
-    public Double getAvargeByRestaurantId(Long restaurantId){
+    /**
+     * Get the average of restaurant.
+     * 
+     * @param restaurantId
+     * @return
+     */
+    public Double getAverageByRestaurantId(Long restaurantId){
         String queryString = "select SUM(vote)/CAST(COUNT(id) AS float4) from rr_comments where live = true and restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
@@ -142,6 +174,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return (Double) query.uniqueResult();
     }
 
+    /**
+     * Get the last comment of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The last comment.
+     */
     public String lastCommentByRestaurantId(Long restaurantId){
         String queryString = "SELECT id from rr_comments WHERE restaurant_id = :restaurantId AND live = true order by createdate DESC LIMIT 1";
 
@@ -153,6 +191,16 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((Comment) get( ((BigInteger)query.uniqueResult()).longValue() )).getComment();
     }
 
+    /**
+     * Get the comments for admin page.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by property.
+     * @param direction The direction property.
+     * @return The comment list.
+     */
     public List<CommentDTO> getCommentsForAdmin(Long restaurantId, Integer from, Integer to, String orderby, String direction){
         
         if(from == null || to == null){
@@ -206,6 +254,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return result;
     }
 
+    /**
+     * Number of comments for admin side.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of comments.
+     */
     public Integer countCommentsForAdmin(Long restaurantId){
         String queryString = "SELECT COUNT(id) FROM rr_COMMENTS WHERE true=true ";
         
@@ -221,6 +275,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
+    /**
+     * Get the order by property.
+     * 
+     * @param orderBy The order by property.
+     * @return The order by property.
+     */
     public String getOrderByProperty(String orderBy){
        if(Arrays.asList(ORDERBY_COLUMN_NAMES).contains(orderBy)){
             return orderBy;

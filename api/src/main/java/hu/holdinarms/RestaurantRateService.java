@@ -16,6 +16,15 @@
  ***************************************************************************************************/
 package hu.holdinarms;
 
+import hu.holdinarms.authentication.UserAuthenticator;
+import hu.holdinarms.dao.AdminDao;
+import hu.holdinarms.model.Admin;
+import hu.holdinarms.model.Comment;
+import hu.holdinarms.model.Restaurant;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fiestacabin.dropwizard.guice.AutoConfigService;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -27,16 +36,6 @@ import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
 import com.yammer.dropwizard.migrations.MigrationsBundle;
-
-import hu.holdinarms.authentication.UserAuthenticator;
-import hu.holdinarms.model.Admin;
-import hu.holdinarms.dao.AdminDao;
-import hu.holdinarms.model.Comment;
-import hu.holdinarms.model.Restaurant;
-import hu.holdinarms.resource.HtmlPageResource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is the main Service class, the entry point of the API.
