@@ -32,7 +32,7 @@
                     <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
                 </th>
                 <th class="text-center">
-                    <span class="table-header-sorting" ng-click="changeOrderBy('avarge')">Avg. Score</span>
+                    <span class="table-header-sorting" ng-click="changeOrderBy('average')">Avg. Score</span>
                     <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
                 </th>
                 <th class="text-center table-header-rounded-right">
@@ -48,8 +48,8 @@
                 </td>
                 <td>{{restaurant.votes}}</td>
                 <td>
-                    <progressbar class="custom-progressbar" value="restaurant.avarge" max="5" type="{{type(restaurant.avarge)}}">
-                        <span class="">{{restaurant.avarge| number:1}} / 5</span>
+                    <progressbar class="custom-progressbar" value="restaurant.average" max="5" type="{{type(restaurant.average)}}">
+                        <span class="">{{restaurant.average| number:1}} / 5</span>
                     </progressbar>
                 </td>
                 <td>
