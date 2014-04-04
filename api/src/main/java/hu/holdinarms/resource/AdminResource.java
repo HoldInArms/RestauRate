@@ -36,7 +36,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  *
  * @author Dgzt
  */
-@Path("/admin")
+@Path("/api/admin")
 @Produces(MediaType.APPLICATION_JSON)
 public class AdminResource {
 

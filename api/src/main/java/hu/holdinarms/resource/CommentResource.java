@@ -43,7 +43,7 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
  *
  * @author Dgzt
  */
-@Path("/comment")
+@Path("/api/comment")
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource { 
 
