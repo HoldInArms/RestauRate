@@ -34,14 +34,33 @@ public class AdminDao extends AbstractDAO<Admin>{
         super(sessionFactory);
     }
 
+    /**
+     * Find the admin by id.
+     * 
+     * @param id The id of admin.
+     * @return The admin.
+     */
     public Admin findById(Long id){
         return (Admin) uniqueResult(namedQuery("Admin.findById").setParameter("id", id));
     }
 
+    /**
+     * Find the admin by username.
+     * 
+     * @param username The admin's name.
+     * @return The admin.
+     */
     public Admin findByUsername(String username){
         return (Admin) uniqueResult(namedQuery("Admin.findByUsername").setParameter("username", username));
     }
     
+    /**
+     * The authentication of admin.
+     * 
+     * @param username The admin's username.
+     * @param password The admin's password.
+     * @return The token.
+     */
     public String authenticate(String username, String password){
         Admin admin = uniqueResult(namedQuery("Admin.authenticate").setParameter("username", username).setParameter("password", password));
 
@@ -58,6 +77,12 @@ public class AdminDao extends AbstractDAO<Admin>{
         return tokenValue;
     }
     
+    /**
+     * Save the new admin.
+     * 
+     * @param admin The new admin's datas.
+     * @return The persisted admin.
+     */
     public Admin save(Admin admin){
         return persist(admin);
     }
