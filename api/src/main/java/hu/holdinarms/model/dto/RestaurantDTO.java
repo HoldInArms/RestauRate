@@ -52,8 +52,13 @@ public class RestaurantDTO implements Serializable {
      * The last comment.
      */
     private String lastComment;
+    
+    /**
+     * Status of the restaurant.
+     */
+    private Boolean live;
 
-    //~-----------------------------------------------------   
+	//~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
     public Long getId() {
@@ -94,6 +99,14 @@ public class RestaurantDTO implements Serializable {
 
 	public void setLastComment(String lastComment) {
 		this.lastComment = lastComment;
+	}
+	
+    public Boolean getLive() {
+		return live;
+	}
+
+	public void setLive(Boolean live) {
+		this.live = live;
 	}
     
 }
