@@ -41,7 +41,7 @@ import com.yammer.dropwizard.hibernate.UnitOfWork;
  *
  * @author Dgzt
  */
-@Path("/restaurant")
+@Path("/api/restaurant")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestaurantResource {
 	
