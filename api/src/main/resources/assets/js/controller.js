@@ -166,7 +166,6 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
 			//Check datas
 			if ($scope.isDatasCorrect(comment)) {
-				console.log("asd");
 				var postData = {};
 				postData.restaurantId = restaurant.id;
 				angular.forEach(comment, function(value, key) {
