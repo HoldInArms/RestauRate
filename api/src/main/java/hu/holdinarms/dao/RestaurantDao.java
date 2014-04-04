@@ -175,7 +175,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         }
         
         if(filterText != null && !filterText.isEmpty()){
-            filterBuilder.append("and name like :filterText ");
+            filterBuilder.append("and lower(name) like lower(:filterText) ");
         }
     }
 
