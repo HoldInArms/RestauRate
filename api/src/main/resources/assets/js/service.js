@@ -16,7 +16,7 @@
  ***************************************************************************************************/
 
 //base url for api calls
-var baseUrl = "/api/";
+var baseUrl = "/";
 angular.module('RestaurantBlacklist.services', [])
 
 /**

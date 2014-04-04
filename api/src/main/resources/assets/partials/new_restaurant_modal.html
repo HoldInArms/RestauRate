@@ -15,7 +15,7 @@
      ------ program. If not, see <http://www.gnu.org/licenses/>.                                    ------
      ----------------------------------------------------------------------------------------------------- --> 
 
-<div class="modal fade" id="rateRestaurant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto;">
+<div class="modal fade" id="newRestaurant" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y: auto;">
     <div class="modal-dialog custom-modal-style">
         <div class="modal-content">
             <form name="newRestaurantForm" novalidate>
@@ -23,7 +23,7 @@
                     <div class="row">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-right: 15px;"><span class="glyphicon glyphicon-remove"></span></button>
                         <h3 class="text-center">
-                            Rate A Restaurant!
+                            Suggest A New Restaurant!
                         </h3>
                     </div>
                 </div>
@@ -33,14 +33,14 @@
                             <label class="custom-input-field-label">Restaurant Name: </label>
                         </div>
                         <div class="col-md-8">
-                            <select class="form-control custom-input-field" ng-options="r.name for r in allRestaurants" ng-model="restaurantIndex">
-                            </select>
+                            <input name="name" class="form-control custom-input-field" type="text" maxlength="32" placeholder="Gulasch I" required="true" ng-model="comment.newRestaurantName"/>
                         </div>
                     </div>
-                    <ng-include src="'partials/restaurant_template.html'"></ng-include>
+                    <ng-include src="'assets/partials/restaurant_template.html'"></ng-include>
                 </div>
+                  
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-restaurant" ng-click="addNewCommentForRestaurant(comment, restaurantIndex)">Send Request</button>
+                    <button type="button" class="btn btn-restaurant" ng-click="addNewRestaurant(comment)">Send Request</button>
                 </div>
             </form>
         </div><!-- /.modal-content -->
