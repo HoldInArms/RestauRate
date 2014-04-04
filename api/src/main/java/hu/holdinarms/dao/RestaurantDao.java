@@ -49,14 +49,33 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         super(sessionFactory);
     }
 
+    /**
+     * Find by restaurant by id.
+     * 
+     * @param id The id of restaurant.
+     * @return The restaurant.
+     */
     public Restaurant findById(Long id){
         return uniqueResult(namedQuery("Restaurant.findById").setParameter("id", id));
     }
 
+    /**
+     * Update the given restaurant.
+     * 
+     * @param restaurant The restaurant.
+     * @return The updated restaurant.
+     */
     public Restaurant update(Restaurant restaurant){
         return persist(restaurant);
     }
     
+    /**
+     * The all restaurant.
+     * If the admin call, then return with where the live is false.
+     * 
+     * @param admin
+     * @return
+     */
     public List<RestaurantDTO> findAll( Admin admin ){
         String queryString = "SELECT id FROM rr_restaurants";
         if( admin == null ){
@@ -78,6 +97,13 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return results;
     }
 
+    /**
+     * The number of restaurants.
+     * 
+     * @param admin The admin.
+     * @param filterText The filter text.
+     * @return The number of restaurants.
+     */
     public Long countRestaurants( Admin admin, String filterText){
         StringBuilder filterBuilder = new StringBuilder();
 
@@ -96,6 +122,17 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return ((BigInteger)query.uniqueResult()).longValue();
     }
 
+    /**
+     * Get the restaurant list.
+     * 
+     * @param admin The admin.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by property.
+     * @param direction The direction property.
+     * @param filterText The filter text.
+     * @return The list of restaurants.
+     */
     public List<RestaurantDTO> getRestaurants(Admin admin, Integer from, Integer to, String orderby, String direction, String filterText){
         if(from == null || to == null){
             return new ArrayList<RestaurantDTO>();
@@ -151,7 +188,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
             restaurantDto.setId(restaurant.getId());
             restaurantDto.setName(restaurant.getName());
             restaurantDto.setLastComment(commentDao.lastCommentByRestaurantId(bigInteger.longValue()));
-            restaurantDto.setAverage(commentDao.getAvargeByRestaurantId(bigInteger.longValue()));
+            restaurantDto.setAverage(commentDao.getAverageByRestaurantId(bigInteger.longValue()));
             restaurantDto.setVotes(commentDao.getVotesByRestaurantId(bigInteger.longValue()));
             
             result.add(restaurantDto);
@@ -160,6 +197,12 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return result;
     }
 
+    /**
+     * Save the given restaurant.
+     * 
+     * @param name The name of the restaurant.
+     * @return The persisted restaurant.
+     */
     public Restaurant save(String name){
         Restaurant newRestaurant = new Restaurant();
         newRestaurant.setName(name);
@@ -169,6 +212,13 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return persist(newRestaurant);
     }
 
+    /**
+     * Add the filter to filter builder.
+     * 
+     * @param filterBuilder The filter builder.
+     * @param admin The admin.
+     * @param filterText The filter text.
+     */
     private void addFilter(StringBuilder filterBuilder, Admin admin, String filterText){
         if( admin == null ){
             filterBuilder.append("and live = true ");
@@ -179,6 +229,12 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         }
     }
 
+    /**
+     * Get the order by property.
+     * 
+     * @param orderby The order by property.
+     * @return The order by property.
+     */
     private String getOrderByProperty(String orderby){
         if(Arrays.asList(ORDERBY_COLUMN_NAMES).contains(orderby)){
             return orderby;
@@ -187,6 +243,12 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         return "latest_comment";
     }
 
+    /**
+     * Add the filter query parameters to the query.
+     * 
+     * @param query The query.
+     * @param filterText The filter text.
+     */
     private void addFilterQueryParameters(Query query, String filterText){
         if(filterText != null && !filterText.isEmpty()){
             query.setParameter("filterText", "%"+filterText+"%");
