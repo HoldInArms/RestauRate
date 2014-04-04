@@ -40,6 +40,11 @@ public class CommentDTO implements Serializable{
     //~ Member fields
     //~----------------------------------------------------- 
 	/**
+	 * Id of comment.
+	 */
+	private Long id;
+
+	/**
 	 * The comment.
 	 */
 	@NotNull
@@ -84,10 +89,23 @@ public class CommentDTO implements Serializable{
      * The dispatch's behaviour.
      */
     private Boolean dispatchBehaviour;
+    
+    /**
+     * Status of the comment.
+     */
+    private Boolean live;
 
-    //~-----------------------------------------------------   
+	//~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
 	public String getComment() {
 		return comment;
 	}
@@ -150,6 +168,14 @@ public class CommentDTO implements Serializable{
 
 	public void setDispatchBehaviour(Boolean dispatchBehaviour) {
 		this.dispatchBehaviour = dispatchBehaviour;
+	}
+	
+    public Boolean getLive() {
+		return live;
+	}
+
+	public void setLive(Boolean live) {
+		this.live = live;
 	}
 
 }
