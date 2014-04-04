@@ -239,6 +239,7 @@ public class CommentDao extends AbstractDAO<Comment> {
         	Comment comment = get(bigInteger.longValue());
         	
         	CommentDTO commentDto = new CommentDTO();
+        	commentDto.setId(comment.getId());
         	commentDto.setComment(comment.getComment());
         	commentDto.setVote(comment.getVote());
         	commentDto.setOrderTime(comment.getOrderTime());
@@ -247,6 +248,7 @@ public class CommentDao extends AbstractDAO<Comment> {
         	commentDto.setFoodPrice(comment.getFoodPrice());
         	commentDto.setWorthMoney(comment.isWorthMoney());
         	commentDto.setDispatchBehaviour(comment.isDispatchBehaviour());
+        	commentDto.setLive(comment.isLive());
         	
             result.add( commentDto );
         }
