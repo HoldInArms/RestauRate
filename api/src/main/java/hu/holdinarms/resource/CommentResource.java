@@ -110,6 +110,7 @@ public class CommentResource {
             @QueryParam("from") Integer from, @QueryParam("to") Integer to)
     {
         CommentPageDTO commentPage = new CommentPageDTO();
+        commentPage.setRestaurantName(restaurantDao.findById(restaurantId).getName());
         commentPage.setComments(commentDao.getComments(restaurantId, from, to));
         commentPage.setCountComments(commentDao.countComments(restaurantId));
         
