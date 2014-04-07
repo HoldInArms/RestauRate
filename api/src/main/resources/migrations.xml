@@ -129,4 +129,11 @@
     	<modifyDataType tableName="rr_comments" columnName="comment" newDataType="varchar(1024)"/>
     	<modifyDataType tableName="rr_comments" columnName="foodname" newDataType="varchar(128)"/>
     </changeSet>
+    <changeSet id="2014.04.07.10.20" author="Dgzt">
+    <addColumn tableName="rr_admins">
+    	<column name="createdate" type="datetime">
+    		<constraints nullable="true"/>
+    	</column>
+    </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -17,6 +17,7 @@
 package hu.holdinarms.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -94,6 +95,13 @@ public class Admin implements Serializable {
     @JoinColumn(name = "whoadded", referencedColumnName = "id")
     @OneToOne
     private Admin whoAdded;
+    
+    /**
+     * The created date.
+     */
+    @Basic(optional = false)
+    @Column(name = "createdate")
+    private Date createDate;
 
     //~-----------------------------------------------------   
     //~ Getters / setters
@@ -129,4 +137,13 @@ public class Admin implements Serializable {
     public void setWhoAdded(Admin whoAdded) {
         this.whoAdded = whoAdded;
     }
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+    
 }

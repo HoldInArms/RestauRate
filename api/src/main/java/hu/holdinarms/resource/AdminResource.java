@@ -16,12 +16,13 @@
  ***************************************************************************************************/
 package hu.holdinarms.resource;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.auth.Auth;
-import com.yammer.dropwizard.hibernate.UnitOfWork;
 import hu.holdinarms.authentication.TokenStorage;
 import hu.holdinarms.dao.AdminDao;
 import hu.holdinarms.model.Admin;
+import hu.holdinarms.model.dto.AdminDTO;
+
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -29,7 +30,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 import org.apache.commons.codec.digest.DigestUtils;
+
+import com.google.inject.Inject;
+import com.yammer.dropwizard.auth.Auth;
+import com.yammer.dropwizard.hibernate.UnitOfWork;
 
 /**
  * The resource for {@file Admin}.
@@ -48,11 +54,6 @@ public class AdminResource {
 	 */
 	@Inject
     private AdminDao adminDao;
-//    
-//    @Inject
-//    AdminResource(AdminDao adminDao){
-//        this.adminDao = adminDao;
-//    }
     
 	//~-----------------------------------------------------   
     //~ Services
@@ -120,5 +121,19 @@ public class AdminResource {
     public Admin changePassword(@Auth Admin admin, @PathParam("newPassword") String newPassword){
         admin.setPassword(DigestUtils.sha256Hex(newPassword));
         return adminDao.save(admin);
+    }
+    
+
+    /**
+     * Get the admin list.
+     * 
+     * @param admin Who requested the service.
+     * @return The admin list.
+     */
+    @GET
+    @UnitOfWork
+    @Path("/list")
+    public List<AdminDTO> getAdminList( @Auth Admin admin ){
+    	return adminDao.getAdminList();
     }
 }
