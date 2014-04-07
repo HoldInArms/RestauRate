@@ -148,4 +148,21 @@
     		</column>
     	</addColumn>
     </changeSet>
+    <changeSet id="2014.04.07.13.30" author="Dgzt">
+    	<createTable tableName="rr_users">
+    		<column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="email" type="varchar(64)">
+            	<constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="varchar(64)">
+            	<constraints nullable="false" unique="true"/>
+            </column>
+            <column name="registrationdate" type="datetime">
+            	<constraints nullable="false"/>
+            </column>
+    	</createTable>
+    	<createSequence sequenceName="user_id_seq" minValue="1"/>
+    </changeSet>
 </databaseChangeLog>
