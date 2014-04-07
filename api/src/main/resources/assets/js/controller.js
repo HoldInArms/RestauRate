@@ -32,8 +32,10 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.orderby = "";
 
 		//Get all restaurants
-		$scope.allRestaurants = [];
-		RestaurantService.getAllRestaurants($scope.allRestaurants);
+		$scope.getAllRestaurants = function() {
+			$scope.allRestaurants = [];
+			RestaurantService.getAllRestaurants($scope.allRestaurants);
+		};
 
 		$scope.changeDirection = function(pageChanged, rateOrVotes) {
 			if (pageChanged) {
@@ -159,6 +161,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 					//Close modal if list is refreshed
 					$('#newRestaurant').modal('toggle');
 					$scope.comment = {};
+					$scope.getAllRestaurants();
 				});
 			}
 		};
