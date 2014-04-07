@@ -204,7 +204,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			var from = ($scope.currentCommentPage - 1) * $scope.commentPerpage + 1;
 			var to = $scope.currentCommentPage * $scope.commentPerpage;
 
-			if (page === $scope.allCommentPages) {
+			if ($scope.savedId == index && page === $scope.allCommentPages) {
 				to = $scope.commentCount;
 				$scope.comments.splice(to - from, $scope.currentCommentPage - (to - from));
 			}
@@ -217,6 +217,9 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			var tmp = {};
 			$scope.comments = [];
 			RestaurantService.getCommentsById($scope.restaurants[index].id, tmp, from, to, function() {
+				//Save the id for if (page === $scope.allCommentPages)
+				$scope.savedId = index;
+
 				//Adding delevery time
 				angular.forEach(tmp.comments, function(value, key) {
 					if (value.arriveTime && value.orderTime) {
