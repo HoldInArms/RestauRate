@@ -16,11 +16,19 @@
  ***************************************************************************************************/
 package hu.holdinarms.dao;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.hibernate.AbstractDAO;
 import hu.holdinarms.authentication.TokenStorage;
 import hu.holdinarms.model.Admin;
+import hu.holdinarms.model.dto.AdminDTO;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+
+import com.google.inject.Inject;
+import com.yammer.dropwizard.hibernate.AbstractDAO;
 
 /**
  * The DAO for {@file Admin}.
@@ -84,7 +92,38 @@ public class AdminDao extends AbstractDAO<Admin>{
      * @return The persisted admin.
      */
     public Admin save(Admin admin){
+    	admin.setCreateDate(new Date());
         return persist(admin);
+    }
+    
+    /**
+     * Get the admin list.
+     * 
+     * @return The admin list.
+     */
+    public List<AdminDTO> getAdminList(){
+    	String queryString = "SELECT a.id FROM Admin AS a";
+    	
+    	Query query = currentSession().createQuery(queryString);
+    	
+    	@SuppressWarnings("unchecked")
+		List<Long> adminList = query.list();
+    	
+    	List<AdminDTO> adminDtoList = new ArrayList<AdminDTO>();
+    	
+    	for( Long adminId : adminList ){
+    		Admin admin = get(adminId);
+    		AdminDTO adminDto = new AdminDTO();
+    		adminDto.setUsername(admin.getUsername());
+    		if(admin.getWhoAdded() != null){
+    			adminDto.setWhoAdded(admin.getWhoAdded().getUsername());
+    		}
+    		adminDto.setCreateDate(admin.getCreateDate());
+    		
+    		adminDtoList.add(adminDto);
+    	}
+    	
+    	return adminDtoList;
     }
 
 }
