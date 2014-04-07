@@ -32,7 +32,7 @@
             <div class="col-md-9">
             <form name="form">
                 <div class="input-group">
-                    <input name="money" type="number" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice"/>
+                    <input name="money" min="0" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice" not-null-number/>
                     <span class="input-group-addon custom-input-field">HUF</span>
                     <!--                    <select class="form-control custom-input-field input-group-addon" style="width: 90px;">
                     <option selected="selected">HUF</option>
@@ -43,8 +43,8 @@
                 -->
             
             </div>
-            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$error.number">
-                    Not valid number!</label>
+            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$invalid">
+                    Wrong number!</label>
             </form>
 
         </div>
