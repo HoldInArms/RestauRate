@@ -136,4 +136,16 @@
     	</column>
     </addColumn>
     </changeSet>
+    <changeSet id="2014.04.07.11.45" author="Dgzt">
+    	<dropColumn tableName="rr_comments" columnName="ordertime"/>
+    	<dropColumn tableName="rr_comments" columnName="arrivetime"/>
+    	<addColumn tableName="rr_comments">
+    		<column name="ordertime" type="datetime">
+    			<constraints nullable="true"/>
+    		</column>
+    		<column name="arrivetime" type="datetime">
+    			<constraints nullable="true"/>
+    		</column>
+    	</addColumn>
+    </changeSet>
 </databaseChangeLog>
