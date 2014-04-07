@@ -35,13 +35,32 @@ public class CommentPageDTO implements Serializable {
 	//~-----------------------------------------------------   
     //~ Member fields
     //~----------------------------------------------------- 
+	/**
+	 * The name of the restaurant.
+	 */
+	private String restaurantName;
+	
+	/**
+	 * The list of comments.
+	 */
 	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
 
+	/**
+	 * The number of all comments of restaurant.s
+	 */
     private Integer countComments = 0;
     
     //~-----------------------------------------------------   
     //~ Getters / setters
     //~-----------------------------------------------------
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
+    
     public List<CommentDTO> getComments() {
         return comments;
     }
