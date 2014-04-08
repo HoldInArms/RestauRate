@@ -15,7 +15,7 @@
  ***** program. If not, see <http://www.gnu.org/licenses/>. *****
  ***************************************************************************************************/
 
-angular.module('RestaurantBlacklist.controllers', []).
+angular.module('RestauRate.controllers', []).
 controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantService',
 	function($rootScope, $scope, $state, RestaurantService) {
 
