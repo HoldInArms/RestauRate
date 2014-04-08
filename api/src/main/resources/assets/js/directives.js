@@ -1,4 +1,4 @@
-angular.module('RestaurantBlacklist.directives', [])
+angular.module('RestauRate.directives', [])
 
 .directive('notNullNumber', ['$parse',
 	function($parse) {

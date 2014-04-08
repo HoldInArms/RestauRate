@@ -17,7 +17,7 @@
 
 //base url for api calls
 var baseUrl = "/api/";
-angular.module('RestaurantBlacklist.services', [])
+angular.module('RestauRate.services', [])
 
 /**
  * CredentialHolder factory

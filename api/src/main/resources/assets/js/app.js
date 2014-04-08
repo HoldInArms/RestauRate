@@ -15,15 +15,15 @@
  ***** program. If not, see <http://www.gnu.org/licenses/>. *****
  ***************************************************************************************************/
 
-var RestaurantBlacklist = angular.module('RestaurantBlacklist', [
-    "RestaurantBlacklist.controllers",
-    "RestaurantBlacklist.services",
-    "RestaurantBlacklist.directives",
+var RestauRate = angular.module('RestauRate', [
+    "RestauRate.controllers",
+    "RestauRate.services",
+    "RestauRate.directives",
     "ui.router",
     "ui.bootstrap"
 ]);
 
-RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {
+RestauRate.config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/home"),
     $stateProvider
