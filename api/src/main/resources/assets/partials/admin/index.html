@@ -14,23 +14,23 @@
      ------ You should have received a copy of the GNU General Public License along with this       ------
      ------ program. If not, see <http://www.gnu.org/licenses/>.                                    ------
      ----------------------------------------------------------------------------------------------------- --> 
-     
-<div class="col-md-3">
+
+<div class="col-md-3" ng-controller="AdminMenu">
     <div class="row margin-top-md margin-bot-lg text-center">
         <img class="logo-style" src="assets/pics/logo.png" alt="LOGO" popover="There is a popover on this logo. It's SO funny. I hope you are happy now Gergely Peidl." popover-trigger="mouseenter" popover-placement="bottom"/>
     </div>
     <div id="admin_menu">
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant-admin-color-green" style="width: 100%;" ui-sref="admin.restaurants">Restaurant List</button>
+            <button type=button" class="btn" ng-class="{true :'btn-restaurant-admin-color-green', false:'btn btn-restaurant'}[isInState('admin.restaurants')]" style="width: 100%;" ui-sref="admin.restaurants">Restaurant List</button>
         </div>
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.comments">Comment List</button>
+            <button type=button" cclass="btn" ng-class="{true :'btn-restaurant-admin-color-green', false:'btn btn-restaurant'}[isInState('admin.comments')]"  style="width: 100%;" ui-sref="admin.comments">Comment List</button>
         </div>
         <div class="row text-center margin-top-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.new-admin">New Admin</button>
+            <button type=button" class="btn" ng-class="{true :'btn-restaurant-admin-color-green', false:'btn btn-restaurant'}[isInState('admin.new-admin')]"  style="width: 100%;" ui-sref="admin.new-admin">New Admin</button>
         </div>
         <div class="row text-center margin-top-md margin-bot-md margin-side-xs">
-            <button type=button" class="btn btn-restaurant" style="width: 100%;" ui-sref="admin.change_password">Change Password</button>
+            <button type=button" class="btn" ng-class="{true :'btn-restaurant-admin-color-green', false:'btn btn-restaurant'}[isInState('admin.change_password')]"  style="width: 100%;" ui-sref="admin.change_password">Change Password</button>
         </div>
         <div class="row text-center margin-top-md margin-bot-md margin-side-xs">
             <button type=button" class="btn btn-restaurant-admin-color-red" style="width: 100%;" ui-sref="admin.logout">Logout</button>
