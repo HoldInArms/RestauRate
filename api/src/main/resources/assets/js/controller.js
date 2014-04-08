@@ -235,6 +235,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				});
 
 				$scope.comments = tmp.comments;
+				$scope.commentRestaurantName = tmp.restaurantName;
 				$scope.allCommentPages = Math.ceil(tmp.countComments / $scope.commentPerpage);
 				$scope.commentCount = tmp.countComments;
 			});
