@@ -128,19 +128,22 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 			$scope.opened = true;
 		};
+ $scope.orderTime;
+		$scope.today = new Date();
 
-		$scope.onTimeSetOrder = function(newDate, oldDate) {
-			var d = new Date(newDate);
-			$scope.comment.orderTime = d.valueOf();
+		$scope.onArriveTimeChange = function(orderDate, orderTime, arriveTime) {
+			var tmpOrder = new Date(orderDate);
+			tmpOrder.setHours(orderTime.getHours(), orderTime.getMinutes());
+			$scope.comment.orderTime = tmpOrder;
+
+			var tmpArrive = new Date(orderDate);
+			tmpArrive.setHours(arriveTime.getHours(), arriveTime.getMinutes());
+			$scope.comment.arriveTime = tmpArrive;
+
+			var d = new Date($scope.comment.arriveTime - $scope.comment.orderTime);
+			$scope.deliveryTime = d.getUTCHours() + ":" + d.getUTCMinute(s);
+
 		};
-
-		$scope.onTimeSetArrive = function(newDate, oldDate) {
-			var d = new Date(newDate);
-			$scope.comment.arriveTime = d.valueOf();
-			var dd = new Date($scope.comment.arriveTime - $scope.comment.orderTime);
-			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
-		};
-
 
 		$scope.isDatasCorrect = function(comment, isNewRestaurant) {
 			if (isNewRestaurant) {
