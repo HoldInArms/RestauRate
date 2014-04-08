@@ -128,7 +128,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 			$scope.opened = true;
 		};
- $scope.orderTime;
+		$scope.orderTime;
 		$scope.today = new Date();
 
 		$scope.onArriveTimeChange = function(orderDate, orderTime, arriveTime) {
@@ -248,6 +248,18 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 				return comment;
 			}
 		};
+	}
+]).
+
+controller('AdminMenu', ['$scope', '$filter', '$state', 'CredentialHolder',
+	function($scope, $filter, $state, CredentialHolder) {
+		if (CredentialHolder.isLoggedIn()) {
+			$scope.isInState = function(state){
+				return $filter('isState')(state);
+			};
+		} else {
+			$state.go("admin.login");
+		}
 	}
 ]).
 
