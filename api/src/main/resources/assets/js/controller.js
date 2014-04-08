@@ -32,8 +32,10 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 		$scope.orderby = "";
 
 		//Get all restaurants
-		$scope.allRestaurants = [];
-		RestaurantService.getAllRestaurants($scope.allRestaurants);
+		$scope.getAllRestaurants = function() {
+			$scope.allRestaurants = [];
+			RestaurantService.getAllRestaurants($scope.allRestaurants);
+		};
 
 		$scope.changeDirection = function(pageChanged, rateOrVotes) {
 			if (pageChanged) {
@@ -126,19 +128,22 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 			$scope.opened = true;
 		};
+ $scope.orderTime;
+		$scope.today = new Date();
 
-		$scope.onTimeSetOrder = function(newDate, oldDate) {
-			var d = new Date(newDate);
-			$scope.comment.orderTime = d.valueOf();
+		$scope.onArriveTimeChange = function(orderDate, orderTime, arriveTime) {
+			var tmpOrder = new Date(orderDate);
+			tmpOrder.setHours(orderTime.getHours(), orderTime.getMinutes());
+			$scope.comment.orderTime = tmpOrder;
+
+			var tmpArrive = new Date(orderDate);
+			tmpArrive.setHours(arriveTime.getHours(), arriveTime.getMinutes());
+			$scope.comment.arriveTime = tmpArrive;
+
+			var d = new Date($scope.comment.arriveTime - $scope.comment.orderTime);
+			$scope.deliveryTime = d.getUTCHours() + ":" + d.getUTCMinute(s);
+
 		};
-
-		$scope.onTimeSetArrive = function(newDate, oldDate) {
-			var d = new Date(newDate);
-			$scope.comment.arriveTime = d.valueOf();
-			var dd = new Date($scope.comment.arriveTime - $scope.comment.orderTime);
-			$scope.deliveryTime = dd.getUTCHours() + ":" + dd.getUTCMinutes();
-		};
-
 
 		$scope.isDatasCorrect = function(comment, isNewRestaurant) {
 			if (isNewRestaurant) {
@@ -159,6 +164,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 					//Close modal if list is refreshed
 					$('#newRestaurant').modal('toggle');
 					$scope.comment = {};
+					$scope.getAllRestaurants();
 				});
 			}
 		};
@@ -204,7 +210,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			var from = ($scope.currentCommentPage - 1) * $scope.commentPerpage + 1;
 			var to = $scope.currentCommentPage * $scope.commentPerpage;
 
-			if (page === $scope.allCommentPages) {
+			if ($scope.savedId == index && page === $scope.allCommentPages) {
 				to = $scope.commentCount;
 				$scope.comments.splice(to - from, $scope.currentCommentPage - (to - from));
 			}
@@ -217,6 +223,9 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			var tmp = {};
 			$scope.comments = [];
 			RestaurantService.getCommentsById($scope.restaurants[index].id, tmp, from, to, function() {
+				//Save the id for if (page === $scope.allCommentPages)
+				$scope.savedId = index;
+
 				//Adding delevery time
 				angular.forEach(tmp.comments, function(value, key) {
 					if (value.arriveTime && value.orderTime) {

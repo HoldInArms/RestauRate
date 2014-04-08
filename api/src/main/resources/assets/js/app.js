@@ -18,10 +18,9 @@
 var RestaurantBlacklist = angular.module('RestaurantBlacklist', [
     "RestaurantBlacklist.controllers",
     "RestaurantBlacklist.services",
+    "RestaurantBlacklist.directives",
     "ui.router",
-    "ui.bootstrap",
-    "ui.bootstrap.datetimepicker"
-
+    "ui.bootstrap"
 ]);
 
 RestaurantBlacklist.config(function($stateProvider, $urlRouterProvider) {

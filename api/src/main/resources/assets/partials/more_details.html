@@ -32,7 +32,7 @@
             <div class="col-md-9">
             <form name="form">
                 <div class="input-group">
-                    <input name="money" type="number" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice"/>
+                    <input name="money" min="0" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice" not-null-number/>
                     <span class="input-group-addon custom-input-field">HUF</span>
                     <!--                    <select class="form-control custom-input-field input-group-addon" style="width: 90px;">
                     <option selected="selected">HUF</option>
@@ -43,8 +43,8 @@
                 -->
             
             </div>
-            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$error.number">
-                    Not valid number!</label>
+            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$invalid">
+                    Wrong number!</label>
             </form>
 
         </div>
@@ -68,40 +68,26 @@
     </div>
     <div class ="col-md-9">
         <div class="input-group">
-            <span class="input-group-addon custom-input-field" ng-if="comment.orderTime">{{comment.orderTime| date:'yyyy.MM.dd. HH:mm'}}</span>
-            <span class="input-group-addon custom-input-field" ng-if="!comment.orderTime">Select order time</span>
-            <span class="input-group-btn">
-                <button class="btn btn-restaurant input-group-btn dropdown-toggle" style="background-color: #FFFFFF; border-color: rgb(204, 204, 204); border-width: 2px;" role="button" data-toggle="dropdown" data-target="#">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <datetimepicker data-ng-model="data.comment.orderTime" data-on-set-time="onTimeSetOrder" data-datetimepicker-config="{startView: 'day', dropdownSelector: '.dropdown-toggle'}"></datetimepicker>
-                </ul>
-            </span>
-        </div>
-    </div>
-</div>
-<div class="row margin-top-sm margin-bot-sm margin-more-details">
-    <div class="col-md-3">
-        <label class="custom-input-field-label">Arrive Time:</label>
-    </div>
-    <div class ="col-md-9">
-        <div class="input-group">
-            <span class="input-group-addon custom-input-field" ng-if="comment.arriveTime">{{comment.arriveTime| date:'yyyy.MM.dd. HH:mm'}}</span>
-            <span class="input-group-addon custom-input-field" ng-if="!comment.arriveTime">Select arrive time</span>
-            <span class="input-group-btn">
-                <button id="arriveDate" class="btn btn-restaurant input-group-btn dropdown-toggle my-toggle-select" style="background-color: #FFFFFF; border-color: rgb(204, 204, 204); border-width: 2px;" role="button" data-toggle="dropdown" data-target="#">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                    <datetimepicker data-ng-model="data.comment.arriveTime" data-on-set-time="onTimeSetArrive" data-datetimepicker-config="{startView: 'day', dropdownSelector: '#arriveDate'}"></datetimepicker>
-                </ul>
+            <input type="text" class="form-control" datepicker-popup="y.MM.dd." ng-model="orderDate" show-weeks="false" show-button-bar="false" max="today"/>
+            <div ng-show="orderDate" ng-model="orderTime" style="display:inline-block;">
+                <timepicker show-meridian="ismeridian"></timepicker>
             </div>
         </div>
     </div>
 </div>
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="orderTime">
+    <div class="col-md-3">
+        <label class="custom-input-field-label">Arrive Time:</label>
+    </div>
+    <div class ="col-md-9">   
+        <input class="form-control" type="text" value="{{orderTime | date: 'y.MM.dd.'}}" disabled="disabled" />
+        <div ng-model="arriveTime" ng-change="onArriveTimeChange(orderDate, orderTime, arriveTime)" style="display:inline-block;">
+            <timepicker show-meridian="ismeridian"></timepicker>
+        </div>
+    </div>
+</div>
 
-<div class="row margin-top-sm margin-bot-sm margin-more-details">
+<div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="comment.orderTime">
     <div class="col-md-3">
         <label class="custom-input-field-label">Delivery Time:</label>
     </div>
