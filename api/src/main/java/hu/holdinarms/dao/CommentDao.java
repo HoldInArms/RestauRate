@@ -139,6 +139,7 @@ public class CommentDao extends AbstractDAO<Comment> {
         	commentDto.setFoodPrice(comment.getFoodPrice());
         	commentDto.setWorthMoney(comment.isWorthMoney());
         	commentDto.setDispatchBehaviour(comment.isDispatchBehaviour());
+        	commentDto.setCreateDate(comment.getCreateDate());
         	
             result.add( commentDto );
         }

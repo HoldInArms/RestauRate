@@ -94,6 +94,11 @@ public class CommentDTO implements Serializable{
      * Status of the comment.
      */
     private Boolean live;
+    
+    /**
+     * The created date.
+     */
+    private Date createDate;
 
 	//~-----------------------------------------------------   
     //~ Getters / setters
@@ -176,6 +181,14 @@ public class CommentDTO implements Serializable{
 
 	public void setLive(Boolean live) {
 		this.live = live;
+	}
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 }
