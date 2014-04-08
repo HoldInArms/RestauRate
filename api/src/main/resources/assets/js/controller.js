@@ -242,7 +242,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 		$scope.shorting = function(comment) {
 			if (comment.length > 64) {
-				return comment.substring(0, 65) + "...";
+				return comment.substring(0, 55) + "...";
 			} else {
 				return comment;
 			}
