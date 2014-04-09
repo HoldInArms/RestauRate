@@ -14,42 +14,99 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-/**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
- * 
- * @author Dgzt
- */
-public class RestaurantRateConfiguration extends Configuration{
-    
-    //~-----------------------------------------------------   
+public class RestaurantDTO implements Serializable {
+
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
+	
+	//~-----------------------------------------------------   
     //~ Member fields
-    //~-----------------------------------------------------      
+    //~-----------------------------------------------------
+	/**
+	 * The primary key.
+	 */
+	private Long id;
+	
+	/**
+	 * The name of the restaurant.
+	 */
+	private String name;
+	
+	/**
+	 * The number of votes.
+	 */
+    private Integer votes;
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
+    /**
+     * The average of the votes.
+     */
+    private Double average;
+
+    /**
+     * The last comment.
+     */
+    private String lastComment;
     
-    //~-----------------------------------------------------   
+    /**
+     * Status of the restaurant.
+     */
+    private Boolean live;
+
+	//~-----------------------------------------------------   
     //~ Getters / setters
-    //~-----------------------------------------------------  
-    
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
-    }
+    //~-----------------------------------------------------
+    public Long getId() {
+		return id;
+	}
 
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getVotes() {
+		return votes;
+	}
+
+	public void setVotes(Integer votes) {
+		this.votes = votes;
+	}
+
+	public Double getAverage() {
+		return average;
+	}
+
+	public void setAverage(Double average) {
+		this.average = average;
+	}
+
+	public String getLastComment() {
+		return lastComment;
+	}
+
+	public void setLastComment(String lastComment) {
+		this.lastComment = lastComment;
+	}
+	
+    public Boolean getLive() {
+		return live;
+	}
+
+	public void setLive(Boolean live) {
+		this.live = live;
+	}
     
 }

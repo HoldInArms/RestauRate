@@ -14,42 +14,54 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
- * 
+ * This object contains a page of the restaurant.
+ *
  * @author Dgzt
  */
-public class RestaurantRateConfiguration extends Configuration{
+public class RestaurantPageDTO implements Serializable {
     
-    //~-----------------------------------------------------   
-    //~ Member fields
-    //~-----------------------------------------------------      
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~-----------------------------------------------------
+	/**
+	 * The list of the restaurants.
+	 */
+	List<RestaurantDTO> restaurants = new ArrayList<RestaurantDTO>();
     
+	/**
+	 * The number of the all restaurants.
+	 */
+    Long restaurantNumber = new Long(0);
+
     //~-----------------------------------------------------   
     //~ Getters / setters
-    //~-----------------------------------------------------  
-    
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
+    //~-----------------------------------------------------
+    public List<RestaurantDTO> getRestaurants() {
+        return restaurants;
     }
 
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
+    public void setRestaurants(List<RestaurantDTO> restaurants) {
+        this.restaurants = restaurants;
+    }
+
+    public Long getRestaurantNumber() {
+        return restaurantNumber;
+    }
+
+    public void setRestaurantNumber(Long restaurantNumber) {
+        this.restaurantNumber = restaurantNumber;
+    }
     
 }

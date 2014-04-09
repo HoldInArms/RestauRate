@@ -1,28 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/
 package hu.holdinarms;
+
+import hu.holdinarms.authentication.UserAuthenticator;
+import hu.holdinarms.dao.AdminDao;
+import hu.holdinarms.model.Admin;
+import hu.holdinarms.model.Comment;
+import hu.holdinarms.model.Restaurant;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fiestacabin.dropwizard.guice.AutoConfigService;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.auth.oauth.OAuthProvider;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
 import com.yammer.dropwizard.migrations.MigrationsBundle;
-import hu.holdinarms.authentication.UserAuthenticator;
-import hu.holdinarms.model.Admin;
-import hu.holdinarms.dao.AdminDao;
-import hu.holdinarms.model.Comment;
-import hu.holdinarms.model.Restaurant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is the main Service class, the entry point of the API.
@@ -39,7 +52,6 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
     private final HibernateBundle<RestaurantRateConfiguration> hibernateBundle = 
             new HibernateBundle<RestaurantRateConfiguration>(Restaurant.class, Comment.class,Admin.class) {
 
-        @Override
         public DatabaseConfiguration getDatabaseConfiguration(RestaurantRateConfiguration configuration) {
             return configuration.getDatabaseConfiguration();
         }
@@ -83,11 +95,12 @@ public class RestaurantRateService extends AutoConfigService<RestaurantRateConfi
         LOGGER.debug("*** initialize called...");
         bootstrap.addBundle(new MigrationsBundle<RestaurantRateConfiguration>() {
 
-            @Override
             public DatabaseConfiguration getDatabaseConfiguration(RestaurantRateConfiguration configuration) {
                 return configuration.getDatabaseConfiguration();
             }
         });
+        
+        bootstrap.addBundle(new AssetsBundle("/assets/"));
         bootstrap.addBundle(hibernateBundle);
     }
 

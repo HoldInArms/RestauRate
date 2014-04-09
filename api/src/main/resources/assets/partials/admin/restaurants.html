@@ -1,0 +1,88 @@
+<!-- -----------------------------------------------------------------------------------------------------
+     ------ This file is part of RestauRate.                                                        ------
+     ------                                                                                         ------
+     ------ Copyright (C) 2014 HoldInArms                                                           ------
+     ------                                                                                         ------
+     ------ This program is free software: you can redistribute it and/or modify it under the       ------
+     ------ terms of the GNU General Public License as published by the Free Software Foundation,   ------
+     ------ either version 3 of the License, or (at your option) any later version.                 ------
+     ------                                                                                         ------
+     ------ This program is distributed in the hope that it will be useful, but WITHOUT ANY         ------
+     ------ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         ------
+     ------ PARTICULAR PURPOSE. See the GNU General Public License for more details.                ------
+     ------                                                                                         ------
+     ------ You should have received a copy of the GNU General Public License along with this       ------
+     ------ program. If not, see <http://www.gnu.org/licenses/>.                                    ------
+     ----------------------------------------------------------------------------------------------------- --> 
+
+<div class="row margin-top-md">
+    <h1 class="text-center font-default">Restaurant List</h1>
+</div>
+
+<div class="row margin-top-lg">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center table-header-rounded-left">
+                    <span class="table-header-sorting" ng-click="changeOrderBy('name')">Restaurant Name</span>
+                    <span class="glyphicon glyphicon-chevron-up color-light-blue"></span>
+                </th>
+                <th class="text-center">
+                    <span class="table-header-sorting" ng-click="changeOrderBy('votes')">All Votes</span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                </th>
+                <th class="text-center">
+                    <span class="table-header-sorting" ng-click="changeOrderBy('average')">Avg. Score</span>
+                    <span class="glyphicon glyphicon-chevron-down color-light-blue"></span>
+                </th>
+                <th class="text-center table-header-rounded-right">
+                    <span class="table-header-sorting">Actions</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-center" ng-repeat="restaurant in restaurants">
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-question-sign" popover="This restaurant need more votes to be approved" popover-trigger="mouseenter" popover-placement="left"></span>
+                    <span class="">{{restaurant.name}}</span>
+                </td>
+                <td>{{restaurant.votes}}</td>
+                <td>
+                    <progressbar class="custom-progressbar" value="restaurant.average" max="5" type="{{type(restaurant.average)}}">
+                        <span class="">{{restaurant.average| number:1}} / 5</span>
+                    </progressbar>
+                </td>
+                <td>
+                    <button type=button" class="btn btn-restaurant" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="View all comments of this restaurant" popover-trigger="mouseenter" popover-placement="left" ng-click="gotoComments($index)">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <button type=button" class="btn btn-restaurant-admin-color-red" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Hide this restaurant's visibility" popover-trigger="mouseenter" popover-placement="left" ng-if="restaurant.live" ng-click="hideRestaurant($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <button type=button" class="btn btn-restaurant-admin-color-green" style="line-height: 15px; padding-left: 8px; padding-right: 8px;" popover="Make this restaurant visible" popover-trigger="mouseenter" popover-placement="left" ng-if="!restaurant.live" ng-click="reInstateRestaurant($index)">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row table-footer-design text-right">
+        <div class="btn-group">
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(0)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-fast-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage - 1)" ng-disabled="currentPage <= 1">
+                <span class="glyphicon glyphicon-backward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant-nonclickable" disabled="disabled">
+                <span style="">Page: {{currentPage || 0}}/{{allPages}}</span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(currentPage + 1)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-forward"></span>
+            </button>
+            <button type="button" class="btn btn-restaurant" ng-click="goToPage(allPages)"  ng-disabled="currentPage == allPages">
+                <span class="glyphicon glyphicon-fast-forward"></span>
+            </button>
+        </div>
+    </div>
+</div>

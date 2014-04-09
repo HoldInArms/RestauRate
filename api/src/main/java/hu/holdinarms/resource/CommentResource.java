@@ -1,21 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/
 package hu.holdinarms.resource;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.auth.Auth;
-import com.yammer.dropwizard.hibernate.UnitOfWork;
 import hu.holdinarms.dao.CommentDao;
 import hu.holdinarms.dao.RestaurantDao;
 import hu.holdinarms.model.Admin;
 import hu.holdinarms.model.Comment;
 import hu.holdinarms.model.Restaurant;
-import hu.holdinarms.model.dto.CommentPage;
-import java.util.List;
+import hu.holdinarms.model.dto.CommentPageDTO;
+import hu.holdinarms.model.dto.CommentWithNewRestaurantDTO;
+import hu.holdinarms.model.dto.CommentWithoutNewRestaurantDTO;
+
+import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,80 +34,110 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.google.inject.Inject;
+import com.yammer.dropwizard.auth.Auth;
+import com.yammer.dropwizard.hibernate.UnitOfWork;
+
 /**
+ * The resouce for {@file Comment}.
  *
- * @author zsurot
+ * @author Dgzt
  */
-@Path("/comment")
+@Path("/api/comment")
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource { 
 
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+    /**
+     * The dao for comment.
+     */
+	@Inject
+	private CommentDao commentDao;
 
-    private CommentDao commentDao;
-
+    /**
+     * The dao for restaurant.
+     */
     @Inject
     private RestaurantDao restaurantDao;
-
-    @Inject
-    public CommentResource(CommentDao commentDao){
-        this.commentDao = commentDao;
-    }
    
+    //~-----------------------------------------------------   
+    //~ Services
+    //~----------------------------------------------------- 
+    /**
+     * Save the new comment with new restaurant.
+     * 
+     * @param commentWithNewRestaurantDTO The new comment DTO object.
+     * @return The persisted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/saveWithNewRestaurant")
-    public Comment saveWithNewRestaurant(Comment comment){
-        if(comment.getNewRestaurantName().isEmpty()){
-            return null;
-        }
+    public Comment saveWithNewRestaurant(@Valid CommentWithNewRestaurantDTO commentWithNewRestaurantDTO){
+        Restaurant restaurant = restaurantDao.save(commentWithNewRestaurantDTO.getNewRestaurantName());
         
-        Restaurant restaurant = restaurantDao.save(comment.getNewRestaurantName());
-        comment.setRestaurant(restaurant);
-        
-        return commentDao.save(comment);
+        return commentDao.save(commentWithNewRestaurantDTO, restaurant);
     }
 
+    /**
+     * Save the new comment for a restaurant.
+     * 
+     * @param commentWithoutNewRestaurantDTO The new comment DTO object.
+     * @return The persisted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/saveWithoutNewRestaurant")
-    public Comment saveWithoutNewRestaurant(Comment comment){
-        if(comment.getRestaurant() == null){
-            return null;
-        }
+    public Comment saveWithoutNewRestaurant(@Valid CommentWithoutNewRestaurantDTO commentWithoutNewRestaurantDTO){
+    	Restaurant restaurant = restaurantDao.findById(commentWithoutNewRestaurantDTO.getRestaurantId());
         
-        return commentDao.save(comment);
+        return commentDao.save(commentWithoutNewRestaurantDTO, restaurant);
     }
 
-    /*@GET
-    @UnitOfWork
-    @Path("/get/{restaurantId}")
-    public List<Comment> getCommentsByRestaurant(@PathParam("restaurantId") Long restaurantId){
-        return commentDao.getCommentsByRestaurantId(restaurantId);
-    }*/
-
+    /**
+     * Get a comment list by a restaurant id.
+     * 
+     * @param restaurantId The restaurant id.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @return The comment page DTO.
+     */
     @GET
     @UnitOfWork
     @Path("/list/{restaurantId}")
-    public CommentPage getComments(@PathParam("restaurantId") Long restaurantId, 
+    public CommentPageDTO getComments(@PathParam("restaurantId") Long restaurantId, 
             @QueryParam("from") Integer from, @QueryParam("to") Integer to)
     {
-        CommentPage commentPage = new CommentPage();
+        CommentPageDTO commentPage = new CommentPageDTO();
+        commentPage.setRestaurantName(restaurantDao.findById(restaurantId).getName());
         commentPage.setComments(commentDao.getComments(restaurantId, from, to));
         commentPage.setCountComments(commentDao.countComments(restaurantId));
         
         return commentPage;
     }
 
+    /**
+     * Get the comment list for admin side. 
+     * 
+     * @param admin The admin.
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by value.
+     * @param direction The deriction value.
+     * @return The comment page DTO.
+     */
     @GET
     @UnitOfWork
     @Path("/adminlist")
-    public CommentPage getCommentsForAdmin(@Auth Admin admin, 
+    public CommentPageDTO getCommentsForAdmin(@Auth Admin admin, 
             @QueryParam("restaurantid") Long restaurantId, 
             @QueryParam("from") Integer from, @QueryParam("to") Integer to,
             @QueryParam("orderby") String orderby, @QueryParam("direction") String direction){
 
         
-        CommentPage commentPage = new CommentPage();
+        CommentPageDTO commentPage = new CommentPageDTO();
 
         commentPage.setComments(commentDao.getCommentsForAdmin(restaurantId, from, to, orderby, direction));
         commentPage.setCountComments(commentDao.countCommentsForAdmin(restaurantId));
@@ -105,6 +145,13 @@ public class CommentResource {
         return commentPage;
     }
 
+    /**
+     * Delete the comment on admin side.
+     * 
+     * @param admin The admin.
+     * @param commentId The id of comment.
+     * @return The deleted comment.
+     */
     @POST
     @UnitOfWork
     @Path("/delete/{commentId}")
@@ -118,6 +165,13 @@ public class CommentResource {
         return comment;
     }
 
+    /**
+     * The reinstate the comment on admin side..
+     * 
+     * @param admin The admin.
+     * @param commentId The id of comment.
+     * @return The reinstated comment.
+     */
     @POST
     @UnitOfWork
     @Path("/reinstate/{commentId}")
@@ -131,6 +185,14 @@ public class CommentResource {
         return comment;
     }
 
+    /**
+     * Move the comment to other restaurant on the admin side.
+     * 
+     * @param admin The admin.
+     * @param commentId The if od comment.
+     * @param restaurantId The id of new restaurant.
+     * @return The moved comment.
+     */
     @POST
     @UnitOfWork
     @Path("/move/{commentId}/{restaurantId}")

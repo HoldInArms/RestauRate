@@ -14,42 +14,46 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.resource;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 /**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
+ * Resource for html pages.
  * 
  * @author Dgzt
  */
-public class RestaurantRateConfiguration extends Configuration{
-    
-    //~-----------------------------------------------------   
-    //~ Member fields
-    //~-----------------------------------------------------      
+@Path("/")
+@Produces(MediaType.TEXT_HTML)
+public class HtmlPageResource {
+	
+	/**
+	 * Get the index.html.
+	 * 
+	 * @return The page content.
+	 */
+	@GET
+	public Response index(){
+		String pageContent = "";
+		
+		try{
+			URL clientPage = Resources.getResource("index.html");
+			pageContent = Resources.toString(clientPage, Charsets.UTF_8);
+		}catch( IOException e ){
+			return Response.serverError().build();
+		}
+		
+		return Response.ok(pageContent).build();
+	}
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
-    
-    //~-----------------------------------------------------   
-    //~ Getters / setters
-    //~-----------------------------------------------------  
-    
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
-    }
-
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
-    
 }

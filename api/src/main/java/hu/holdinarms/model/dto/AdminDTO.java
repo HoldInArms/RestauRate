@@ -14,42 +14,66 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
+ * The DTO object for {@file Admin}.
  * 
  * @author Dgzt
  */
-public class RestaurantRateConfiguration extends Configuration{
-    
+public class AdminDTO implements Serializable{
+
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
+	
     //~-----------------------------------------------------   
     //~ Member fields
-    //~-----------------------------------------------------      
+    //~----------------------------------------------------- 
+	/**
+	 * The username.
+	 */
+	private String username;
+	
+	/**
+	 * The username who added the current admin.
+	 */
+	private String whoAdded;
+	
+	/**
+	 * The created date.
+	 */
+	private Date createDate;
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
-    
     //~-----------------------------------------------------   
     //~ Getters / setters
-    //~-----------------------------------------------------  
-    
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
-    }
+    //~-----------------------------------------------------
+	public String getUsername() {
+		return username;
+	}
 
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
-    
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getWhoAdded() {
+		return whoAdded;
+	}
+
+	public void setWhoAdded(String whoAdded) {
+		this.whoAdded = whoAdded;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
 }

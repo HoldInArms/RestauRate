@@ -1,24 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/***************************************************************************************************
+ ***** This file is part of RestauRate.                                                        *****
+ *****                                                                                         *****
+ ***** Copyright (C) 2014 HoldInArms                                                           *****
+ *****                                                                                         *****
+ ***** This program is free software: you can redistribute it and/or modify it under the       *****
+ ***** terms of the GNU General Public License as published by the Free Software Foundation,   *****
+ ***** either version 3 of the License, or (at your option) any later version.                 *****
+ *****                                                                                         *****
+ ***** This program is distributed in the hope that it will be useful, but WITHOUT ANY         *****
+ ***** WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         *****
+ ***** PARTICULAR PURPOSE. See the GNU General Public License for more details.                *****
+ *****                                                                                         *****
+ ***** You should have received a copy of the GNU General Public License along with this       *****
+ ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
+ ***************************************************************************************************/
 package hu.holdinarms.dao;
 
-import com.google.inject.Inject;
-import com.yammer.dropwizard.hibernate.AbstractDAO;
 import hu.holdinarms.model.Comment;
+import hu.holdinarms.model.Restaurant;
+import hu.holdinarms.model.dto.CommentDTO;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
+import com.google.inject.Inject;
+import com.yammer.dropwizard.hibernate.AbstractDAO;
+
 /**
+ * The DAO for {@file Comment}.
  *
- * @author zsurot
+ * @author Dgzt
  */
 public class CommentDao extends AbstractDAO<Comment> {
 
@@ -32,32 +49,47 @@ public class CommentDao extends AbstractDAO<Comment> {
     public Comment findById(Long id){
         return uniqueResult(namedQuery("Comment.findById").setParameter("id", id));
     }
-
-    public Comment save(Comment comment) {
-        comment.setLive(Boolean.TRUE);
-        comment.setCreateDate(new Date());
-        return persist(comment);
+    
+    /**
+     * Save the new comment.
+     * 
+     * @param commentDto The new comment.
+     * @param restaurant The restaurant of comment.
+     * @return Ther persisted comment.
+     */
+    public Comment save( CommentDTO commentDto, Restaurant restaurant ){
+    	Comment comment = new Comment();
+    	comment.setRestaurant(restaurant);
+    	comment.setComment(commentDto.getComment());
+    	comment.setVote(commentDto.getVote());
+    	comment.setOrderTime(commentDto.getOrderTime());
+    	comment.setArriveTime(commentDto.getArriveTime());
+    	comment.setFoodName(commentDto.getFoodName());
+    	comment.setFoodPrice(commentDto.getFoodPrice());
+    	comment.setWorthMoney(commentDto.getWorthMoney());
+    	comment.setDispatchBehaviour(commentDto.getDispatchBehaviour());
+    	comment.setLive(Boolean.TRUE);
+    	comment.setCreateDate(new Date());
+    	
+    	return persist(comment);
     }
 
+    /**
+     * Update the comment.
+     * 
+     * @param comment The comment.
+     * @return The persisted comment.
+     */
     public Comment update(Comment comment){
         return persist(comment);
     }
 
-    /*public List<Comment> getCommentsByRestaurantId(Long restaurantId) {
-        String queryString = "SELECT id FROM RR_comments where restaurant_id = :restaurantId";
-
-        Query query = currentSession().createSQLQuery(queryString);
-        query.setParameter("restaurantId", restaurantId);
-
-        List<BigInteger> queryResult = query.list();
-        List<Comment> result = new ArrayList<Comment>();
-        for (BigInteger bigInteger : queryResult) {
-            result.add(get(bigInteger.longValue()));
-        }
-
-        return result;
-    }*/
-
+    /**
+     * Return with the number of comments of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of comments.
+     */
     public Integer countComments(Long restaurantId){
 
         String queryString = "SELECT COUNT(id) FROM rr_comments WHERE restaurant_id = :restaurantId AND live = true";
@@ -67,10 +99,18 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
-    public List<Comment> getComments(Long restaurantId, Integer from, Integer to){
+    /**
+     * Get the comments.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @return The comment list.
+     */
+    public List<CommentDTO> getComments(Long restaurantId, Integer from, Integer to){
 
         if(from == null || to == null){
-            return new ArrayList<Comment>();
+            return new ArrayList<CommentDTO>();
         }
         
         String queryString = "SELECT id FROM (" +
@@ -83,16 +123,36 @@ public class CommentDao extends AbstractDAO<Comment> {
         query.setParameter("from", from);
         query.setParameter("to", to);
 
-        List<BigInteger> queryRestult = query.list();
-        List<Comment> result = new ArrayList<Comment>();
+        @SuppressWarnings("unchecked")
+		List<BigInteger> queryRestult = query.list();
+        List<CommentDTO> result = new ArrayList<CommentDTO>();
         
         for(BigInteger bigInteger: queryRestult){
-            result.add( get(bigInteger.longValue()) );
+        	Comment comment = get(bigInteger.longValue());
+        	
+        	CommentDTO commentDto = new CommentDTO();
+        	commentDto.setComment(comment.getComment());
+        	commentDto.setVote(comment.getVote());
+        	commentDto.setOrderTime(comment.getOrderTime());
+        	commentDto.setArriveTime(comment.getArriveTime());
+        	commentDto.setFoodName(comment.getFoodName());
+        	commentDto.setFoodPrice(comment.getFoodPrice());
+        	commentDto.setWorthMoney(comment.isWorthMoney());
+        	commentDto.setDispatchBehaviour(comment.isDispatchBehaviour());
+        	commentDto.setCreateDate(comment.getCreateDate());
+        	
+            result.add( commentDto );
         }
         
         return result;
     }
 
+    /**
+     * Get the number of votes of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of votes.
+     */
     public Integer getVotesByRestaurantId(Long restaurantId){
         String queryString = "SELECT COUNT(id) FROM rr_comments WHERE live = true AND restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
@@ -101,7 +161,13 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
-    public Double getAvargeByRestaurantId(Long restaurantId){
+    /**
+     * Get the average of restaurant.
+     * 
+     * @param restaurantId
+     * @return
+     */
+    public Double getAverageByRestaurantId(Long restaurantId){
         String queryString = "select SUM(vote)/CAST(COUNT(id) AS float4) from rr_comments where live = true and restaurant_id = :restaurantId";
         Query query = currentSession().createSQLQuery(queryString);
         query.setParameter("restaurantId", restaurantId);
@@ -109,6 +175,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return (Double) query.uniqueResult();
     }
 
+    /**
+     * Get the last comment of restaurant.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The last comment.
+     */
     public String lastCommentByRestaurantId(Long restaurantId){
         String queryString = "SELECT id from rr_comments WHERE restaurant_id = :restaurantId AND live = true order by createdate DESC LIMIT 1";
 
@@ -120,10 +192,20 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((Comment) get( ((BigInteger)query.uniqueResult()).longValue() )).getComment();
     }
 
-    public List<Comment> getCommentsForAdmin(Long restaurantId, Integer from, Integer to, String orderby, String direction){
+    /**
+     * Get the comments for admin page.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @param from The from value of list.
+     * @param to The to value of list.
+     * @param orderby The order by property.
+     * @param direction The direction property.
+     * @return The comment list.
+     */
+    public List<CommentDTO> getCommentsForAdmin(Long restaurantId, Integer from, Integer to, String orderby, String direction){
         
         if(from == null || to == null){
-            return new ArrayList();
+            return new ArrayList<CommentDTO>();
         }
         
         if(direction == null || direction.isEmpty()){
@@ -151,15 +233,36 @@ public class CommentDao extends AbstractDAO<Comment> {
             query.setParameter("restaurantId", restaurantId);
         }
         
-        List<BigInteger> resultList = query.list();
-        List<Comment> result = new ArrayList<Comment>();
+        @SuppressWarnings("unchecked")
+		List<BigInteger> resultList = query.list();
+        List<CommentDTO> result = new ArrayList<CommentDTO>();
         for(BigInteger bigInteger : resultList){
-            result.add(get(bigInteger.longValue()));
+        	Comment comment = get(bigInteger.longValue());
+        	
+        	CommentDTO commentDto = new CommentDTO();
+        	commentDto.setId(comment.getId());
+        	commentDto.setComment(comment.getComment());
+        	commentDto.setVote(comment.getVote());
+        	commentDto.setOrderTime(comment.getOrderTime());
+        	commentDto.setArriveTime(comment.getArriveTime());
+        	commentDto.setFoodName(comment.getFoodName());
+        	commentDto.setFoodPrice(comment.getFoodPrice());
+        	commentDto.setWorthMoney(comment.isWorthMoney());
+        	commentDto.setDispatchBehaviour(comment.isDispatchBehaviour());
+        	commentDto.setLive(comment.isLive());
+        	
+            result.add( commentDto );
         }
         
         return result;
     }
 
+    /**
+     * Number of comments for admin side.
+     * 
+     * @param restaurantId The id of restaurant.
+     * @return The number of comments.
+     */
     public Integer countCommentsForAdmin(Long restaurantId){
         String queryString = "SELECT COUNT(id) FROM rr_COMMENTS WHERE true=true ";
         
@@ -175,6 +278,12 @@ public class CommentDao extends AbstractDAO<Comment> {
         return ((BigInteger) query.uniqueResult()).intValue();
     }
 
+    /**
+     * Get the order by property.
+     * 
+     * @param orderBy The order by property.
+     * @return The order by property.
+     */
     public String getOrderByProperty(String orderBy){
        if(Arrays.asList(ORDERBY_COLUMN_NAMES).contains(orderBy)){
             return orderBy;

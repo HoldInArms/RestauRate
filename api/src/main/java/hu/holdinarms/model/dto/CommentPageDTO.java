@@ -14,42 +14,67 @@
  ***** You should have received a copy of the GNU General Public License along with this       *****
  ***** program. If not, see <http://www.gnu.org/licenses/>.                                    *****
  ***************************************************************************************************/
-package hu.holdinarms;
+package hu.holdinarms.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yammer.dropwizard.config.Configuration;
-import com.yammer.dropwizard.db.DatabaseConfiguration;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * This class encapsulates the database configuration. It reads from
- * the YML config file passed in on the command line.
- * 
+ * This DTO contains the comment page information.
+ *
  * @author Dgzt
  */
-public class RestaurantRateConfiguration extends Configuration{
+public class CommentPageDTO implements Serializable {
     
-    //~-----------------------------------------------------   
-    //~ Member fields
-    //~-----------------------------------------------------      
+	//~-----------------------------------------------------   
+    //~ Static fields
+    //~-----------------------------------------------------
+	private static final long serialVersionUID = 1L;
 
-    @Valid
-    @NotNull
-    private DatabaseConfiguration database = new DatabaseConfiguration();
+	//~-----------------------------------------------------   
+    //~ Member fields
+    //~----------------------------------------------------- 
+	/**
+	 * The name of the restaurant.
+	 */
+	private String restaurantName;
+	
+	/**
+	 * The list of comments.
+	 */
+	private List<CommentDTO> comments = new ArrayList<CommentDTO>();
+
+	/**
+	 * The number of all comments of restaurant.s
+	 */
+    private Integer countComments = 0;
     
     //~-----------------------------------------------------   
     //~ Getters / setters
-    //~-----------------------------------------------------  
+    //~-----------------------------------------------------
+	public String getRestaurantName() {
+		return restaurantName;
+	}
+
+	public void setRestaurantName(String restaurantName) {
+		this.restaurantName = restaurantName;
+	}
     
-    @JsonProperty("database")
-    public DatabaseConfiguration getDatabaseConfiguration() {
-        return database;
+    public List<CommentDTO> getComments() {
+        return comments;
     }
 
-    @JsonProperty("database")
-    public void setDatabaseConfiguration(DatabaseConfiguration databaseConfiguration) {
-        this.database = databaseConfiguration;
-    }  
-    
+    public void setComments(List<CommentDTO> comments) {
+        this.comments = comments;
+    }
+
+    public Integer getCountComments() {
+        return countComments;
+    }
+
+    public void setCountComments(Integer countComments) {
+        this.countComments = countComments;
+    }
+
 }
