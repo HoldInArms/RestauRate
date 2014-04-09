@@ -81,6 +81,7 @@ public class RestaurantDao extends AbstractDAO<Restaurant> {
         if( admin == null ){
             queryString += " WHERE live = TRUE";
         }
+        queryString += " ORDER BY name";
         Query query = currentSession().createSQLQuery(queryString);
 
         @SuppressWarnings("unchecked")
