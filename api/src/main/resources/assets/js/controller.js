@@ -36,7 +36,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			$scope.allRestaurants = [];
 			RestaurantService.getAllRestaurants($scope.allRestaurants);
 		};
-		
+
 		$scope.getAllRestaurants();
 
 		$scope.changeDirection = function(pageChanged, rateOrVotes) {
@@ -147,11 +147,11 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 		};
 
-		$scope.isDatasCorrect = function(comment, isNewRestaurant) {
+		$scope.isDatasCorrect = function(comment, isNewRestaurant, restaurant) {
 			if (isNewRestaurant) {
 				$scope.missingDatas = !(angular.isDefined(comment.newRestaurantName) && !comment.newRestaurantName.length == 0 && angular.isDefined(comment) && angular.isDefined(comment.comment) && !comment.comment.length == 0 && angular.isDefined(comment.vote) && angular.isNumber(comment.vote));
 			} else {
-				$scope.missingDatas = !(angular.isDefined(comment) && angular.isDefined(comment.comment) && !comment.comment.length == 0 && angular.isDefined(comment.vote) && angular.isNumber(comment.vote));
+				$scope.missingDatas = !(angular.isDefined(restaurant) && angular.isDefined(comment) && angular.isDefined(comment.comment) && !comment.comment.length == 0 && angular.isDefined(comment.vote) && angular.isNumber(comment.vote));
 			}
 			return !$scope.missingDatas;
 		};
@@ -173,7 +173,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 
 		$scope.addNewCommentForRestaurant = function(comment, restaurant) {
 			//Check datas
-			if ($scope.isDatasCorrect(comment)) {
+			if ($scope.isDatasCorrect(comment, false, restaurant)) {
 				var postData = {};
 				postData.restaurantId = restaurant.id;
 				angular.forEach(comment, function(value, key) {
