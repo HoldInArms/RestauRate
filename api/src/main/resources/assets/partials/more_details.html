@@ -45,11 +45,16 @@
         <div class="col-md-3">
             <label class="custom-input-field-label">Was it worth your money?</label>
         </div>
-        <div class="col-md-9">
-            <div class="btn-group">
-                <button type="button" class="btn btn-restaurant-color-green" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.worthMoney]" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
-                <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.worthMoney == false]" ng-model="comment.worthMoney" btn-radio="false">No</button>
-            </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-restaurant-color-green custom-btn-group-btn-left" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.worthMoney]" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
+            <button type="button" class="btn btn-restaurant-color-red custom-btn-group-btn-right" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.worthMoney == false]" ng-model="comment.worthMoney" btn-radio="false">No</button>
+        </div>
+        <div class="col-md-3 text-right">
+            <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
+        </div>
+        <div class="col-md-3 text-right">
+            <button type="button" class="btn btn-restaurant-color-green custom-btn-group-btn-left" ng-model="comment.dispatchBehaviour" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.dispatchBehaviour]" btn-radio="true">Acceptable</button>
+            <button type="button" class="btn btn-restaurant-color-red custom-btn-group-btn-right" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.dispatchBehaviour == false]" ng-model="comment.dispatchBehaviour" btn-radio="false">Unacceptable</button>
         </div>
     </div>
 </div>
@@ -63,12 +68,15 @@
             <div class="col-md-9" style="margin: 0; padding: 0;">
                 <input type="text" class="form-control custom-timepicker-style-date-field" datepicker-popup="y.MM.dd." ng-model="orderDate" show-weeks="false" show-button-bar="false" max="today"/>
             </div>
-            <div class="col-md-3 custom-timepicker-style-time-field" ng-show="orderDate" ng-model="orderTime" style="display:inline-block;">
-                <timepicker show-meridian="ismeridian"></timepicker>
+            <div class="col-md-3 custom-timepicker-style-time-field" ng-show="orderDate" ng-model="orderTime">
+                <div class="pull-right">
+                    <timepicker show-meridian="ismeridian"></timepicker>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="orderTime">
     <div class="col-md-3">
         <label class="custom-input-field-label">Arrive Time:</label>
@@ -76,10 +84,10 @@
     <div class="col-md-9">
         <div class="">
             <div class="col-md-9" style="margin: 0; padding: 0;">
-                <input class="form-control custom-input-field" type="text" value="{{orderTime| date: 'y.MM.dd.'}}" disabled="disabled" />
+                <input class="form-control custom-input-field" type="text" value="{{orderDate| date: 'y.MM.dd.'}}" disabled="disabled" />
             </div>
             <div class="col-md-3 custom-timepicker-style-time-field">
-                <div ng-model="arriveTime" ng-change="onArriveTimeChange(orderDate, orderTime, arriveTime)" style="display:inline-block;">
+                <div class="pull-right" ng-model="arriveTime" ng-change="onArriveTimeChange(orderDate, orderTime, arriveTime)">
                     <timepicker show-meridian="ismeridian"></timepicker>
                 </div>
             </div>
@@ -93,18 +101,6 @@
     </div>
     <div class="col-md-9">
         <input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" />
-    </div>
-</div>
-
-<div class="row margin-top-sm margin-bot-sm margin-more-details">
-    <div class="col-md-3">
-        <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
-    </div>
-    <div class="col-md-9">
-        <div class="btn-group">
-            <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.dispatchBehaviour]" btn-radio="true">Nice/Acceptable</button>
-            <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.dispatchBehaviour == false]" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
-        </div>
     </div>
 </div>
 
