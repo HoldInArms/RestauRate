@@ -143,7 +143,7 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			$scope.comment.arriveTime = tmpArrive;
 
 			var d = new Date($scope.comment.arriveTime - $scope.comment.orderTime);
-			$scope.deliveryTime = d.getUTCHours() + ":" + d.getUTCMinute(s);
+			$scope.deliveryTime = d.getUTCHours() + ":" + d.getUTCMinutes();
 
 		};
 
