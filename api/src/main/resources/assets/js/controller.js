@@ -36,6 +36,8 @@ controller('HomePageController', ['$rootScope', '$scope', '$state', 'RestaurantS
 			$scope.allRestaurants = [];
 			RestaurantService.getAllRestaurants($scope.allRestaurants);
 		};
+		
+		$scope.getAllRestaurants();
 
 		$scope.changeDirection = function(pageChanged, rateOrVotes) {
 			if (pageChanged) {
