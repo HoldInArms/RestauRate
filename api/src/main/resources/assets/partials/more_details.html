@@ -1,19 +1,19 @@
 <!-- -----------------------------------------------------------------------------------------------------
-     ------ This file is part of RestauRate.                                                        ------
-     ------                                                                                         ------
-     ------ Copyright (C) 2014 HoldInArms                                                           ------
-     ------                                                                                         ------
-     ------ This program is free software: you can redistribute it and/or modify it under the       ------
-     ------ terms of the GNU General Public License as published by the Free Software Foundation,   ------
-     ------ either version 3 of the License, or (at your option) any later version.                 ------
-     ------                                                                                         ------
-     ------ This program is distributed in the hope that it will be useful, but WITHOUT ANY         ------
-     ------ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         ------
-     ------ PARTICULAR PURPOSE. See the GNU General Public License for more details.                ------
-     ------                                                                                         ------
-     ------ You should have received a copy of the GNU General Public License along with this       ------
-     ------ program. If not, see <http://www.gnu.org/licenses/>.                                    ------
-     ----------------------------------------------------------------------------------------------------- --> 
+------ This file is part of RestauRate.                                                        ------
+------                                                                                         ------
+------ Copyright (C) 2014 HoldInArms                                                           ------
+------                                                                                         ------
+------ This program is free software: you can redistribute it and/or modify it under the       ------
+------ terms of the GNU General Public License as published by the Free Software Foundation,   ------
+------ either version 3 of the License, or (at your option) any later version.                 ------
+------                                                                                         ------
+------ This program is distributed in the hope that it will be useful, but WITHOUT ANY         ------
+------ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A         ------
+------ PARTICULAR PURPOSE. See the GNU General Public License for more details.                ------
+------                                                                                         ------
+------ You should have received a copy of the GNU General Public License along with this       ------
+------ program. If not, see <http://www.gnu.org/licenses/>.                                    ------
+----------------------------------------------------------------------------------------------------- --> 
 
 <section class="margin-side-md">
     <div class="row margin-top-sm margin-bot-sm margin-more-details">
@@ -26,24 +26,16 @@
     </div>
 
     <div class="row margin-top-sm margin-bot-sm margin-more-details">
-            <div class="col-md-3">
-                <label class="custom-input-field-label">Food Price:</label>
-            </div>
-            <div class="col-md-9">
+        <div class="col-md-3">
+            <label class="custom-input-field-label">Food Price:</label>
+        </div>
+        <div class="col-md-9">
             <form name="form">
                 <div class="input-group">
                     <input name="money" min="0" maxlength="4" class="form-control custom-input-field input-group-btn" placeholder="1500" ng-model="comment.foodPrice" not-null-number/>
-                    <span class="input-group-addon custom-input-field">HUF</span>
-                    <!--                    <select class="form-control custom-input-field input-group-addon" style="width: 90px;">
-                    <option selected="selected">HUF</option>
-                    <option>EUR</option>
-                    <option>USD</option>
-                    <option>GBP</option>
-                </select>
-                -->
-            
-            </div>
-            <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$invalid">
+                    <span class="input-group-addon custom-input-field">HUF</span>           
+                </div>
+                <label class="margin-left-md" style="color: #FF0000" ng-if="form.money.$invalid">
                     Wrong number!</label>
             </form>
 
@@ -53,11 +45,16 @@
         <div class="col-md-3">
             <label class="custom-input-field-label">Was it worth your money?</label>
         </div>
-        <div class="col-md-9">
-            <div class="btn-group">
-                <button type="button" class="btn btn-restaurant-color-green" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.worthMoney]" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
-                <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.worthMoney == false]" ng-model="comment.worthMoney" btn-radio="false">No</button>
-            </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-restaurant-color-green custom-btn-group-btn-left" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.worthMoney]" ng-model="comment.worthMoney" btn-radio="true">Yes</button>
+            <button type="button" class="btn btn-restaurant-color-red custom-btn-group-btn-right" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.worthMoney == false]" ng-model="comment.worthMoney" btn-radio="false">No</button>
+        </div>
+        <div class="col-md-3 text-right">
+            <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
+        </div>
+        <div class="col-md-3 text-right">
+            <button type="button" class="btn btn-restaurant-color-green custom-btn-group-btn-left" ng-model="comment.dispatchBehaviour" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.dispatchBehaviour]" btn-radio="true">Acceptable</button>
+            <button type="button" class="btn btn-restaurant-color-red custom-btn-group-btn-right" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.dispatchBehaviour == false]" ng-model="comment.dispatchBehaviour" btn-radio="false">Unacceptable</button>
         </div>
     </div>
 </div>
@@ -67,22 +64,33 @@
         <label class="custom-input-field-label">Order Time:</label>
     </div>
     <div class ="col-md-9">
-        <div class="input-group">
-            <input type="text" class="form-control" datepicker-popup="y.MM.dd." ng-model="orderDate" show-weeks="false" show-button-bar="false" max="today"/>
-            <div ng-show="orderDate" ng-model="orderTime" style="display:inline-block;">
-                <timepicker show-meridian="ismeridian"></timepicker>
+        <div class="input-group" style="width: 100%;">
+            <div class="col-md-9" style="margin: 0; padding: 0;">
+                <input type="text" class="form-control custom-timepicker-style-date-field" datepicker-popup="y.MM.dd." ng-model="orderDate" show-weeks="false" show-button-bar="false" max="today"/>
+            </div>
+            <div class="col-md-3 custom-timepicker-style-time-field" ng-show="orderDate" ng-model="orderTime">
+                <div class="pull-right">
+                    <timepicker show-meridian="ismeridian"></timepicker>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="row margin-top-sm margin-bot-sm margin-more-details" ng-if="orderTime">
     <div class="col-md-3">
         <label class="custom-input-field-label">Arrive Time:</label>
     </div>
-    <div class ="col-md-9">   
-        <input class="form-control" type="text" value="{{orderTime | date: 'y.MM.dd.'}}" disabled="disabled" />
-        <div ng-model="arriveTime" ng-change="onArriveTimeChange(orderDate, orderTime, arriveTime)" style="display:inline-block;">
-            <timepicker show-meridian="ismeridian"></timepicker>
+    <div class="col-md-9">
+        <div class="">
+            <div class="col-md-9" style="margin: 0; padding: 0;">
+                <input class="form-control custom-input-field" type="text" value="{{orderDate| date: 'y.MM.dd.'}}" disabled="disabled" />
+            </div>
+            <div class="col-md-3 custom-timepicker-style-time-field">
+                <div class="pull-right" ng-model="arriveTime" ng-change="onArriveTimeChange(orderDate, orderTime, arriveTime)">
+                    <timepicker show-meridian="ismeridian"></timepicker>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -93,18 +101,6 @@
     </div>
     <div class="col-md-9">
         <input class="form-control custom-input-field" type="text" value="{{deliveryTime}}" disabled="disabled" />
-    </div>
-</div>
-
-<div class="row margin-top-sm margin-bot-sm margin-more-details">
-    <div class="col-md-3">
-        <label class="custom-input-field-label">Dispatch's Behaviour/Mood:</label>
-    </div>
-    <div class="col-md-9">
-        <div class="btn-group">
-            <button type="button" class="btn btn-restaurant-color-green" ng-model="comment.dispatchBehaviour" ng-class="{true: 'btn-restaurant-rate-selected-green'}[comment.dispatchBehaviour]" btn-radio="true">Nice/Acceptable</button>
-            <button type="button" class="btn btn-restaurant-color-red" ng-class="{true: 'btn-restaurant-rate-selected-red'}[comment.dispatchBehaviour == false]" ng-model="comment.dispatchBehaviour" btn-radio="false">Rude/Unacceptable</button>
-        </div>
     </div>
 </div>
 
