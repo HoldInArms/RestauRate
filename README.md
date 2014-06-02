@@ -20,9 +20,10 @@ Windows: open pgAdmin:
 Linux (the easy way.):
 
 	root@host:~# su - postgres
-	postgres@host:~$ CREATE USER restaurate WITH PASSWORD 'myPassword';
-	postgres@host:~$ CREATE DATABASE restaurate;
-	postgres@host:~$ GRANT ALL PRIVILEGES ON DATABASE restaurate to restaurate;
+	root@host:~# psql
+	postgres=# CREATE USER restaurate WITH PASSWORD 'myPassword';
+	postgres=# CREATE DATABASE restaurate;
+	postgres=# GRANT ALL PRIVILEGES ON DATABASE restaurate to restaurate;
 
 edit your api/local.yml file for the database what you just set.
 
